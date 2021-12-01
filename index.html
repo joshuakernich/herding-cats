@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Maate</title>
+  <style type="text/css">
+
+
+    @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+
+    @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+    body{
+      white-space: nowrap;
+    }
+
+    .screen{
+      width: 350px;
+      height: 600px;
+      border: 1px solid black;
+
+      font-family: 'Rubik', sans-serif;
+      /*position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      margin: auto;
+      background: #270F69;
+      color: white;*/
+
+      font-size: 22px;
+      display: inline-block;
+      vertical-align: middle;
+      text-align: center;
+      position: relative;
+      color: #222;
+      overflow: hidden;
+      white-space: normal;
+    }
+
+
+
+    button{
+      border: 2px solid black;
+      background: white;
+      display: block;
+      margin: 20px;
+      width: calc( 100% - 40px );
+      box-sizing: border-box;
+      box-shadow: 5px -5px 0px black;
+
+      font-family: inherit;
+      font-size: inherit;
+      padding: 20px;
+      position: relative;
+    }
+
+    button.bottomed{
+      position: absolute;
+      bottom: 0px;
+    }
+
+    button.back{
+      position: absolute;
+      top: 0px;
+      width: 20px;
+    }
+
+    button.back:after{
+      content: "<";
+      right: 15px;
+      top: 8px;
+    }
+
+    button:after{
+      content: ">";
+      position: absolute;
+      right: 25px;
+      display: inline-block;
+      
+    }
+
+    .madlib{
+      text-align: center;
+      font-size: 30px;
+    }
+
+    .madlib-line{
+      display: inline-block;
+      text-align: left;
+    }
+
+    .madlib-line.editable{
+      background: yellow;
+      border-bottom: 2px solid black;
+      position: relative;
+    }
+
+    .madlib-line.editing .placeholder{
+      opacity: 0.1;
+    }
+
+    .madlib-line.edited{
+      background: #99ffdd;
+    }
+
+
+
+    .deet-icon{
+     
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      font-weight: bold;
+      font-size: 20px;
+      background: white;
+      display: block;
+     
+      background: yellow;
+      border-bottom: 2px solid black;
+      background-position: center;
+      background-size: 70%;
+      background-repeat: no-repeat;
+      stroke: black;
+      margin-bottom: 2px;
+     
+    }
+
+    .deet{
+      display: inline-block;
+      font-size: 10px;
+      font-weight: bold;
+      margin: 10px 2px;
+    }
+
+    .deets{
+      opacity: 0;
+      transition: 0.5s all;
+    }
+
+    .tip:before{
+      content: "TIP";
+      display: block;
+    }
+
+    .tip{
+      position: absolute;
+      bottom: 0px;
+      margin: 10px;
+      background: #222;
+      color: white;
+      font-size: 15px;
+      padding: 20px;
+      line-height: 20px;
+      left: 0px;
+      right: 0px;
+    }
+
+    .footer{
+      position: absolute;
+      font-size: 10px;
+      
+      border-top: 2px solid #333;
+      width: 100%;
+      bottom: 0px;
+      background: yellow;
+      padding: 10px 0px;
+    }
+
+    .footer-button{
+      display: inline-block;
+      margin: 0px 20px;
+      vertical-align: bottom;
+
+    }
+
+    .footer-button h3{
+      font-size: 10px;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .footer-icon{
+      width: 45px;
+      height: 45px;
+      
+      
+      background-position: center;
+      background-size: 50%;
+      background-repeat: no-repeat;
+      position: relative;
+      display: inline-block;
+      
+      border-radius: 100px;
+
+      
+
+    }
+
+    .story{
+      background: #ddd;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      margin: 20px;
+      border: 2px solid #333;
+      
+      white-space: nowrap;
+    }
+
+    .story-page{
+      white-space: normal;
+      background: white;
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+      padding-top: 30px;
+      box-sizing: border-box;
+      display: inline-block;
+      vertical-align: top;
+      overflow: hidden;
+    }
+
+    .story-scroll{
+      overflow-x: scroll;
+      height: 90%;
+      position: relative;
+      scroll-snap-type: x mandatory;
+    }
+
+    .story-train{
+     padding: 15px;
+    }
+
+    .story-train-station{
+      width: 8px;
+      height: 8px;
+      background: black;
+      display: inline-block;
+      margin: 0px 3px;
+      border-radius: 10px;
+      opacity: 0.2;
+    }
+
+    .herd{
+      margin: 20px;
+      background: white;
+      border: 2px solid #222;
+      box-shadow: 5px -5px 0px black;
+    }
+
+    .herd .madlib{
+      font-size: 20px;
+       padding: 20px;
+    }
+
+    .herd-footer{
+      background: #ddd;
+      font-size: 14px;
+      padding: 10px;
+    }
+
+    strong{
+      background: yellow;
+      font-weight: normal;
+    }
+
+    .screen.memphis{
+      background: yellow;
+    }
+
+    .screen-herd-builder.ready .deets{
+      opacity: 1;
+    }
+
+    .screen-herd-builder button{
+      opacity: 0;
+      transition: 0.5s all;
+      transition-delay: 2.5s;
+    }
+
+    .screen-herd-builder.ready button{
+      opacity: 1;
+    }
+
+    .screen-herd-builder.ready .herd-tip-propose{
+      transition: 0.5s all;
+      opacity: 0;
+    }
+
+    .screen-herd-builder .herd-tip-summon{
+      opacity: 0;
+    }
+
+    .screen-herd-builder.ready .herd-tip-summon{
+      transition: 0.5s all;
+      transition-delay: 2.5s;
+      opacity: 1;
+    }
+
+    .editable ul{
+      list-style-type: none;
+      padding: 0px;
+      margin: 0px;
+
+      position: absolute;
+      left: -100px;
+      right: -100px;
+      bottom: 40px;
+      
+      
+      text-align: center;
+    
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .editable li{
+      background: yellow;
+      border-bottom: 2px solid black;
+      display: inline-block;
+    }
+
+    .editable.editing ul{
+      display: block;
+      opacity: 0.9;
+      transition: 0.5s all;
+    }
+
+    .herd-icon{
+      position: relative;
+    }
+
+    .herd-icon, .herd-icon:before, .herd-icon:after{
+      content: "";
+      display: block;
+
+      width: 40px;
+      height: 40px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url('./cats/cat_38.png');
+    }
+
+    .herd-icon:before{
+       position: absolute;
+       left: 25px;
+       background-image: url('./cats/cat_08.png');
+    }
+
+    .herd-icon:after{
+       position: absolute;
+       background-image: url('./cats/cat_11.png');
+       left: -15px;
+    }
+
+
+    .logo{
+      font-family: 'Abril Fatface', cursive;
+      font-size: 50px;
+      line-height: 50px;
+      color: white;
+
+      /*text-shadow: 2px -2px 0px white;*/
+    }
+
+    .logo:before{
+      content: "herding";
+      display: block;
+      z-index: 2;
+      position: relative;
+    }
+
+    .logo:after{
+      content: "cats";
+      display: block;
+      position: relative;
+      top: -12px;
+      left: 30px;
+      z-index: 1;
+    }
+
+    @keyframes scroll-bg{
+      0%{
+        background-position: 0% 0%;
+      }
+
+      100%{
+        background-position: 320px 568px;
+      }
+    }
+
+    .bg-cats{
+      background: yellow;
+      background-size: 320px;
+      background-image: url(./cat-bg-tile.png);
+      animation-name: scroll-bg;
+      animation-duration: 15s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+
+    .deet-info{
+      text-align: left;
+      font-size: 14px;
+      width: 70%;
+      margin: 0px 15%;
+      min-height: 50px;
+      border-left: 2px solid #222;
+      
+      background: #eee;
+      box-sizing: border-box;
+    }
+
+    .deet-info .input{
+      padding: 10px 15px;
+    }
+
+    .deet-info .placeholder{
+      color: #777;
+    }
+
+  </style>
+  <script type="text/javascript" src='./jq.js'></script>
+  <script type="text/javascript">
+    $(function(){
+
+      $('.editable').on('mousedown touchstart',doEditLine);
+      $('.editable .input').on('focusout',onEditFinish);
+
+      $('.story-page').each(function(){
+        $('<div class=story-train-station>').appendTo('.story-train');
+      })
+
+      function doEditLine(){
+
+        $(this).css({
+          'height':$(this).height(),
+          'min-width':$(this).width(),
+          'min-height':$(this).height()
+        }).addClass('editing').find('.input').empty();
+
+      }
+
+      function onEditFinish(){
+        console.log('yo');
+
+         $(this).closest('.editable').css({
+          'height':'auto',
+          'min-width':'auto'
+        }).removeClass('editing').addClass('edited');
+
+
+        if( $('.editable:not(.edited)').length==0 ){
+          $('.screen-herd-builder').addClass('ready');
+        }
+      }
+
+      var shadows = ['-1px -1px black','1px -1px black','-1px 1px black','1px 1px black','-1px 0px black','1px 0px black','0px -1px black','0px 1px black'];
+      for(var i = 0; i<10; i++) shadows.push(''+(i+1)+'px -'+(i+1)+'px black');
+      var s = shadows.join(', ');
+
+      $('.logo').css({'text-shadow':s});
+
+      $('.summoner').click(function(){
+        navigator.share();
+      })
+
+    })
+  </script>
+</head>
+<body>
+  <div class="screen bg-cats">
+    <!--img style='position:absolute;right:-20px;top:150px;' src='./cats/cat_02.png'>
+    <img style='position:absolute;left:20px;top:150px;' src='./cats/cat_05.png'>
+    <img style='position:absolute;right:30px;top:380px;' src='./cats/cat_08.png'>
+    <img style='position:absolute;left:50px;top:400px;' src='./cats/cat_11.png'-->
+    <br><br>
+    <div class="logo"></div>
+  
+    <button class="bottomed">Get herdin'</button>
+  </div>
+  <div class="screen" style="background:yellow;">
+    <div class="story">
+      <div class="story-scroll">
+        <div class="story-page">
+          <p>People are<br>kinda shit, right?</p>
+          <br>
+          <p style="font-size: 15px;margin-left:60%;width:40%;margin-bottom: 0px;">uhm... rude!<br>|</p>
+          <img style='width:300px;'src='./people.jpeg'>
+        </div><div class="story-page">
+          <p>Always wanting to<br>catch up, but<br>notoriously bad at it.</p>
+          <br>
+          <p style="font-size: 15px;margin-bottom: 0px;">I guess that's fair<br>|</p>
+          <div style='background-image:url(./people.jpeg);width:150px;background-size: 300%;height:150px;background-position: top right;display:inline-block;margin-left: 20px;'></div>
+        </div><div class="story-page">
+          <p>It's like herding cats.</p>
+          <br>
+          <img src='./cats/cat_05.png'>
+        </div><div class="story-page">
+          <p>So we fixed it.</p>
+          <br>
+          <p style="font-size: 15px;margin-bottom: 0px;">I'm listening...<br>|</p>
+          <div style='background-image:url(./people.jpeg);width:150px;background-size: 300%;height:150px;background-position: top right;display:inline-block;margin-left: 20px;'></div>
+        </div><div class="story-page">
+          <p>BEHOLD...</p>
+          <br>
+          <img width=150px src='./drumroll.gif'>
+        </div><div class="story-page">
+          <br>
+           <div class="logo"></div><p style="font-size: 12px;"><i>Home of the empowered social shepherd.</i></p>
+            <p style="font-size: 15px;margin-bottom: 0px;margin-top:30px;">Ok, wow!<br>|</p>
+          <div style='background-image:url(./people.jpeg);width:150px;background-size: 300%;height:150px;background-position: top right;display:inline-block;margin-left: 20px;'></div>
+
+           <button>Let's go.</button>
+        </div>
+      </div>
+      <div class="story-train"></div>
+    </div>
+  </div>
+  <div class="screen screen-herd-builder ready">
+    <br>
+    <p class='herd-tip-propose' style="font-size: 14px;">Propose a happening!<br>Need some <a href=''>ideas</a>?</p>
+     <div class="madlib">
+      <div class="madlib-line">Hey, let's</div><br>
+      <div class="madlib-line editable"><div class='input' contenteditable>do something</div><ul><li>go to the movies</li><li>make some cheese</li><li>indulge in exploits</li></ul></div><br>
+      <div class="madlib-line editable"><div class='input' contenteditable>sometime.</div><ul><li>Tomorrow.</li><br><li>on Saturday.</li><li>in a thousand years.</li></ul></div>
+    </div>
+    
+    <br>
+
+    <div class="deets">
+      <div class="deet-info editable">
+        <div class='input' contenteditable>Add some deets. People LOVE deets 📄 ❤️.</div>
+      </div>
+      <div class="deet"><div class="deet-icon" style="background-image: url(./feather/clock.svg)"></div>time</div>
+      <div class="deet"><div class="deet-icon" style="background-image: url(./feather/map-pin.svg)"></div>place</div>
+      <input type="time" name="">
+    </div>
+    <br><p class='herd-tip-summon' style="font-size: 14px;">and when you're ready...</p>
+    <button class="summoner">Summon a herd!</button>
+
+    <div class="footer">
+      <div class="footer-button">
+        <div class="footer-icon" style="width:60px;height:42px;background-color:transparent;background-size:100%;background-image:url(./cats/cat_43.png);background-position: center top;"></div>
+        <h3>Me</h3>
+     </div>
+      <div class="footer-button">
+        <div class="footer-icon herd-icon"></div>
+        <h3>Herds</h3>
+      </div>
+    </div>
+  </div>
+  <div class="screen" style="background:yellow;">
+    <h2><div style='display:inline-block;left:-30px;top:5px;' class='herd-icon'></div>Herds</h2>
+    <div class="herd">
+      <div class="madlib">
+        <div class="madlib-line">Hey, let's</div><br>
+        <div class="madlib-line edited">eat some cheese</div><br>
+        <div class="madlib-line edited">on Friday.</div>
+      </div>
+      <div class="herd-footer">
+        
+        <img style='width:30px;vertical-align: middle;' src='./cats/cat_33.png'>12 
+        <img style='width:20px;vertical-align: middle;margin-left: 10px;' src='./tick.png'> 6
+        <img style='width:18px;vertical-align: middle;margin-left: 10px;' src='./maybe.png'> 3
+        <p style="margin:0px;padding:0px;margin-top:10px;">Your herd is <strong>unruly</strong>.<br>Do some <a href=''>shepherding</a>.</p>
+      </div>
+    </div>
+    <div class="herd">
+      <div class="madlib">
+        <div class="madlib-line">Hey, let's</div><br>
+        <div class="madlib-line edited">be  the mad lads we are</div><br>
+        <div class="madlib-line edited">Tomorrow.</div>
+      </div>
+       <div class="herd-footer">
+        
+        <img style='width:30px;vertical-align: middle;' src='./cats/cat_33.png'>5 
+        <img style='width:20px;vertical-align: middle;margin-left: 10px;' src='./tick.png'> 5
+        <p style="margin:0px;padding:0px;margin-top:10px;">Your herd is <strong>perfect</strong>.</p>
+      </div>
+    </div>
+    <div class="herd">
+      <div class="madlib">
+        <div class="madlib-line">Hey, let's</div><br>
+        <div class="madlib-line edited">eat some cheese</div><br>
+        <div class="madlib-line edited">on Friday.</div>
+      </div>
+      <div class="herd-footer">
+        
+        <img style='width:30px;vertical-align: middle;' src='./cats/cat_33.png'>12 
+        <img style='width:20px;vertical-align: middle;margin-left: 10px;' src='./tick.png'> 6
+        <img style='width:18px;vertical-align: middle;margin-left: 10px;' src='./maybe.png'> 3
+        <p style="margin:0px;padding:0px;margin-top:10px;">Your herd is <strong>unruly</strong>.<br>Do some <a href=''>shepherding</a>.</p>
+      </div>
+    </div>
+    <div class="herd">
+      <div class="madlib">
+        <div class="madlib-line">Hey, let's</div><br>
+        <div class="madlib-line edited">eat some cheese</div><br>
+        <div class="madlib-line edited">on Friday.</div>
+      </div>
+      <div class="herd-footer">
+        
+        <img style='width:30px;vertical-align: middle;' src='./cats/cat_33.png'>12 
+        <img style='width:20px;vertical-align: middle;margin-left: 10px;' src='./tick.png'> 6
+        <img style='width:18px;vertical-align: middle;margin-left: 10px;' src='./maybe.png'> 3
+        <p style="margin:0px;padding:0px;margin-top:10px;">Your herd is <strong>unruly</strong>.<br>Do some <a href=''>shepherding</a>.</p>
+      </div>
+    </div>
+  </div>
+  <!--div class="screen">
+    <br><br><br>
+    <div class="madlib">
+      <div class="madlib-line">Hey, let's</div><br>
+      <div class="madlib-line editable" contenteditable>do something</div><br>
+      <div class="madlib-line editable" contenteditable>tomorrow.</div>
+    </div>
+    <br>
+   
+    <br>
+    <button class="bottomed">Summon the herd!</button>
+    <div class="tip">Be specific. People like it.</div>
+    <button class="back"></button>
+  </div-->
+  <div class="screen" style="background:yellow;">
+    <h2><img style='display:inline-block;vertical-align: middle;width:60px;' src='./cats/cat_43.png'>Me</h2>
+    <div class="herd">
+      <p style="font-size: 15px;">You are a</p>
+      <h2 style='margin:0px;padding:0px;display:inline-block;vertical-align: middle;' >Fledgeling<br>Cat Herder</h2>
+
+      <p style="font-size: 15px;">Your herd is <strong>37 strong</strong> and growing.</p>
+      <img src="./cats/cat_02.png" style="height: 40px;">
+      <img src="./cats/cat_15.png" style="height: 40px;">
+      <img src="./cats/cat_05.png" style="height: 40px;">
+      <img src="./cats/cat_08.png" style="height: 40px;">
+      <img src="./cats/cat_11.png" style="height: 40px;">
+      <img src="./cats/cat_17.png" style="height: 40px;">
+      <br>
+      <button>Invite some cats</button>
+    </div>
+    
+  </div>
+</body>
+</html>
