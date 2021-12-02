@@ -162,16 +162,21 @@
     }
 
     .deet{
+      background: yellow;
+      border-bottom: 2px solid #222;
       display: inline-block;
-      font-size: 10px;
-      font-weight: bold;
-      margin: 10px 2px;
+      padding-left: 30px;
+      background-position: 3px 4px;
+      background-size: 20px;
+      background-repeat: no-repeat;
+
+      display: block;
+      width: 70%;
+      margin: 5px 15%;
+      text-align: left;
+      box-sizing: border-box;
     }
 
-    .deets{
-      opacity: 0;
-      transition: 0.5s all;
-    }
 
     .tip:before{
       content: "TIP";
@@ -267,6 +272,7 @@
       display: inline-block;
       vertical-align: top;
       overflow: hidden;
+      scroll-snap-align: start;
     }
 
     .story-scroll{
@@ -283,11 +289,15 @@
     .story-train-station{
       width: 8px;
       height: 8px;
-      background: black;
+      background: #bbb;
       display: inline-block;
       margin: 0px 3px;
       border-radius: 10px;
-      opacity: 0.2;
+
+    }
+
+    .story-train-station.active{
+      background: #222;
     }
 
     .herd{
@@ -315,35 +325,6 @@
 
     .screen.memphis{
       background: yellow;
-    }
-
-    .screen-herd-builder.ready .deets{
-      opacity: 1;
-    }
-
-    .screen-herd-builder button{
-      opacity: 0;
-      transition: 0.5s all;
-      transition-delay: 2.5s;
-    }
-
-    .screen-herd-builder.ready button{
-      opacity: 1;
-    }
-
-    .screen-herd-builder.ready .herd-tip-propose{
-      transition: 0.5s all;
-      opacity: 0;
-    }
-
-    .screen-herd-builder .herd-tip-summon{
-      opacity: 0;
-    }
-
-    .screen-herd-builder.ready .herd-tip-summon{
-      transition: 0.5s all;
-      transition-delay: 2.5s;
-      opacity: 1;
     }
 
     .editable ul{
@@ -454,8 +435,7 @@
     .deet-info{
       text-align: left;
       font-size: 14px;
-      width: 70%;
-      margin: 0px 15%;
+     
       min-height: 50px;
       border-left: 2px solid #222;
       
@@ -483,12 +463,12 @@
       border-top: 5px solid #222;
       box-shadow: 0px -50px rgba(0,0,0,0.1);
       transition: 0.3s all;
-      display: none;
+      
     }
 
     .modal.summoned{
       top: 5%;
-      display: block;
+      
     }
 
     .search-box{
@@ -537,6 +517,39 @@
     }*/
 
 
+    .curly-arrow{
+      width: 30px;
+      height: 30px;
+      background-image: url('./feather/corner-up-left.svg');
+      background-size: 100%;
+      position: absolute;
+      right: 0px;
+      top: -30px;
+    }
+
+    .tip-inline{
+      position: relative;
+      display: inline-block;
+    }
+
+    .time-input{
+      font-family: inherit;
+      font-size: inherit;
+      background: none;
+      border: none;
+      padding-right: 0px;
+      width: auto;
+      font-weight: normal;
+
+    }
+
+    input[type="time"]::-webkit-calendar-picker-indicator {
+      background: none;
+    }
+
+    input, .input{
+      outline: none;
+    }
 
   </style>
   <script type="text/javascript" src='./jq.js'></script>
@@ -561,7 +574,6 @@
       }
 
       function onEditFinish(){
-        console.log('yo');
 
          $(this).closest('.editable').css({
           'height':'auto',
@@ -615,6 +627,14 @@
         $('.wrapper').height(window.innerHeight);
       })
 
+      $('.story-scroll').scroll(function(){
+        var x = $(this).scrollLeft();
+        var ix = Math.round(x/$('.story-page').width());
+        $('.story-train-station').removeClass('active').eq(ix).addClass('active');
+      })
+
+      $('.story-train-station').removeClass('active').eq(0).addClass('active');
+
     })
   </script>
 </head>
@@ -630,7 +650,7 @@
   
     <button class="bottomed action-to-next-screen">Get herdin'</button>
   </div>
-  <div class="screen" style="background:yellow;">
+  <div class="screen bg-cats">
     <div class="story">
       <div class="story-scroll">
         <div class="story-page">
@@ -671,24 +691,28 @@
   </div>
   <div class="screen screen-herd-builder">
     <br>
-    <p class='herd-tip-propose' style="font-size: 14px;">Propose a happening!<br>Need some <a href=''>ideas</a>?</p>
+    <br>
+    <br>
+    
      <div class="madlib">
       <div class="madlib-line">Hey, let's</div><br>
       <div class="madlib-line editable"><div class='input' contenteditable>do something</div><ul><li>go to the movies</li><li>make some cheese</li><li>indulge in exploits</li></ul></div><br>
       <div class="madlib-line editable"><div class='input' contenteditable>sometime.</div><ul><li>Tomorrow.</li><br><li>on Saturday.</li><li>in a thousand years.</li></ul></div>
     </div>
-    
     <br>
-
-    <div class="deets">
-      <div class="deet-info editable">
-        <div class='input' contenteditable>Add some deets. People LOVE deets 📄 ❤️.</div>
-      </div>
-      <div class="deet"><div class="deet-icon" style="background-image: url(./feather/clock.svg)"></div>time</div>
-      <div class="deet action-summon-place-finder"><div class="deet-icon" style="background-image: url(./feather/map-pin.svg)"></div>place</div>
-      <input type="time" name="">
+    <div class="deet action-summon-place-finder" style="background-image: url(./feather/map-pin.svg)">somewhere</div>
+    <div class="deet" style="background-image: url(./feather/clock.svg)">at <input class='time-input' type="time" name=""></div>
+    <div class="deet editable" style="font-size:14px;padding-top:5px;padding-bottom:5px;background-image: url(./feather/clipboard.svg)">
+      <div class='input' contenteditable>Add some deets.<br>People LOVE deets 📄 ❤️.</div>
     </div>
-    <br><p class='herd-tip-summon' style="font-size: 14px;">and when you're ready...</p>
+
+    
+
+    <!--div class="herd-tip-propose">
+      <p class='' style="font-size: 14px;">Propose a happening!<br>Need some <a href=''>ideas</a>?</p>
+    </div>
+
+    <br><p class='herd-tip-summon' style="font-size: 14px;">When you're ready...</p-->
     <button class="summoner">Summon a herd!</button>
 
     <div class="footer">
