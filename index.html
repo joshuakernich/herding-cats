@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1">
   <title>Maate</title>
   <style type="text/css">
 
@@ -11,12 +12,29 @@
 
     body{
       white-space: nowrap;
+      overflow: hidden;
+      padding: 0px;
+      margin: 0px;
+      background: black;
+    }
+
+    .wrapper{
+      width: 100vw;
+      height: 100vh;
+      max-width: 60vh;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      margin: auto;
+      background: white;
+
     }
 
     .screen{
-      width: 350px;
-      height: 600px;
-      border: 1px solid black;
+      width: 100%;
+      height: 100%;
 
       font-family: 'Rubik', sans-serif;
       /*position: absolute;
@@ -34,7 +52,8 @@
       text-align: center;
       position: relative;
       color: #222;
-      overflow: hidden;
+      overflow-x:hidden;
+      overflow-y:auto;
       white-space: normal;
     }
 
@@ -53,6 +72,23 @@
       font-size: inherit;
       padding: 20px;
       position: relative;
+    }
+
+    button.compact{
+      padding: 0px 8px;
+      display: inline-block;
+      width: auto;
+      border-bottom: none;
+    }
+
+    button.tr{
+      position: absolute;
+      right: 5px;
+      top: -49px;
+    }
+
+    button.compact:after{
+      content: "";
     }
 
     button.bottomed{
@@ -108,9 +144,8 @@
 
     .deet-icon{
      
-      width: 30px;
-      height: 30px;
-      line-height: 30px;
+      width: 45px;
+      height: 45px;
       font-weight: bold;
       font-size: 20px;
       background: white;
@@ -160,18 +195,29 @@
       position: absolute;
       font-size: 10px;
       
-      border-top: 2px solid #333;
+      
       width: 100%;
       bottom: 0px;
-      background: yellow;
+      
       padding: 10px 0px;
     }
 
     .footer-button{
       display: inline-block;
-      margin: 0px 20px;
-      vertical-align: bottom;
 
+      vertical-align: bottom;
+     
+      float:left; 
+      width: 100px;
+      text-align: center;
+
+      
+      position: relative;
+    }
+
+    .footer-button:nth-of-type(2){
+      float:right;
+      text-align: center;
     }
 
     .footer-button h3{
@@ -331,11 +377,12 @@
 
     .herd-icon{
       position: relative;
+      display: inline-block;
     }
 
     .herd-icon, .herd-icon:before, .herd-icon:after{
       content: "";
-      display: block;
+      
 
       width: 40px;
       height: 40px;
@@ -349,12 +396,14 @@
        position: absolute;
        left: 25px;
        background-image: url('./cats/cat_08.png');
+       display: block;
     }
 
     .herd-icon:after{
        position: absolute;
        background-image: url('./cats/cat_11.png');
        left: -15px;
+       display: block;
     }
 
 
@@ -417,11 +466,76 @@
 
     .deet-info .input{
       padding: 10px 15px;
+      min-height: 100%;
+      box-sizing: border-box;
     }
 
     .deet-info .placeholder{
       color: #777;
     }
+
+    .modal{
+      position: absolute;
+      top: calc( 100% + 50px);
+      min-height: 95%;
+      left: 0px;
+      right: 0px;
+      background: white;
+      border-top: 5px solid #222;
+      box-shadow: 0px -50px rgba(0,0,0,0.1);
+      transition: 0.3s all;
+    }
+
+    .modal.summoned{
+      top: 5%;
+    }
+
+    .search-box{
+      margin: 20px;
+      
+      border-bottom: 2px solid #222;
+      
+      background: yellow;
+      padding: 5px;
+      padding-left: 40px;
+      background-image: url('./feather/search.svg');
+      background-repeat: no-repeat;
+      background-size: 20px;
+      background-position: 10px 8px; 
+    }
+
+    .place-finder{
+      text-align: left;
+    }
+
+    .place-finder ul{
+      list-style-type: none;
+      padding: 0px;
+      margin: 0px 20px;
+
+    }
+
+    .place-finder li{
+      margin-bottom: 10px;
+      padding: 0px 5px;
+      color: #999;
+    }
+
+    /*.place-finder li:before{
+      content: ">";
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background-image: url('./feather/map-pin.svg');
+      background-position: center;
+      background-size: 100%;
+      background-repeat: no-repeat;
+      vertical-align: middle;
+      margin-right: 10px;
+
+    }*/
+
+
 
   </style>
   <script type="text/javascript" src='./jq.js'></script>
@@ -450,7 +564,8 @@
 
          $(this).closest('.editable').css({
           'height':'auto',
-          'min-width':'auto'
+          'min-width':'auto',
+          'min-height':'auto'
         }).removeClass('editing').addClass('edited');
 
 
@@ -469,10 +584,37 @@
         navigator.share();
       })
 
+      $('.action-to-next-screen').click(toNextScreen);
+      $('.action-summon-place-finder').click(function(){
+        $('.modal').addClass('summoned');
+      });
+
+      $('.action-unsummon-place-finder, .place-finder li').click(function(){
+        $('.modal').removeClass('summoned');
+      });
+
+      function toNextScreen(){
+
+        var idx = $('.screen').index( $(this).closest('.screen') );
+        var toScreenIdx = idx+1;
+
+        if($(this).data('to-screen')){
+          var inc = $(this).data('to-screen');
+          if(inc[0] == '+') toScreenIdx = idx + parseInt(inc.substr(1));
+          if(inc[1] == '-') toScreenIdx = idx - parseInt(inc.substr(1));
+        }
+
+      
+        $('.screen').hide().eq(toScreenIdx).show();
+      }
+
+      $('.screen').hide().eq(0).show();
+
     })
   </script>
 </head>
 <body>
+  <div class="wrapper">
   <div class="screen bg-cats">
     <!--img style='position:absolute;right:-20px;top:150px;' src='./cats/cat_02.png'>
     <img style='position:absolute;left:20px;top:150px;' src='./cats/cat_05.png'>
@@ -481,7 +623,7 @@
     <br><br>
     <div class="logo"></div>
   
-    <button class="bottomed">Get herdin'</button>
+    <button class="bottomed action-to-next-screen">Get herdin'</button>
   </div>
   <div class="screen" style="background:yellow;">
     <div class="story">
@@ -515,13 +657,13 @@
             <p style="font-size: 15px;margin-bottom: 0px;margin-top:30px;">Ok, wow!<br>|</p>
           <div style='background-image:url(./people.jpeg);width:150px;background-size: 300%;height:150px;background-position: top right;display:inline-block;margin-left: 20px;'></div>
 
-           <button>Let's go.</button>
+           <button class="action-to-next-screen">Let's go.</button>
         </div>
       </div>
       <div class="story-train"></div>
     </div>
   </div>
-  <div class="screen screen-herd-builder ready">
+  <div class="screen screen-herd-builder">
     <br>
     <p class='herd-tip-propose' style="font-size: 14px;">Propose a happening!<br>Need some <a href=''>ideas</a>?</p>
      <div class="madlib">
@@ -537,21 +679,33 @@
         <div class='input' contenteditable>Add some deets. People LOVE deets 📄 ❤️.</div>
       </div>
       <div class="deet"><div class="deet-icon" style="background-image: url(./feather/clock.svg)"></div>time</div>
-      <div class="deet"><div class="deet-icon" style="background-image: url(./feather/map-pin.svg)"></div>place</div>
+      <div class="deet action-summon-place-finder"><div class="deet-icon" style="background-image: url(./feather/map-pin.svg)"></div>place</div>
       <input type="time" name="">
     </div>
     <br><p class='herd-tip-summon' style="font-size: 14px;">and when you're ready...</p>
     <button class="summoner">Summon a herd!</button>
 
     <div class="footer">
-      <div class="footer-button">
+      <div class="footer-button action-to-next-screen" data-to-screen="+2">
         <div class="footer-icon" style="width:60px;height:42px;background-color:transparent;background-size:100%;background-image:url(./cats/cat_43.png);background-position: center top;"></div>
         <h3>Me</h3>
      </div>
-      <div class="footer-button">
+      <div class="footer-button action-to-next-screen">
         <div class="footer-icon herd-icon"></div>
         <h3>Herds</h3>
       </div>
+    </div>
+     <div class="modal place-finder">
+      <div class='search-box'>Somewhere</div>
+      <ul>
+        <li>A place called home</li>
+        <li>heaven in a can</li>
+        <li>The liquid dimension</li>
+        <li>The seventh paradox</li>
+        <li>Apricot kingdom</li>
+        <li>Realm of the Teletubbies</li>
+      </ul>
+      <button class="compact tr action-unsummon-place-finder">×</button>
     </div>
   </div>
   <div class="screen" style="background:yellow;">
@@ -611,6 +765,7 @@
         <p style="margin:0px;padding:0px;margin-top:10px;">Your herd is <strong>unruly</strong>.<br>Do some <a href=''>shepherding</a>.</p>
       </div>
     </div>
+   
   </div>
   <!--div class="screen">
     <br><br><br>
@@ -644,5 +799,6 @@
     </div>
     
   </div>
+</div>
 </body>
 </html>
