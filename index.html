@@ -678,7 +678,7 @@
 
       $('.screen').hide().eq(0).show();
 
-      if(window.location.href.indexOf('?')) $('.screen').hide().last().show();
+      if(window.location.href.indexOf('?')>-1) $('.screen').hide().last().show();
 
       $(window).resize(function(){
         $('.wrapper').height(window.innerHeight);
