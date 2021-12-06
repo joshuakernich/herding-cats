@@ -645,7 +645,7 @@
 
         var text = "Hey, let's " + $('.input-thing .input').text() + ' ' + $('.input-date .input').text();
 
-        text = text + ' ' + location.href.replace(/\/$/, "") + '?';
+        text = text + ' ' + location.href + '?herdID';
 
         navigator.share({text:text}).then(function(e){
           console.log('then',e);
