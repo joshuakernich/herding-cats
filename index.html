@@ -626,7 +626,11 @@
       $('.logo').css({'text-shadow':s});
 
       $('.summoner').click(function(){
-        navigator.share();
+        navigator.share().then(function(e){
+          console.log('then',e);
+        }).catch(function(e){
+          console.log('catch',e);
+        })
       })
 
       $('.action-to-next-screen').click(toNextScreen);
