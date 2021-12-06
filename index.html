@@ -2,9 +2,10 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, viewport-fit=cover">
-  <meta property='og:image' content="./og-image.png">
+  <!--meta property='og:image' content="./og-image.png"-->
+  <link rel="image_src" href="./og-image.png" />
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
-  <title>Maate</title>
+  <title>Herding Cats</title>
   <style type="text/css">
 
 
@@ -644,7 +645,7 @@
 
         var text = "Hey, let's " + $('.input-thing .input').text() + ' ' + $('.input-date .input').text();
 
-        text = text + ' ' + location.href.replace(/\/$/, ""); + '?';
+        text = text + ' ' + location.href.replace(/\/$/, "") + '?';
 
         navigator.share({text:text}).then(function(e){
           console.log('then',e);
