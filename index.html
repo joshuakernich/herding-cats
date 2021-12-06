@@ -35,6 +35,7 @@
     .screen{
       width: 100%;
       height: 100%;
+      box-sizing: border-box;
 
       font-family: 'Rubik', sans-serif;
       /*position: absolute;
@@ -136,8 +137,8 @@
       opacity: 0.1;
     }
 
-    .madlib-line.edited{
-      background: #99ffdd;
+    .editable.edited{
+      background-color: #99ffdd;
     }
 
 
@@ -171,10 +172,23 @@
       background-repeat: no-repeat;
 
       display: block;
-      width: 70%;
-      margin: 5px 15%;
+      margin: 5px 0px;
       text-align: left;
       box-sizing: border-box;
+
+      opacity: 0;
+      transition: 0.5s all;
+      transition-delay: 0.5s;
+    }
+
+    .summoner{
+      opacity: 0;
+      transition: 0.5s all;
+      transition-delay: 3s;
+    }
+
+    .screen-herd-builder.step-2 .deet, .screen-herd-builder.step-2 .summoner{
+      opacity: 1;
     }
 
 
@@ -201,7 +215,8 @@
       font-size: 10px;
       
       
-      width: 100%;
+      width: 80%;
+      box-sizing: border-box;
       bottom: 0px;
       
       padding: 10px 0px;
@@ -315,7 +330,7 @@
     .herd-footer{
       background: #ddd;
       font-size: 14px;
-      padding: 10px;
+      padding: 10px 0px;
     }
 
     strong{
@@ -354,6 +369,7 @@
       display: block;
       opacity: 0.9;
       transition: 0.5s all;
+      pointer-events: all;
     }
 
     .herd-icon{
@@ -551,6 +567,15 @@
       outline: none;
     }
 
+    .screen-herd-builder{
+      padding: 0px 10%;
+    }
+
+    .screen-herd-builder button{
+      margin: 15px 0px;
+      width: 100%;
+    }
+
   </style>
   <script type="text/javascript" src='./jq.js'></script>
   <script type="text/javascript">
@@ -561,6 +586,13 @@
 
       $('.story-page').each(function(){
         $('<div class=story-train-station>').appendTo('.story-train');
+      })
+
+      $('.madlib-line li').on('mousedown', function(e){
+        e.stopPropagation();
+      
+        $(this).closest('.madlib-line').find('.input').blur();
+        $(this).closest('.madlib-line').find('.input').html($(this).text());
       })
 
       function doEditLine(){
@@ -582,8 +614,8 @@
         }).removeClass('editing').addClass('edited');
 
 
-        if( $('.editable:not(.edited)').length==0 ){
-          $('.screen-herd-builder').addClass('ready');
+        if( $('.input-thing').hasClass('edited') && $('.input-date').hasClass('edited') ){
+          $('.screen-herd-builder').addClass('step-2');
         }
       }
 
@@ -594,7 +626,7 @@
       $('.logo').css({'text-shadow':s});
 
       $('.summoner').click(function(){
-        navigator.share();
+        Navigator.share();
       })
 
       $('.action-to-next-screen').click(toNextScreen);
@@ -634,6 +666,7 @@
       })
 
       $('.story-train-station').removeClass('active').eq(0).addClass('active');
+
 
     })
   </script>
@@ -679,7 +712,7 @@
           <img width=150px src='./drumroll.gif'>
         </div><div class="story-page">
           <br>
-           <div class="logo"></div><p style="font-size: 12px;"><i>Home of the empowered social shepherd.</i></p>
+           <div class="logo"></div><p style="margin:0px;padding:0px;font-size: 12px;"><i>Home of the empowered social shepherd.</i></p>
             <p style="font-size: 15px;margin-bottom: 0px;margin-top:30px;">Ok, wow!<br>|</p>
           <div style='background-image:url(./people.jpeg);width:150px;background-size: 300%;height:150px;background-position: top right;display:inline-block;margin-left: 20px;'></div>
 
@@ -696,13 +729,13 @@
     
      <div class="madlib">
       <div class="madlib-line">Hey, let's</div><br>
-      <div class="madlib-line editable"><div class='input' contenteditable>do something</div><ul><li>go to the movies</li><li>make some cheese</li><li>indulge in exploits</li></ul></div><br>
-      <div class="madlib-line editable"><div class='input' contenteditable>sometime.</div><ul><li>Tomorrow.</li><br><li>on Saturday.</li><li>in a thousand years.</li></ul></div>
+      <div class="madlib-line editable input-thing"><div class='input' contenteditable>do something</div><ul><li>go to the movies</li><li>make some cheese</li><li>indulge in exploits</li></ul></div><br>
+      <div class="madlib-line editable input-date"><div class='input' contenteditable>sometime.</div><ul><li>Tomorrow.</li><br><li>on Saturday.</li><li>in a thousand years.</li></ul></div>
     </div>
     <br>
-    <div class="deet action-summon-place-finder" style="background-image: url(./feather/map-pin.svg)">somewhere</div>
-    <div class="deet" style="background-image: url(./feather/clock.svg)">at <input class='time-input' type="time" name=""></div>
-    <div class="deet editable" style="font-size:14px;padding-top:5px;padding-bottom:5px;background-image: url(./feather/clipboard.svg)">
+    <div class="deet action-summon-place-finder input-place" style="background-image: url(./feather/map-pin.svg)">somewhere</div>
+    <div class="deet input-time" style="background-image: url(./feather/clock.svg)">at <input class='time-input' type="time" name=""></div>
+    <div class="deet editable input-details" style="font-size:14px;padding-top:5px;padding-bottom:5px;background-image: url(./feather/clipboard.svg)">
       <div class='input' contenteditable>Add some deets.<br>People LOVE deets 📄 ❤️.</div>
     </div>
 
@@ -713,6 +746,7 @@
     </div>
 
     <br><p class='herd-tip-summon' style="font-size: 14px;">When you're ready...</p-->
+      <br><br>
     <button class="summoner">Summon a herd!</button>
 
     <div class="footer">
