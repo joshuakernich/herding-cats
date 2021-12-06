@@ -590,6 +590,18 @@
       width: 100%;
     }
 
+    .deets.static{
+      display: inline-block;
+    }
+
+    .deets.static .deet{
+      transition: none;
+      opacity: 1;
+      background-color: transparent;
+ 
+      border-bottom: none;
+    }
+
   </style>
   <script type="text/javascript" src='./jq.js'></script>
   <script type="text/javascript">
@@ -907,9 +919,19 @@
       <br><br>
       <div class="madlib">
         <div class="madlib-line">Hey, let's</div><br>
-        <div class="madlib-line edited">eat some cheese</div><br>
-        <div class="madlib-line edited">on Friday.</div>
+        <div class="madlib-line edited">make some cheese</div><br>
+        <div class="madlib-line edited">on Saturday.</div>
       </div>
+      <br>
+      <div class="deets static">
+      <div class="deet" style="background-image: url(./feather/map-pin.svg)">a place called home</div>
+      <div class="deet" style="background-image: url(./feather/clock.svg)">at <input class='time-input' type="time" value="19:00"></div>
+      <div class="deet" style="font-size:14px;padding-top:5px;padding-bottom:5px;background-image: url(./feather/clipboard.svg)">
+        Come to mine. We'll kick out the jams.
+      </div>
+    </div>
+      <br>
+
       <br>
       <button class="third">I'm in!</button>
       <button class="third">Maybe</button>
