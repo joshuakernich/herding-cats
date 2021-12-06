@@ -75,6 +75,18 @@
       position: relative;
     }
 
+    button.third{
+      display: inline-block;
+      width: auto;
+      margin: 2px;
+    }
+
+    button.third:after{
+      content: "";
+    }
+
+
+
     button.compact{
       padding: 0px 8px;
       display: inline-block;
@@ -137,7 +149,7 @@
       opacity: 0.1;
     }
 
-    .editable.edited{
+    .edited{
       background-color: #99ffdd;
     }
 
@@ -630,7 +642,7 @@
 
         var text = "Hey, let's " + $('.input-thing .input').text() + ' ' + $('.input-date .input').text();
 
-        text = text + ' ' + location.href;
+        text = text + ' ' + location.href + '?';
 
         navigator.share({text:text}).then(function(e){
           console.log('then',e);
@@ -664,6 +676,8 @@
       }
 
       $('.screen').hide().eq(0).show();
+
+      if(window.location.href.indexOf('?')) $('.screen').hide().last().show();
 
       $(window).resize(function(){
         $('.wrapper').height(window.innerHeight);
@@ -872,6 +886,23 @@
       <button>Invite some cats</button>
     </div>
     
+  </div>
+  <div class="screen">
+      <br>
+      <img src="./cats/cat_43.png">
+      <br><br>
+      <div class="madlib">
+        <div class="madlib-line">Hey, let's</div><br>
+        <div class="madlib-line edited">eat some cheese</div><br>
+        <div class="madlib-line edited">on Friday.</div>
+      </div>
+      <br>
+      <button class="third">I'm in!</button>
+      <button class="third">Maybe</button>
+      <button class="third">Can't</button>
+      <br><br>
+      <p style='font-size: 14px;'>Wanna be part of more things?<br>
+      <a href='./'>Sign up</a> to Herding Cats.</p>
   </div>
 </div>
 </body>
