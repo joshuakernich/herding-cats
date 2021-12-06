@@ -94,13 +94,6 @@
       padding: 0px 8px;
       display: inline-block;
       width: auto;
-      border-bottom: none;
-    }
-
-    button.tr{
-      position: absolute;
-      right: 5px;
-      top: -49px;
     }
 
     button.compact:after{
@@ -142,7 +135,7 @@
       text-align: left;
     }
 
-    .madlib-line.editable{
+    .editable{
       background: yellow;
       border-bottom: 2px solid black;
       position: relative;
@@ -152,11 +145,7 @@
       opacity: 0.1;
     }
 
-    .edited{
-      background-color: #99ffdd;
-    }
-
-
+    
 
     .deet-icon{
      
@@ -178,7 +167,7 @@
     }
 
     .deet{
-      background: yellow;
+      background-color: yellow;
       border-bottom: 2px solid #222;
       display: inline-block;
       padding-left: 30px;
@@ -192,8 +181,12 @@
       box-sizing: border-box;
 
       opacity: 0;
-      transition: 0.5s all;
+      transition: 0.5s opacity;
       transition-delay: 0.5s;
+    }
+
+    .edited, .deet.edited{
+      background-color: #99ffdd;
     }
 
     .summoner{
@@ -463,6 +456,10 @@
       animation-timing-function: linear;
     }
 
+    .bg-yellow{
+      background:yellow;
+    }
+
     .deet-info{
       text-align: left;
       font-size: 14px;
@@ -574,6 +571,8 @@
 
     }
 
+
+
     input[type="time"]::-webkit-calendar-picker-indicator {
       background: none;
     }
@@ -586,7 +585,7 @@
       padding: 0px 10%;
     }
 
-    .screen-herd-builder button{
+    .screen-herd-builder > button{
       margin: 15px 0px;
       width: 100%;
     }
@@ -615,7 +614,7 @@
         $(this).css({
           'height':$(this).height(),
           'min-width':$(this).width(),
-          'min-height':$(this).height()
+          'min-height':$(this).outerHeight()
         }).addClass('editing').find('.input').empty();
 
       }
@@ -671,7 +670,8 @@
         if($(this).data('to-screen')){
           var inc = $(this).data('to-screen');
           if(inc[0] == '+') toScreenIdx = idx + parseInt(inc.substr(1));
-          if(inc[1] == '-') toScreenIdx = idx - parseInt(inc.substr(1));
+          else if(inc[1] == '-') toScreenIdx = idx - parseInt(inc.substr(1));
+          else toScreenIdx = parseInt(inc);
         }
 
       
@@ -695,6 +695,15 @@
 
       $('.story-train-station').removeClass('active').eq(0).addClass('active');
 
+      $('.place-finder li').click(function(){
+        $('.input-place').text($(this).text()).addClass('edited');
+      })
+
+      $('.input-time').change(function(){
+        $('.input-time').addClass('edited');
+      })
+
+
 
     })
   </script>
@@ -711,7 +720,7 @@
   
     <button class="bottomed action-to-next-screen">Get herdin'</button>
   </div>
-  <div class="screen bg-cats">
+  <div class="screen bg-yellow">
     <div class="story">
       <div class="story-scroll">
         <div class="story-page">
@@ -762,7 +771,7 @@
     </div>
     <br>
     <div class="deet action-summon-place-finder input-place" style="background-image: url(./feather/map-pin.svg)">somewhere</div>
-    <div class="deet input-time" style="background-image: url(./feather/clock.svg)">at <input class='time-input' type="time" name=""></div>
+    <div class="deet input-time" style="background-image: url(./feather/clock.svg)">at <input class='time-input' type="time" value="00:00"></div>
     <div class="deet editable input-details" style="font-size:14px;padding-top:5px;padding-bottom:5px;background-image: url(./feather/clipboard.svg)">
       <div class='input' contenteditable>Add some deets.<br>People LOVE deets 📄 ❤️.</div>
     </div>
@@ -797,7 +806,7 @@
         <li>Apricot kingdom</li>
         <li>Realm of the Teletubbies</li>
       </ul>
-      <button class="compact tr action-unsummon-place-finder">×</button>
+      <button style='position:absolute;right:10px;top:-40px;' class="compact action-unsummon-place-finder">×</button>
     </div>
   </div>
   <div class="screen" style="background:yellow;">
@@ -857,7 +866,7 @@
         <p style="margin:0px;padding:0px;margin-top:10px;">Your herd is <strong>unruly</strong>.<br>Do some <a href=''>shepherding</a>.</p>
       </div>
     </div>
-   
+   <button class="compact action-to-next-screen" data-to-screen='2' style="position: absolute;top:10px;left:10px;"><</button>
   </div>
   <!--div class="screen">
     <br><br><br>
@@ -889,6 +898,7 @@
       <br>
       <button>Invite some cats</button>
     </div>
+    <button class="compact action-to-next-screen" data-to-screen='2' style="position: absolute;top:10px;left:10px;"><</button>
     
   </div>
   <div class="screen">
@@ -907,6 +917,7 @@
       <br><br>
       <p style='font-size: 14px;'>Wanna be part of more things?<br>
       <a href='./'>Sign up</a> to Herding Cats.</p>
+
   </div>
 </div>
 </body>
