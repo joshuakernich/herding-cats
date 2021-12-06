@@ -3,6 +3,7 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, viewport-fit=cover">
   <meta property='og:image' content="./og-image.png">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <title>Maate</title>
   <style type="text/css">
 
@@ -643,7 +644,7 @@
 
         var text = "Hey, let's " + $('.input-thing .input').text() + ' ' + $('.input-date .input').text();
 
-        text = text + ' ' + location.href + '?';
+        text = text + ' ' + location.href.replace(/\/$/, ""); + '?';
 
         navigator.share({text:text}).then(function(e){
           console.log('then',e);
@@ -677,6 +678,7 @@
       }
 
       $('.screen').hide().eq(0).show();
+
 
       if(window.location.href.indexOf('?')>-1) $('.screen').hide().last().show();
 
