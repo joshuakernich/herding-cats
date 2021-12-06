@@ -629,9 +629,8 @@
        
 
         var text = "Hey, let's " + $('.input-thing .input').text() + ' ' + $('.input-date .input').text();
-        console.log(text);
 
-        navigator.share({text:text}).then(function(e){
+        navigator.share({text:text,url:location.href}).then(function(e){
           console.log('then',e);
         }).catch(function(e){
           console.log('catch',e);
