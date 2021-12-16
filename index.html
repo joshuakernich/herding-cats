@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, viewport-fit=cover">
-  <meta property='og:image' content="https://joshuakernich.github.io/herding-cats/og-image.png">
-  <link rel="image_src" href="./og-image.png" />
+  <meta property='og:image' content="https://joshuakernich.github.io/herding-cats/og-headline.png">
+  <link rel="image_src" href="./og-headline.png" />
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <title>Herding Cats</title>
   <style type="text/css">
@@ -145,7 +145,22 @@
       opacity: 0.1;
     }
 
-    
+    .madlib-icon{
+       width: 25px;
+      height: 25px;
+      display: inline-block;
+     
+     
+      background-position: center;
+      background-size: 100%;
+      background-repeat: no-repeat;
+      vertical-align: middle;
+      margin: 0px 5px;
+    }
+
+    .madlib-icon.compact{
+      margin: 0px;
+    }
 
     .deet-icon{
      
@@ -602,6 +617,48 @@
       border-bottom: none;
     }
 
+    .proposal-select{
+      position: relative;
+    }
+
+    .proposal-series{
+      display: block;
+
+      opacity: 0;
+      transition: all 0.2s;
+      top: 10px;
+      left: 0px;
+      right: 0px;
+      position: absolute;
+      background: white;
+      z-index: 1;
+      pointer-events: none;
+
+    }
+
+    .proposal-select.open .proposal-series{
+      opacity: 1;
+      top: 35px;
+      pointer-events: all;
+    }
+
+    .proposal-series ul{
+      display: inline-block;
+      list-style-type: none;
+      padding: 0px;
+      margin: 0px;
+      text-align: left;
+    }
+
+    .proposal-series ul li{
+      margin-bottom: 5px;
+      cursor: pointer;
+    }
+
+    .proposal-headline{
+      cursor: pointer;
+    }
+
   </style>
   <script type="text/javascript" src='./jq.js'></script>
   <script type="text/javascript">
@@ -666,6 +723,7 @@
       })
 
       $('.action-to-next-screen').click(toNextScreen);
+
       $('.action-summon-place-finder').click(function(){
         $('.modal').addClass('summoned');
       });
@@ -687,13 +745,16 @@
         }
 
       
-        $('.screen').hide().eq(toScreenIdx).show();
+        var $s = $('.screen').hide().eq(toScreenIdx).show();
+
+
+        if($(this).data('handball')) $s.find('.handball').text($(this).data('handball'));
       }
 
       $('.screen').hide().eq(0).show();
 
 
-      if(window.location.href.indexOf('?')>-1) $('.screen').hide().last().show();
+      if(window.location.href.indexOf('?')>-1) $('.screen').hide().eq(-4).show();
 
       $(window).resize(function(){
         $('.wrapper').height(window.innerHeight);
@@ -715,6 +776,19 @@
         $('.input-time').addClass('edited');
       })
 
+      $('.action-contacts').click(function(){
+        navigator.contacts.select(['name'],{multiple:true});
+      });
+
+      $('.proposal-select').click(function(){
+        $(this).toggleClass('open');
+      })
+
+      $('.proposal-series li').click(function(){
+        $(this).closest('.proposal-select').find('.proposal-headline').html($(this).html()).find('.editable').addClass('edited');
+      })
+
+      
 
 
     })
@@ -797,6 +871,7 @@
     <br><p class='herd-tip-summon' style="font-size: 14px;">When you're ready...</p-->
       <br><br>
     <button class="summoner">Summon a herd!</button>
+    
 
     <div class="footer">
       <div class="footer-button action-to-next-screen" data-to-screen="+2">
@@ -933,13 +1008,98 @@
       <br>
 
       <br>
-      <button class="third">I'm in!</button>
-      <button class="third">Maybe</button>
-      <button class="third">Can't</button>
+      <button class="third action-to-next-screen">I'm in!</button>
+      <button class="third action-to-next-screen" data-to-screen='+1'>Maybe</button>
+      <button class="third action-to-next-screen" data-to-screen='+2'>Can't</button>
       <br><br>
       <p style='font-size: 14px;'>Wanna be part of more things?<br>
       <a href='./'>Sign up</a> to Herding Cats.</p>
 
+  </div>
+  
+  <div class="screen">
+    <br>
+      <img src="./cats/cat_43.png">
+      <br><br>
+      <button class="third edited">Maybe</button>
+      <br><br>
+      <p style="font-size: 14px;">Want to <span class='edited'>kick up some fuss</span>?</p>
+      
+      <div class="proposal-select">
+        <div class="proposal"><span class='proposal-headline'>Propose a <span class="editable">change of plan</span></span><div style='background-image:url(./feather/chevron-down.svg)' class='madlib-icon compact'></div></div>
+        <div class="proposal-series">
+          <ul>
+            <li>Propose <span class='editable'>another date</span></li>
+            <li>Propose <span class='editable'>another time</span></li>
+            <li>Propose <span class='editable'>another location</span></li>
+            <li>Propose <span class='editable'>another activity</span></li>
+            <li>Air a <span class='editable'>grievance</span></li>
+          </ul>
+        </div>
+      </div>
+      <button class="bottomed action-to-next-screen" data-to-screen='+2'  data-handball="Maybe">Send to Josh</button>
+  </div>
+  <div class="screen">
+    <br>
+      <img src="./cats/cat_43.png">
+      <br><br>
+      <button class="third edited">Can't</button>
+      <br><br>
+      <p style="font-size: 14px;">Feel the need to <span class='edited'>explain yourself</span>?</p>
+      <div class="proposal-select">
+        <div class="proposal"><span class='proposal-headline'>Send a <span class="editable">reason</span></span><div style='background-image:url(./feather/chevron-down.svg)' class='madlib-icon compact'></div></div>
+        <div class="proposal-series">
+          <ul>
+            <li>I have <span class='editable'>other plans</span></li>
+            <li>I'm kinda <span class='editable'>not feeling so well</span></li>
+            <li>That's a <span class='editable'>bad time for me</span></li>
+            <li>This thing <span class='editable'>sounds kinda shit</span></li>
+          </ul>
+        </div>
+      </div>
+
+     
+      <br>
+      <p style="font-size: 14px;">Want to <span class='edited'>kick up some fuss</span>?</p>
+      
+      <div class="proposal-select">
+        <div class="proposal"><span class='proposal-headline'>Propose a <span class="editable">change of plan</span></span><div style='background-image:url(./feather/chevron-down.svg)' class='madlib-icon compact'></div></div>
+        <div class="proposal-series">
+          <ul>
+            <li>Propose <span class='editable'>another date</span></li>
+            <li>Propose <span class='editable'>another time</span></li>
+            <li>Propose <span class='editable'>another location</span></li>
+            <li>Propose <span class='editable'>another activity</span></li>
+            <li>Air a <span class='editable'>grievance</span></li>
+          </ul>
+        </div>
+      </div>
+      <button class="bottomed action-to-next-screen" data-handball="Can't">Send to Josh</button>
+  </div>
+  <div class="screen">
+    <br>
+      <img src="./cats/cat_43.png">
+      <br><br>
+      <button class="third edited handball">I'm in!</button>
+      <br><br>
+    <div class="madlib">
+        <!--div class="madlib-line">Hang on,</div><br>
+        <div class="madlib-line">who are you?</div-->
+        <p style="font-size: 14px;padding:0px 50px;">Help <span class='edited'>Josh</span> keep track of who is coming.</p>
+        
+      
+        <div class="madlib-line editable iconified" contenteditable>
+          <div class="madlib-icon" style='background-image:url(./feather/user.svg)'></div>
+          <div class='input' style='display:inline-block;' contenteditable>Mr Your Name</div>
+          </div>
+        <br>
+        <div class="madlib-line editable iconified" contenteditable style="margin-top:10px;">
+          <div class="madlib-icon" style='background-image:url(./feather/phone.svg)'></div>
+          <div class='input' style='display:inline-block;' contenteditable>+44 ANON ANON</div>
+        </div>
+    </div>
+    <p style="font-size: 14px;">* This is totally optional, by the way.</p>
+    <button class="bottomed">There ya go, Josh.</button>
   </div>
 </div>
 </body>
