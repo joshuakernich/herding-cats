@@ -125,6 +125,14 @@
       
     }
 
+    button.summoner:after{
+      content: "";
+      width: 20px;
+      height: 20px;
+      background-image: url('./feather/send.svg');
+      background-size: 100%;
+    }
+
     .madlib{
       text-align: center;
       font-size: 30px;
@@ -204,13 +212,13 @@
       background-color: #99ffdd;
     }
 
-    .summoner{
+    .summon-your-herd{
       opacity: 0;
       transition: 0.5s all;
       transition-delay: 3s;
     }
 
-    .screen-herd-builder.step-2 .deet, .screen-herd-builder.step-2 .summoner{
+    .screen-herd-builder.step-2 .deet, .screen-herd-builder.step-2 .summon-your-herd{
       opacity: 1;
     }
 
@@ -250,18 +258,22 @@
 
       vertical-align: bottom;
      
-      float:left; 
-      width: 100px;
+     
+     
       text-align: center;
 
       
       position: relative;
+      padding: 5px;
+      border: 2px solid #333;
+      width: 70px;
+      height: 70px;
+      box-sizing: border-box;
+      
+       background: white;
     }
 
-    .footer-button:nth-of-type(2){
-      float:right;
-      text-align: center;
-    }
+   
 
     .footer-button h3{
       font-size: 10px;
@@ -342,12 +354,12 @@
       margin: 20px;
       background: white;
       border: 2px solid #222;
-      box-shadow: 5px -5px 0px black;
+      position: relative;
+      /*box-shadow: 5px -5px 0px black;*/
     }
 
     .herd .madlib{
-      font-size: 20px;
-       padding: 20px;
+      margin: 20px 0px;
     }
 
     .herd-footer{
@@ -398,33 +410,17 @@
     .herd-icon{
       position: relative;
       display: inline-block;
-    }
-
-    .herd-icon, .herd-icon:before, .herd-icon:after{
-      content: "";
-      
-
       width: 40px;
       height: 40px;
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
-      background-image: url('./cats/cat_38.png');
+      background-image: url('./herds-icon.png');
+      border-radius: 0px;
     }
 
-    .herd-icon:before{
-       position: absolute;
-       left: 25px;
-       background-image: url('./cats/cat_08.png');
-       display: block;
-    }
-
-    .herd-icon:after{
-       position: absolute;
-       background-image: url('./cats/cat_11.png');
-       left: -15px;
-       display: block;
-    }
+    
+    
 
 
     .logo{
@@ -659,6 +655,18 @@
       cursor: pointer;
     }
 
+    .herd:after{
+      content: "";
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      display: block;
+      background-image: url('./feather/edit-3.svg');
+      background-size: 100%;
+      right: 20px;
+      top: 20px;
+    }
+
   </style>
   <script type="text/javascript" src='./jq.js'></script>
   <script type="text/javascript">
@@ -738,12 +746,16 @@
         var toScreenIdx = idx+1;
 
         if($(this).data('to-screen')){
-          var inc = $(this).data('to-screen');
+          var inc = ''+$(this).data('to-screen');
+          
+    
+
           if(inc[0] == '+') toScreenIdx = idx + parseInt(inc.substr(1));
-          else if(inc[1] == '-') toScreenIdx = idx - parseInt(inc.substr(1));
+          else if(inc[0] == '-') toScreenIdx = idx - parseInt(inc.substr(1));
           else toScreenIdx = parseInt(inc);
         }
 
+        console.log(toScreenIdx);
       
         var $s = $('.screen').hide().eq(toScreenIdx).show();
 
@@ -869,20 +881,22 @@
     </div>
 
     <br><p class='herd-tip-summon' style="font-size: 14px;">When you're ready...</p-->
-      <br><br>
-    <button class="summoner">Summon a herd!</button>
+     
+    <button class="action-to-next-screen summon-your-herd">Summon your herd</button>
     
 
-    <div class="footer">
+    <!--div class="footer">
       <div class="footer-button action-to-next-screen" data-to-screen="+2">
         <div class="footer-icon" style="width:60px;height:42px;background-color:transparent;background-size:100%;background-image:url(./cats/cat_43.png);background-position: center top;"></div>
         <h3>Me</h3>
      </div>
-      <div class="footer-button action-to-next-screen">
+      
+    </div-->
+
+      <div style='position:absolute;right:20px;bottom:-2px;' class="footer-button action-to-next-screen" data-to-screen='+2'>
         <div class="footer-icon herd-icon"></div>
         <h3>Herds</h3>
       </div>
-    </div>
      <div class="modal place-finder">
       <div class='search-box'>Somewhere</div>
       <ul>
@@ -895,6 +909,30 @@
       </ul>
       <button style='position:absolute;right:10px;top:-40px;' class="compact action-unsummon-place-finder">×</button>
     </div>
+  </div>
+  <div class="screen bg-cats">
+     <br><br> <br><br>
+    <div class="herd active action-to-next-screen" data-to-screen='-1'>
+      <div class="madlib">
+        <div class="madlib-line">Hey, let's</div><br>
+        <div class="madlib-line edited">eat some cheese</div><br>
+        <div class="madlib-line edited">on Friday.</div>
+      </div>
+      <div class="deets static">
+        <div class="deet" style="background-image: url(./feather/map-pin.svg)">a place called home</div>
+        <div class="deet" style="background-image: url(./feather/clock.svg)">at 7:00 pm</div>
+        <div class="deet" style="font-size:14px;padding-top:5px;padding-bottom:5px;background-image: url(./feather/clipboard.svg)">
+          Come to mine. We'll kick out the jams.
+        </div>
+      </div>
+      <br><br>
+    </div>
+
+    <button class="summoner">Invite/Share</button>
+    <div style='position:absolute;right:20px;bottom:-2px;' class="footer-button action-to-next-screen" data-to-screen='+2'>
+        <div class="footer-icon herd-icon"></div>
+        <h3>Herds</h3>
+      </div>
   </div>
   <div class="screen" style="background:yellow;">
     <h2><div style='display:inline-block;left:-30px;top:5px;' class='herd-icon'></div>Herds</h2>
