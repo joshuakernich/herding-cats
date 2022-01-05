@@ -19,6 +19,8 @@
       padding: 0px;
       margin: 0px;
       background: black;
+
+      font-family: 'Rubik', sans-serif;
     }
 
     .wrapper{
@@ -40,7 +42,7 @@
       height: 100%;
       box-sizing: border-box;
 
-      font-family: 'Rubik', sans-serif;
+      
       /*position: absolute;
       top: 0px;
       left: 0px;
@@ -245,12 +247,21 @@
       position: absolute;
       font-size: 10px;
       
-      
-      width: 80%;
       box-sizing: border-box;
-      bottom: 0px;
+      bottom:-100px;
+      left: 0px;
+      right: 0px;
       
       padding: 10px 0px;
+      border-top: 2px solid black;
+      background: white;
+      text-align: center;
+
+      transition: all 0.2s;
+    }
+
+    .footer.active{
+      bottom: 0px;
     }
 
     .footer-button{
@@ -264,13 +275,25 @@
 
       
       position: relative;
-      padding: 5px;
-      border: 2px solid #333;
-      width: 70px;
-      height: 70px;
+      padding: 0px;
+     
+      width: 50px;
+      height: 50px;
       box-sizing: border-box;
       
        background: white;
+       margin: 0px 30px;
+    }
+
+    .footer-button-new{
+
+      border-radius: 100px;
+
+      font-size: 50px;
+      line-height:46px;
+      border: 2px solid black;
+      box-sizing: border-box;
+
     }
 
    
@@ -740,10 +763,13 @@
         $('.modal').removeClass('summoned');
       });
 
-      function toNextScreen(){
+      function toNextScreen(n){
 
         var idx = $('.screen').index( $(this).closest('.screen') );
         var toScreenIdx = idx+1;
+
+        if(typeof(n) == 'number') toScreenIdx = n;
+        
 
         if($(this).data('to-screen')){
           var inc = ''+$(this).data('to-screen');
@@ -755,16 +781,19 @@
           else toScreenIdx = parseInt(inc);
         }
 
-        console.log(toScreenIdx);
+
       
         var $s = $('.screen').hide().eq(toScreenIdx).show();
 
 
         if($(this).data('handball')) $s.find('.handball').text($(this).data('handball'));
+
+        $('.footer').removeClass('active');
+        if($s.hasClass('screen-has-footer')) $('.footer').addClass('active');
       }
 
-      $('.screen').hide().eq(0).show();
-
+     
+      toNextScreen(0);
 
       if(window.location.href.indexOf('?')>-1) $('.screen').hide().eq(-4).show();
 
@@ -857,7 +886,7 @@
       <div class="story-train"></div>
     </div>
   </div>
-  <div class="screen screen-herd-builder">
+  <div class="screen screen-herd-builder screen-has-footer">
     <br>
     <br>
     <br>
@@ -885,18 +914,9 @@
     <button class="action-to-next-screen summon-your-herd">Summon your herd</button>
     
 
-    <!--div class="footer">
-      <div class="footer-button action-to-next-screen" data-to-screen="+2">
-        <div class="footer-icon" style="width:60px;height:42px;background-color:transparent;background-size:100%;background-image:url(./cats/cat_43.png);background-position: center top;"></div>
-        <h3>Me</h3>
-     </div>
-      
-    </div-->
+    
 
-      <div style='position:absolute;right:20px;bottom:-2px;' class="footer-button action-to-next-screen" data-to-screen='+2'>
-        <div class="footer-icon herd-icon"></div>
-        <h3>Herds</h3>
-      </div>
+      
      <div class="modal place-finder">
       <div class='search-box'>Somewhere</div>
       <ul>
@@ -929,18 +949,15 @@
     </div>
 
     <button class="summoner">Invite/Share</button>
-    <div style='position:absolute;right:20px;bottom:-2px;' class="footer-button action-to-next-screen" data-to-screen='+1'>
-        <div class="footer-icon herd-icon"></div>
-        <h3>Herds</h3>
-      </div>
+   
   </div>
-  <div class="screen" style="background:yellow;">
-    <h2><div style='display:inline-block;left:-30px;top:5px;' class='herd-icon'></div>Herds</h2>
+  <div class="screen screen-has-footer" style="background:yellow;">
+   
     <div class="herd">
       <div class="madlib">
         <div class="madlib-line">Hey, let's</div><br>
         <div class="madlib-line edited">eat some cheese</div><br>
-        <div class="madlib-line edited">on Friday.</div>
+        <div class="madlib-line edited">on Saturday.</div>
       </div>
       <div class="herd-footer">
         
@@ -991,7 +1008,7 @@
         <p style="margin:0px;padding:0px;margin-top:10px;">Your herd is <strong>unruly</strong>.<br>Do some <a href=''>shepherding</a>.</p>
       </div>
     </div>
-   <button class="compact action-to-next-screen" data-to-screen='2' style="position: absolute;top:10px;left:10px;"><</button>
+   <!--button class="compact action-to-next-screen" data-to-screen='2' style="position: absolute;top:10px;left:10px;"><</button-->
   </div>
   <!--div class="screen">
     <br><br><br>
@@ -1007,8 +1024,8 @@
     <div class="tip">Be specific. People like it.</div>
     <button class="back"></button>
   </div-->
-  <div class="screen" style="background:yellow;">
-    <h2><img style='display:inline-block;vertical-align: middle;width:60px;' src='./cats/cat_43.png'>Me</h2>
+  <div class="screen screen-has-footer" style="background:yellow;">
+    
     <div class="herd">
       <p style="font-size: 15px;">You are a</p>
       <h2 style='margin:0px;padding:0px;display:inline-block;vertical-align: middle;' >Fledgeling<br>Cat Herder</h2>
@@ -1021,9 +1038,10 @@
       <img src="./cats/cat_11.png" style="height: 40px;">
       <img src="./cats/cat_17.png" style="height: 40px;">
       <br>
-      <button>Invite some cats</button>
+      <br>
     </div>
-    <button class="compact action-to-next-screen" data-to-screen='2' style="position: absolute;top:10px;left:10px;"><</button>
+    <button>Invite friends</button>
+    <!--button class="compact action-to-next-screen" data-to-screen='2' style="position: absolute;top:10px;left:10px;"><</button-->
     
   </div>
   <div class="screen">
@@ -1139,6 +1157,19 @@
     <p style="font-size: 14px;">* This is totally optional, by the way.</p>
     <button class="bottomed">There ya go, Josh.</button>
   </div>
+  <div class="footer">
+      <div class="footer-button action-to-next-screen" data-to-screen="5">
+        <div class="footer-icon" style="width:50px;height:42px;background-color:transparent;background-size:100%;background-image:url(./cats/cat_43.png);background-position: center top;"></div>
+        <h3>Me</h3>
+     </div>
+     <div class="footer-button footer-button-new action-to-next-screen" data-to-screen='2'>
+      +
+     </div>
+      <div class="footer-button action-to-next-screen" data-to-screen='4'>
+        <div class="footer-icon herd-icon"></div>
+        <h3>Herds</h3>
+      </div>
+    </div>
 </div>
 </body>
 </html>
