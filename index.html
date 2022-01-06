@@ -31,9 +31,10 @@
       top: 0px;
       left: 0px;
       right: 0px;
-      bottom: 0px;
+      bottom: 20px;
       margin: auto;
       background: white;
+      overflow: hidden;
 
     }
 
@@ -61,6 +62,10 @@
       overflow-x:hidden;
       overflow-y:auto;
       white-space: normal;
+    }
+
+    .screen-has-footer{
+      padding-bottom: 70px;
     }
 
 
@@ -253,7 +258,7 @@
       right: 0px;
       
       padding: 10px 0px;
-      border-top: 2px solid black;
+      border-top: 1px solid rgba(0,0,0,0.2);
       background: white;
       text-align: center;
 
@@ -690,6 +695,42 @@
       top: 20px;
     }
 
+    .nav-train{
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      text-align: center;
+      position: fixed;
+    }
+
+    .nav-train button{
+      width: 20px;
+      height: 20px;
+      border: none;
+      box-shadow: none;
+      display: inline-block;
+      margin: 0px;
+      padding: 0px;
+      background: none;
+      line-height: 0px;
+    }
+
+    .nav-train button:after{
+      content: "";
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 5px;
+     
+      position: absolute;
+      top: 7px;
+      left: 7px;
+    }
+
+    p.small{
+      font-size: 14px;
+    }
+
   </style>
   <script type="text/javascript" src='./jq.js'></script>
   <script type="text/javascript">
@@ -753,7 +794,7 @@
         })
       })
 
-      $('.action-to-next-screen').click(toNextScreen);
+     
 
       $('.action-summon-place-finder').click(function(){
         $('.modal').addClass('summoned');
@@ -798,7 +839,7 @@
       if(window.location.href.indexOf('?')>-1) $('.screen').hide().eq(-4).show();
 
       $(window).resize(function(){
-        $('.wrapper').height(window.innerHeight);
+        $('.wrapper').height(window.innerHeight-20);
       })
 
       $('.story-scroll').scroll(function(){
@@ -830,7 +871,12 @@
       })
 
       
+      $('.screen').each(function(i){
 
+        $('<button class="action-to-next-screen">').appendTo('.nav-train').data('to-screen',i);
+      })
+
+      $('.action-to-next-screen').click(toNextScreen);
 
     })
   </script>
@@ -1149,13 +1195,34 @@
           <div class='input' style='display:inline-block;' contenteditable>Mr Your Name</div>
           </div>
         <br>
+      </div>
+    <button class="bottomed action-to-next-screen">Next</button>
+  </div>
+  <div class="screen">
+    <br>
+      <img src="./cats/cat_43.png">
+      <br><br>
+      <button class="third edited handball">I'm in!</button>
+      <br><br>
+    <div class="madlib">
+        <p style="font-size: 14px;padding:0px 50px;">Help <span class='edited'>Josh</span> keep track of who is coming.</p>
+        
         <div class="madlib-line editable iconified" contenteditable style="margin-top:10px;">
           <div class="madlib-icon" style='background-image:url(./feather/phone.svg)'></div>
           <div class='input' style='display:inline-block;' contenteditable>+44 ANON ANON</div>
         </div>
     </div>
-    <p style="font-size: 14px;">* This is totally optional, by the way.</p>
-    <button class="bottomed">There ya go, Josh.</button>
+    <p class="small">* This is totally optional, by the way.</p>
+    <button class="bottomed action-to-next-screen">There ya go, Josh.</button>
+  </div>
+  <div class="screen">
+    <br>
+     <img src="./cats/cat_43.png">
+      <br><br>
+      <button class="third edited handball">I'm in!</button>
+      <br><br>
+      <p>Thanks for your response!</p>
+      <p class="small">Wanna send your own invites?<br><a href="">Sign up</a> to Herding Cats.</p>
   </div>
   <div class="footer">
       <div class="footer-button action-to-next-screen" data-to-screen="5">
@@ -1171,5 +1238,6 @@
       </div>
     </div>
 </div>
+<div class="nav-train"></div>
 </body>
 </html>
