@@ -552,23 +552,8 @@
       color: #777;
     }
 
-    .modal{
-      position: absolute;
-      top: calc( 100% + 50px);
-      min-height: 95%;
-      left: 0px;
-      right: 0px;
-      background: white;
-      border-top: 5px solid var(--col-black);
-      box-shadow: 0px -50px rgba(0,0,0,0.1);
-      transition: 0.3s all;
-      
-    }
-
-    .modal.summoned{
-      top: 5%;
-      
-    }
+   
+    
 
     .search-box{
       margin: 20px;
@@ -585,35 +570,35 @@
     }
 
     .place-finder{
+      position: absolute;
+      top: calc( 100% + 50px);
+      min-height: 95%;
+      left: 0px;
+      right: 0px;
+      background: white;
+      border-top: 2px solid var(--col-black);
+      box-shadow: 0px -50px rgba(0,0,0,0.1);
+      transition: 0.3s all;
       text-align: left;
+      padding-top: 20px;
+    }
+
+    .place-finder.summoned{
+      top: 5%;
     }
 
     .place-finder ul{
       list-style-type: none;
       padding: 0px;
       margin: 0px 20px;
-
     }
 
     .place-finder li{
       margin-bottom: 10px;
       padding: 0px 5px;
       color: #999;
+      cursor: pointer;
     }
-
-    /*.place-finder li:before{
-      content: ">";
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      background-image: url('./feather/map-pin.svg');
-      background-position: center;
-      background-size: 100%;
-      background-repeat: no-repeat;
-      vertical-align: middle;
-      margin-right: 10px;
-
-    }*/
 
 
     .curly-arrow{
@@ -746,15 +731,22 @@
     }
 
     .invite-button{
-      width: 20px;
-      height: 20px;
+      
       position: absolute;
       display: block;
       
       background-image: url('./feather/send.svg');
-      background-size: 100%;
+      background-size: 20px;
       right: 20px;
       bottom: 20px;
+      padding-right: 30px;
+      background-position: right center;
+      background-repeat: no-repeat;
+
+    }
+
+    .invite-button:before{
+      content: 'invite';
     }
 
     .nav-train{
@@ -836,6 +828,7 @@
       box-sizing: border-box;
       border: 2px solid white;
       min-height: calc( 100vh - 100px );
+      overflow: hidden;
     }
 
     
@@ -937,41 +930,47 @@
       box-sizing: border-box;
     }
 
+    .place-finder-close-button{
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      border: 0px;
+      box-shadow: none;
+      background: none;
+    }
+
   </style>
   <script type="text/javascript" src='./jq.js'></script>
   <script type="text/javascript">
     $(function(){
 
-      var $b = $('.builder');
-
-      for(var i=0; i<12; i++){
-        var $bc = $b.clone().addClass('step-2 gift-wrapped collapsed').appendTo('.screen[data-nav=herds]');
-        $bc.find('.editable').addClass('edited');
-
-      }  
-
-      $('.editable').on('mousedown touchstart',doEditLine);
-      $('.editable .input').on('focusout',onEditFinish);
-
       $('.story-page').each(function(){
         $('<div class=story-train-station>').appendTo('.story-train');
       })
 
-      $('.madlib-line li').on('mousedown', function(e){
-        e.stopPropagation();
+
+      var $bReset = $('.builder').clone();
+
+      for(var i=0; i<12; i++){
+        var $bc = $bReset.clone().addClass('step-2 gift-wrapped').appendTo('.screen[data-nav=herds]');
+        $bc.find('.editable').addClass('edited');
+
+      }  
+
+     
       
+      function onFocusLine(e){
+        e.stopPropagation();
         $(this).closest('.madlib-line').find('.input').blur();
         $(this).closest('.madlib-line').find('.input').html($(this).text());
-      })
+      }
 
       function doEditLine(){
-
         $(this).css({
           'height':$(this).height(),
           'min-width':$(this).width(),
           'min-height':$(this).outerHeight()
         }).addClass('editing').find('.input').empty();
-
       }
 
       function onEditFinish(){
@@ -989,15 +988,7 @@
         }
       }
 
-      /*var shadows = ['-1px -1px black','1px -1px black','-1px 1px black','1px 1px black','-1px 0px black','1px 0px black','0px -1px black','0px 1px black'];
-      for(var i = 0; i<10; i++) shadows.push(''+(i+1)+'px -'+(i+1)+'px black');
-      var s = shadows.join(', ');
-
-      $('.logo').css({'text-shadow':s});*/
-
-      $('.action-invite').click(function(){
-       
-
+      function onInvite(){
         var text = "Hey, let's " + $('.input-thing .input').text() + ' ' + $('.input-date .input').text();
 
         text = text + ' ' + location.href + '?herdID';
@@ -1006,26 +997,20 @@
         if(navigator.share){
           navigator.share({text:text}).then(function(e){
             console.log('then',e);
-            $(this).closest('.builder').addClass('collapsed');
           }).catch(function(e){
             console.log('catch',e);
-            $(this).closest('.builder').addClass('collapsed');
           })
         } else {
-          $(this).closest('.builder').addClass('collapsed');
+          //$(this).closest('.builder').addClass('collapsed');
         }
-        
-      })
+      }
+
+      
 
      
 
-      $('.action-summon-place-finder').click(function(){
-        $('.modal').addClass('summoned');
-      });
+      
 
-      $('.action-unsummon-place-finder, .place-finder li').click(function(){
-        $('.modal').removeClass('summoned');
-      });
 
       function toNextScreen(n){
 
@@ -1053,8 +1038,11 @@
 
       function toNav(){
         var nav = $(this).data('nav');
+        toNavName(nav);
+      }
+
+      function toNavName(nav){
         var idx = $('.screen').index($('.screen[data-nav='+nav+']'));
-        console.log(nav,idx);
         toScreen(idx);
       }
 
@@ -1087,35 +1075,9 @@
 
       $('.story-train-station').removeClass('active').eq(0).addClass('active');
 
-      $('.place-finder li').click(function(){
-        $('.input-place').text($(this).text()).addClass('edited');
-      })
-
-      $('.input-time').change(function(){
-        $('.input-time').addClass('edited');
-      })
-
-      $('.action-contacts').click(function(){
-        navigator.contacts.select(['name'],{multiple:true});
-      });
-
-      $('.proposal-select').click(function(){
-        $(this).toggleClass('open');
-      })
-
-      $('.proposal-series li').click(function(){
-        $(this).closest('.proposal-select').find('.proposal-headline').html($(this).html()).find('.editable').addClass('edited');
-      })
+      
 
       
-      $('.screen').each(function(i){
-
-        $('<button class="action-to-next-screen">').appendTo('.nav-train').data('to-screen',i);
-      })
-
-      $('.action-to-next-screen').click(toNextScreen);
-      $('.action-nav').click(toNav);
-
       var $t = $('<table>').appendTo('.grid');
       for(var i=0; i<8; i++){
         var $tr = $('<tr>').appendTo($t);
@@ -1128,17 +1090,77 @@
         $('.grid').toggle();
       })
 
-      $('.action-to-invite').click(function(){
-        $(this).closest('.builder').addClass('gift-wrapped');
-      })
+      function toInvite(){
+        $b = $(this).closest('.builder');
+        if($b.closest('.screen').is('.screen-herd-builder')){
+          $b.prependTo('.screen[data-nav=herds]');
+        }
 
-      $('.action-to-edit').click(function(){
+        toNavName('herds');
+        $b.addClass('gift-wrapped');
+        $bReset.clone().appendTo('.screen-herd-builder');
+      }
+
+      function toEdit(){
         $(this).closest('.builder').removeClass('gift-wrapped');
+      }
+
+      function toExpand(){
+        $(this).closest('.builder').removeClass('collapsed');
+      }
+
+      function onPlaceFound(){
+        $(this).closest('.builder').find('.input-place').text($(this).text()).addClass('edited');
+        $(this).closest('.builder').find('.place-finder').removeClass('summoned');
+      }
+
+      function onTimeFound(){
+        $(this).addClass('edited');
+      }
+
+      function summonPlaceFinder(){
+        $(this).closest('.builder').find('.place-finder').addClass('summoned');
+      }
+
+      function unsummonPlaceFinder(){
+        $(this).closest('.place-finder').removeClass('summoned');
+      }
+
+
+
+      $('.proposal-select').click(function(){
+        $(this).toggleClass('open');
       })
 
-      $('.action-to-expand').click(function(){
-        $(this).closest('.builder').removeClass('collapsed');
-      }) 
+      $('.proposal-series li').click(function(){
+
+
+        $(this).closest('.proposal-select').find('.proposal-headline').html($(this).html()).find('.editable').addClass('edited');
+      })
+
+      $('.screen').each(function(i){
+        $('<button class="action-to-next-screen">').appendTo('.nav-train').data('to-screen',i);
+      })
+
+
+
+      function relisten(){
+        $('.editable').on('mousedown touchstart',doEditLine);
+        $('.editable .input').on('focusout',onEditFinish);
+        $('.madlib-line li').on('mousedown',onFocusLine);
+        $('.action-invite').click(onInvite);
+        $('.action-to-next-screen').click(toNextScreen);
+        $('.action-nav').click(toNav);
+        $('.action-to-expand').click(toExpand);
+        $('.action-to-edit').click(toEdit);
+        $('.action-to-invite').click(toInvite);
+        $('.place-finder li').click(onPlaceFound);
+        $('.input-time').change(onTimeFound);
+        $('.action-summon-place-finder').click(summonPlaceFinder);
+        $('.action-unsummon-place-finder').click(unsummonPlaceFinder);
+      }
+      
+      relisten();
 
     })
   </script>
@@ -1211,27 +1233,27 @@
         <div class="herd-stat herd-stat-yes">0</div>
         <div class="herd-stat herd-stat-maybe">0</div>
       </div>
-      <button class="action-to-invite summon-your-herd bottomed">Summon your herd</button>
+      <button class="action-to-invite summon-your-herd bottomed">Done</button>
       <!--button class="action-invite bottomed">Invite/Share</button-->
       <div class="action-to-edit edit-button"></div>
       <div class="action-to-expand expand-button"></div>
       <div class="action-invite invite-button"></div>
-
+      <div class="place-finder">
+        <div class='search-box'>Somewhere</div>
+        <ul>
+          <li>A place called home</li>
+          <li>heaven in a can</li>
+          <li>The liquid dimension</li>
+          <li>The seventh paradox</li>
+          <li>Apricot kingdom</li>
+          <li>Realm of the Teletubbies</li>
+        </ul>
+        <button class="compact place-finder-close-button action-unsummon-place-finder">×</button>
+      </div>
     </div>
     
       
-     <div class="modal place-finder">
-      <div class='search-box'>Somewhere</div>
-      <ul>
-        <li>A place called home</li>
-        <li>heaven in a can</li>
-        <li>The liquid dimension</li>
-        <li>The seventh paradox</li>
-        <li>Apricot kingdom</li>
-        <li>Realm of the Teletubbies</li>
-      </ul>
-      <button style='position:absolute;right:10px;top:-40px;' class="compact action-unsummon-place-finder">×</button>
-    </div>
+     
   </div>
   <!--div class="screen bg-cats">
      <br><br> <br><br>
