@@ -71,7 +71,8 @@
     }
 
     .screen-has-footer{
-      padding-bottom: 70px;
+      
+      height: calc( 100vh - 100px );
     }
 
 
@@ -80,8 +81,8 @@
       border: 2px solid var(--col-black);
       background: white;
       display: block;
-      margin: 20px;
-      width: calc( 100% - 40px );
+      
+     
       box-sizing: border-box;
       box-shadow: 5px -5px 0px var(--col-black);
 
@@ -115,7 +116,10 @@
 
     button.bottomed{
       position: absolute;
-      bottom: 0px;
+      bottom: 20px;
+      right: 20px;
+      left: 20px;
+      width: calc(100% - 40px);
     }
 
     button.back{
@@ -138,7 +142,7 @@
       
     }
 
-    button.summoner:after{
+    button.action-invite:after{
       content: "";
       width: 20px;
       height: 20px;
@@ -238,7 +242,7 @@
       transition-delay: 3s;
     }
 
-    .screen-herd-builder.step-2 .deet, .screen-herd-builder.step-2 .summon-your-herd{
+    .builder.step-2 .deet, .builder.step-2 .summon-your-herd{
       opacity: 1;
     }
 
@@ -369,6 +373,7 @@
       vertical-align: top;
       overflow: hidden;
       scroll-snap-align: start;
+      position: relative;
     }
 
     .story-scroll{
@@ -729,6 +734,29 @@
       top: 20px;
     }
 
+    .expand-button{
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      display: block;
+      background-image: url('./feather/more-vertical.svg');
+      background-size: 100%;
+      right: 5px;
+      top: 10px;
+    }
+
+    .invite-button{
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      display: block;
+      
+      background-image: url('./feather/send.svg');
+      background-size: 100%;
+      right: 20px;
+      bottom: 20px;
+    }
+
     .nav-train{
       bottom: 0px;
       left: 0px;
@@ -801,12 +829,19 @@
     }
 
     .builder{
-      padding: 50px 20px;
+      padding: 50px 20px 100px;
       transition: 0.5s all;
       background: white;
       position: relative;
-      min-height: 100%;
+      box-sizing: border-box;
       border: 2px solid white;
+      min-height: calc( 100vh - 100px );
+    }
+
+    
+
+    .builder .action-invite{
+      display: none;
     }
 
     .builder .edit-button{
@@ -824,6 +859,10 @@
       min-height: 0px;
     }
 
+    .builder.gift-wrapped .action-invite{
+      display: block;
+    }
+
     .builder.gift-wrapped .editable{
       border-bottom-width: 0px;
     }
@@ -832,8 +871,37 @@
       display: none;
     }
 
+    .builder.gift-wrapped .deet.edited{
+      background-color: transparent;
+    }
+
     .builder.gift-wrapped .action-to-invite{
       display: none;
+    }
+
+    .builder .herd-footer{
+      display: none;
+      text-align: left;
+    }
+
+    .builder.gift-wrapped .herd-footer{
+      display: block;
+    }
+
+    .builder.collapsed{
+      padding: 20px;
+    }
+
+    .builder.collapsed .deet, .builder.collapsed .action-to-edit{
+      display: none;
+    }
+
+    .builder .action-to-expand{
+      display: none;
+    }
+
+    .builder.collapsed .action-to-expand{
+      display: block;
     }
 
     .herd-stat{
@@ -864,10 +932,23 @@
       background-image: url('./feather/x-circle.svg');
     }
 
+    .screen-padded{
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
   </style>
   <script type="text/javascript" src='./jq.js'></script>
   <script type="text/javascript">
     $(function(){
+
+      var $b = $('.builder');
+
+      for(var i=0; i<12; i++){
+        var $bc = $b.clone().addClass('step-2 gift-wrapped collapsed').appendTo('.screen[data-nav=herds]');
+        $bc.find('.editable').addClass('edited');
+
+      }  
 
       $('.editable').on('mousedown touchstart',doEditLine);
       $('.editable .input').on('focusout',onEditFinish);
@@ -895,15 +976,16 @@
 
       function onEditFinish(){
 
+          var $b = $(this).closest('.builder');
+
          $(this).closest('.editable').css({
           'height':'auto',
           'min-width':'auto',
           'min-height':'auto'
         }).removeClass('editing').addClass('edited');
 
-
-        if( $('.input-thing').hasClass('edited') && $('.input-date').hasClass('edited') ){
-          $('.screen-herd-builder').addClass('step-2');
+        if( $b.find('.input-thing').hasClass('edited') && $b.find('.input-date').hasClass('edited') ){
+          $b.addClass('step-2');
         }
       }
 
@@ -913,18 +995,26 @@
 
       $('.logo').css({'text-shadow':s});*/
 
-      $('.summoner').click(function(){
+      $('.action-invite').click(function(){
        
 
         var text = "Hey, let's " + $('.input-thing .input').text() + ' ' + $('.input-date .input').text();
 
         text = text + ' ' + location.href + '?herdID';
 
-        navigator.share({text:text}).then(function(e){
-          console.log('then',e);
-        }).catch(function(e){
-          console.log('catch',e);
-        })
+
+        if(navigator.share){
+          navigator.share({text:text}).then(function(e){
+            console.log('then',e);
+            $(this).closest('.builder').addClass('collapsed');
+          }).catch(function(e){
+            console.log('catch',e);
+            $(this).closest('.builder').addClass('collapsed');
+          })
+        } else {
+          $(this).closest('.builder').addClass('collapsed');
+        }
+        
       })
 
      
@@ -1039,25 +1129,23 @@
       })
 
       $('.action-to-invite').click(function(){
-        $('.builder').addClass('gift-wrapped');
+        $(this).closest('.builder').addClass('gift-wrapped');
       })
 
       $('.action-to-edit').click(function(){
-        $('.builder').removeClass('gift-wrapped');
+        $(this).closest('.builder').removeClass('gift-wrapped');
       })
 
-      $('.herd').click(function(){
-        
-        
-
-      })
+      $('.action-to-expand').click(function(){
+        $(this).closest('.builder').removeClass('collapsed');
+      }) 
 
     })
   </script>
 </head>
 <body>
   <div class="wrapper">
-  <div class="screen bg-cats">
+  <div class="screen screen-padded bg-cats">
     <!--img style='position:absolute;right:-20px;top:150px;' src='./cats/cat_02.png'>
     <img style='position:absolute;left:20px;top:150px;' src='./cats/cat_05.png'>
     <img style='position:absolute;right:30px;top:380px;' src='./cats/cat_08.png'>
@@ -1100,7 +1188,7 @@
             <p style="font-size: 15px;margin-bottom: 0px;margin-top:30px;">Ok, wow!<br>|</p>
           <div style='background-image:url(./people.jpeg);width:150px;background-size: 300%;height:130px;background-position: right -20px;display:inline-block;margin-left: 20px;'></div>
 
-           <button class="action-to-next-screen">Let's go.</button>
+           <button class="action-to-next-screen bottomed">Let's go.</button>
         </div>
       </div>
       <div class="story-train"></div>
@@ -1119,22 +1207,18 @@
       <div class="deet editable input-details" style="font-size:14px;padding-top:5px;padding-bottom:5px;background-image: url(./feather/clipboard.svg)">
         <div class='input' contenteditable>Add some deets.<br>People LOVE deets 📄 ❤️.</div>
       </div>
-      <button class="action-to-invite summon-your-herd">Summon your herd</button>
+      <div class="herd-footer">
+        <div class="herd-stat herd-stat-yes">0</div>
+        <div class="herd-stat herd-stat-maybe">0</div>
+      </div>
+      <button class="action-to-invite summon-your-herd bottomed">Summon your herd</button>
+      <!--button class="action-invite bottomed">Invite/Share</button-->
       <div class="action-to-edit edit-button"></div>
+      <div class="action-to-expand expand-button"></div>
+      <div class="action-invite invite-button"></div>
+
     </div>
-    <button class="summoner">Invite/Share</button>
-
-    <!--div class="herd-tip-propose">
-      <p class='' style="font-size: 14px;">Propose a happening!<br>Need some <a href=''>ideas</a>?</p>
-    </div>
-
-    <br><p class='herd-tip-summon' style="font-size: 14px;">When you're ready...</p-->
-     
     
-    
-
-    
-
       
      <div class="modal place-finder">
       <div class='search-box'>Somewhere</div>
@@ -1172,7 +1256,7 @@
   </div-->
   <div class="screen screen-has-footer bg-yellow" data-nav='herds'>
    
-    <div class="herd">
+    <!--div class="herd">
       <div class="madlib">
         <div class="madlib-line">Hey, let's</div><br>
         <div class="madlib-line edited">eat some cheese</div><br>
@@ -1215,7 +1299,7 @@
         <div class="herd-stat herd-stat-yes">0</div>
         <div class="herd-stat herd-stat-maybe">0</div>
       </div>
-    </div>
+    </div-->
    <!--button class="compact action-to-next-screen" data-to-screen='2' style="position: absolute;top:10px;left:10px;"><</button-->
   </div>
   <!--div class="screen">
@@ -1248,7 +1332,7 @@
       <br>
       <br>
     </div>
-    <button class="summoner">Invite Friends</button>
+    <button class="bottomed action-invite">Invite Friends</button>
     <!--button class="compact action-to-next-screen" data-to-screen='2' style="position: absolute;top:10px;left:10px;"><</button-->
     
   </div>
