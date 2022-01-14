@@ -1095,15 +1095,22 @@
         $b = $(this).closest('.builder');
         if($b.closest('.screen').is('.screen-herd-builder')){
           $b.prependTo('.screen[data-nav=herds]');
+          $bReset.clone().appendTo('.screen-herd-builder');
+          relisten();
         }
 
         toNavName('herds');
         $b.addClass('gift-wrapped');
-        $bReset.clone().appendTo('.screen-herd-builder');
+
       }
 
       function toEdit(){
         $(this).closest('.builder').removeClass('gift-wrapped');
+
+        var t = $(this).closest('.builder').position().top;
+        var st = $(this).closest('.screen').scrollTop();
+       
+        $(this).closest('.screen').animate({scrollTop:st+t+22});
       }
 
       function toExpand(){
