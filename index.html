@@ -21,6 +21,12 @@
       background: black;
 
       font-family: 'Rubik', sans-serif;
+
+      --col-1: #FFF12B;
+      --col-2: #99ffdd;
+      --col-black: #222;
+
+      color: var(--col-black);
     }
 
     .wrapper{
@@ -58,7 +64,7 @@
       vertical-align: middle;
       text-align: center;
       position: relative;
-      color: #222;
+      color: var(--col-black);
       overflow-x:hidden;
       overflow-y:auto;
       white-space: normal;
@@ -71,17 +77,17 @@
 
 
     button{
-      border: 2px solid black;
+      border: 2px solid var(--col-black);
       background: white;
       display: block;
       margin: 20px;
       width: calc( 100% - 40px );
       box-sizing: border-box;
-      box-shadow: 5px -5px 0px black;
+      box-shadow: 5px -5px 0px var(--col-black);
 
       font-family: inherit;
       font-size: inherit;
-      padding: 20px;
+      padding: 15px 20px;
       position: relative;
     }
 
@@ -140,6 +146,14 @@
       background-size: 100%;
     }
 
+     button.action-to-invite:after{
+      content: "";
+      width: 20px;
+      height: 20px;
+      background-image: url('./feather/thumbs-up.svg');
+      background-size: 100%;
+    }
+
     .madlib{
       text-align: center;
       font-size: 30px;
@@ -151,8 +165,8 @@
     }
 
     .editable{
-      background: yellow;
-      border-bottom: 2px solid black;
+      background: var(--col-1);
+      border-bottom: 2px solid var(--col-black);
       position: relative;
     }
 
@@ -186,19 +200,18 @@
       background: white;
       display: block;
      
-      background: yellow;
-      border-bottom: 2px solid black;
+      background: var(--col-1);
+      border-bottom: 2px solid var(--col-black);
       background-position: center;
       background-size: 70%;
       background-repeat: no-repeat;
-      stroke: black;
+      stroke: var(--col-black);
       margin-bottom: 2px;
      
     }
 
     .deet{
-      background-color: yellow;
-      border-bottom: 2px solid #222;
+      
       display: inline-block;
       padding-left: 30px;
       background-position: 3px 4px;
@@ -216,7 +229,7 @@
     }
 
     .edited, .deet.edited{
-      background-color: #99ffdd;
+      background-color: var(--col-2);
     }
 
     .summon-your-herd{
@@ -239,7 +252,7 @@
       position: absolute;
       bottom: 0px;
       margin: 10px;
-      background: #222;
+      background: var(--col-black);
       color: white;
       font-size: 15px;
       padding: 20px;
@@ -258,7 +271,7 @@
       right: 0px;
       
       padding: 10px 0px;
-      border-top: 1px solid rgba(0,0,0,0.2);
+      border-top: 2px solid var(--col-black);
       background: white;
       text-align: center;
 
@@ -272,7 +285,7 @@
     .footer-button{
       display: inline-block;
 
-      vertical-align: bottom;
+      vertical-align: top;
      
      
      
@@ -283,7 +296,7 @@
       padding: 0px;
      
       width: 50px;
-      height: 50px;
+      
       box-sizing: border-box;
       
        background: white;
@@ -296,7 +309,7 @@
 
       font-size: 50px;
       line-height:46px;
-      border: 2px solid black;
+      border: 2px solid var(--col-black);
       box-sizing: border-box;
 
     }
@@ -307,6 +320,8 @@
       font-size: 10px;
       margin: 0px;
       padding: 0px;
+      position: relative;
+
     }
 
     .footer-icon{
@@ -314,20 +329,23 @@
       height: 45px;
       
       
-      background-position: center;
-      background-size: 50%;
+      background-position: top;
+      background-size: 100%;
       background-repeat: no-repeat;
       position: relative;
       display: inline-block;
-      
-      border-radius: 100px;
+
 
       
 
     }
 
+    .footer-button.active .footer-icon{
+      background-position: bottom;
+    }
+
     .story{
-      background: #ddd;
+      background: var(--col-2);
       position: absolute;
       top: 0px;
       right: 0px;
@@ -355,7 +373,7 @@
 
     .story-scroll{
       overflow-x: scroll;
-      height: 90%;
+      height: calc(100% - 62px);
       position: relative;
       scroll-snap-type: x mandatory;
     }
@@ -367,7 +385,7 @@
     .story-train-station{
       width: 8px;
       height: 8px;
-      background: #bbb;
+      background: white;
       display: inline-block;
       margin: 0px 3px;
       border-radius: 10px;
@@ -375,34 +393,32 @@
     }
 
     .story-train-station.active{
-      background: #222;
+      background: var(--col-black);
     }
 
     .herd{
       margin: 20px;
       background: white;
-      border: 2px solid #222;
+      border: 2px solid var(--col-black);
       position: relative;
-      /*box-shadow: 5px -5px 0px black;*/
+      padding: 20px 0px;
     }
 
-    .herd .madlib{
-      margin: 20px 0px;
-    }
+
+
+   
 
     .herd-footer{
-      background: #ddd;
-      font-size: 14px;
-      padding: 10px 0px;
+       margin-top:20px;
     }
 
     strong{
-      background: yellow;
+      background: var(--col-1);
       font-weight: normal;
     }
 
     .screen.memphis{
-      background: yellow;
+      background: var(--col-1);
     }
 
     .editable ul{
@@ -423,8 +439,8 @@
     }
 
     .editable li{
-      background: yellow;
-      border-bottom: 2px solid black;
+      background: var(--col-1);
+      border-bottom: 2px solid var(--col-black);
       display: inline-block;
     }
 
@@ -435,16 +451,16 @@
       pointer-events: all;
     }
 
+    .me-icon{
+      background-image: url('./icon-me.png');
+    }
+
     .herd-icon{
-      position: relative;
-      display: inline-block;
-      width: 40px;
-      height: 40px;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-image: url('./herds-icon.png');
-      border-radius: 0px;
+      background-image: url('./icon-herd.png');
+    }
+
+    .new-icon{
+      background-image: url('./icon-create.png');
     }
 
     
@@ -455,7 +471,7 @@
       font-family: 'Abril Fatface', cursive;
       font-size: 75px;
       line-height: 75px;
-      color: white;
+      color: var(--col-black);
       /*text-shadow: 2px -2px 0px white;*/
     }
 
@@ -486,17 +502,28 @@
     }
 
     .bg-cats{
-      background: yellow;
+      background: linear-gradient( var(--col-2), var(--col-1), var(--col-1) );
+      
+    }
+
+    .bg-cats:before{
+      content: "";
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
       background-size: 320px;
       background-image: url(./cat-bg-tile.png);
       animation-name: scroll-bg;
       animation-duration: 15s;
       animation-iteration-count: infinite;
       animation-timing-function: linear;
+
     }
 
     .bg-yellow{
-      background:yellow;
+      background: linear-gradient( var(--col-2), var(--col-1), var(--col-1) );
     }
 
     .deet-info{
@@ -504,7 +531,7 @@
       font-size: 14px;
      
       min-height: 50px;
-      border-left: 2px solid #222;
+      border-left: 2px solid var(--col-black);
       
       background: #eee;
       box-sizing: border-box;
@@ -527,7 +554,7 @@
       left: 0px;
       right: 0px;
       background: white;
-      border-top: 5px solid #222;
+      border-top: 5px solid var(--col-black);
       box-shadow: 0px -50px rgba(0,0,0,0.1);
       transition: 0.3s all;
       
@@ -541,9 +568,9 @@
     .search-box{
       margin: 20px;
       
-      border-bottom: 2px solid #222;
+      border-bottom: 2px solid var(--col-black);
       
-      background: yellow;
+      background: var(--col-1);
       padding: 5px;
       padding-left: 40px;
       background-image: url('./feather/search.svg');
@@ -621,13 +648,9 @@
     }
 
     .screen-herd-builder{
-      padding: 0px 10%;
+      
     }
 
-    .screen-herd-builder > button{
-      margin: 15px 0px;
-      width: 100%;
-    }
 
     .deets.static{
       display: inline-block;
@@ -683,8 +706,19 @@
       cursor: pointer;
     }
 
-    .herd:after{
+    /*.herd:after{
       content: "";
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      display: block;
+      background-image: url('./feather/edit-3.svg');
+      background-size: 100%;
+      right: 20px;
+      top: 20px;
+    }*/
+
+    .edit-button{
       width: 20px;
       height: 20px;
       position: absolute;
@@ -731,6 +765,105 @@
       font-size: 14px;
     }
 
+    .grid{
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      
+      z-index: 5;
+      pointer-events: none;
+      display: none;
+    }
+
+    .grid table{
+      width: 100%;
+      height: 100%;
+      border-spacing: 20px;
+    }
+
+    .grid td{
+      border: 1px solid red;
+    }
+
+    .grid-toggle{
+      position: fixed;
+      top: 0px;
+      right: 0px;
+      width: 40px;
+      height: 40px;
+      background-image: url('./feather/grid.svg');
+      background-position: center;
+      background-size: 50%;
+      background-repeat: no-repeat;
+      background-color: white;
+    }
+
+    .builder{
+      padding: 50px 20px;
+      transition: 0.5s all;
+      background: white;
+      position: relative;
+      min-height: 100%;
+      border: 2px solid white;
+    }
+
+    .builder .edit-button{
+      opacity: 0;
+    }
+
+    .builder.gift-wrapped .edit-button{
+      opacity: 1;
+    }
+
+    .builder.gift-wrapped{
+      margin: 20px;
+      padding: 20px;
+      border: 2px solid var(--col-black);
+      min-height: 0px;
+    }
+
+    .builder.gift-wrapped .editable{
+      border-bottom-width: 0px;
+    }
+
+    .builder.gift-wrapped .editable:not(.edited){
+      display: none;
+    }
+
+    .builder.gift-wrapped .action-to-invite{
+      display: none;
+    }
+
+    .herd-stat{
+      display: inline-block;
+      vertical-align: middle;
+      
+      margin: 0px 5px;
+    }
+
+    .herd-stat:before{
+      content: "";
+      width: 20px;
+      height: 20px;
+      background-image: url('./feather/check-circle.svg');
+      background-size: 100%;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 4px;
+      position: relative;
+      top: -2px;
+    }
+
+    .herd-stat.herd-stat-invite:before{
+      background-image: url('./icon-me.png');
+    }
+
+    .herd-stat.herd-stat-maybe:before{
+      background-image: url('./feather/x-circle.svg');
+    }
+
   </style>
   <script type="text/javascript" src='./jq.js'></script>
   <script type="text/javascript">
@@ -774,11 +907,11 @@
         }
       }
 
-      var shadows = ['-1px -1px black','1px -1px black','-1px 1px black','1px 1px black','-1px 0px black','1px 0px black','0px -1px black','0px 1px black'];
+      /*var shadows = ['-1px -1px black','1px -1px black','-1px 1px black','1px 1px black','-1px 0px black','1px 0px black','0px -1px black','0px 1px black'];
       for(var i = 0; i<10; i++) shadows.push(''+(i+1)+'px -'+(i+1)+'px black');
       var s = shadows.join(', ');
 
-      $('.logo').css({'text-shadow':s});
+      $('.logo').css({'text-shadow':s});*/
 
       $('.summoner').click(function(){
        
@@ -823,18 +956,32 @@
         }
 
 
-      
+        if($(this).data('handball')) $('.handball').text($(this).data('handball'));
+
+        toScreen(toScreenIdx);
+      }
+
+      function toNav(){
+        var nav = $(this).data('nav');
+        var idx = $('.screen').index($('.screen[data-nav='+nav+']'));
+        console.log(nav,idx);
+        toScreen(idx);
+      }
+
+      function toScreen(toScreenIdx){
         var $s = $('.screen').hide().eq(toScreenIdx).show();
-
-
-        if($(this).data('handball')) $s.find('.handball').text($(this).data('handball'));
 
         $('.footer').removeClass('active');
         if($s.hasClass('screen-has-footer')) $('.footer').addClass('active');
+
+        $('.footer-button').removeClass('active');
+
+        var nav = $s.data('nav');
+        $('.footer-button[data-nav='+nav+']').addClass('active');
       }
 
      
-      toNextScreen(0);
+      toScreen(2);
 
       if(window.location.href.indexOf('?')>-1) $('.screen').hide().eq(-4).show();
 
@@ -877,6 +1024,33 @@
       })
 
       $('.action-to-next-screen').click(toNextScreen);
+      $('.action-nav').click(toNav);
+
+      var $t = $('<table>').appendTo('.grid');
+      for(var i=0; i<8; i++){
+        var $tr = $('<tr>').appendTo($t);
+        for(var j=0; j<5; j++){
+          $('<td>').appendTo($tr);
+        }
+      }
+
+      $('.grid-toggle').click(function(){
+        $('.grid').toggle();
+      })
+
+      $('.action-to-invite').click(function(){
+        $('.builder').addClass('gift-wrapped');
+      })
+
+      $('.action-to-edit').click(function(){
+        $('.builder').removeClass('gift-wrapped');
+      })
+
+      $('.herd').click(function(){
+        
+        
+
+      })
 
     })
   </script>
@@ -932,24 +1106,23 @@
       <div class="story-train"></div>
     </div>
   </div>
-  <div class="screen screen-herd-builder screen-has-footer">
-    <br>
-    <br>
-    <br>
-    
-     <div class="madlib">
-      <div class="madlib-line">Hey, let's</div><br>
-      <div class="madlib-line editable input-thing"><div class='input' contenteditable>do something</div><ul><li>go to the movies</li><li>make some cheese</li><li>indulge in exploits</li></ul></div><br>
-      <div class="madlib-line editable input-date"><div class='input' contenteditable>sometime.</div><ul><li>Tomorrow.</li><br><li>on Saturday.</li><li>in a thousand years.</li></ul></div>
+  <div class="screen screen-herd-builder screen-has-footer bg-cats" data-nav='create'>
+    <div class="builder">
+       <div class="madlib">
+        <div class="madlib-line">Hey, let's</div><br>
+        <div class="madlib-line editable input-thing"><div class='input' contenteditable>do something</div><ul><li>go to the movies</li><li>make some cheese</li><li>indulge in exploits</li></ul></div><br>
+        <div class="madlib-line editable input-date"><div class='input' contenteditable>sometime.</div><ul><li>Tomorrow.</li><br><li>on Saturday.</li><li>in a thousand years.</li></ul></div>
+      </div>
+      <br>
+      <div class="deet editable action-summon-place-finder input-place" style="background-image: url(./feather/map-pin.svg)">somewhere</div>
+      <div class="deet editable input-time" style="background-image: url(./feather/clock.svg)">at <input class='time-input' type="time" value="00:00"></div>
+      <div class="deet editable input-details" style="font-size:14px;padding-top:5px;padding-bottom:5px;background-image: url(./feather/clipboard.svg)">
+        <div class='input' contenteditable>Add some deets.<br>People LOVE deets 📄 ❤️.</div>
+      </div>
+      <button class="action-to-invite summon-your-herd">Summon your herd</button>
+      <div class="action-to-edit edit-button"></div>
     </div>
-    <br>
-    <div class="deet action-summon-place-finder input-place" style="background-image: url(./feather/map-pin.svg)">somewhere</div>
-    <div class="deet input-time" style="background-image: url(./feather/clock.svg)">at <input class='time-input' type="time" value="00:00"></div>
-    <div class="deet editable input-details" style="font-size:14px;padding-top:5px;padding-bottom:5px;background-image: url(./feather/clipboard.svg)">
-      <div class='input' contenteditable>Add some deets.<br>People LOVE deets 📄 ❤️.</div>
-    </div>
-
-    
+    <button class="summoner">Invite/Share</button>
 
     <!--div class="herd-tip-propose">
       <p class='' style="font-size: 14px;">Propose a happening!<br>Need some <a href=''>ideas</a>?</p>
@@ -957,7 +1130,7 @@
 
     <br><p class='herd-tip-summon' style="font-size: 14px;">When you're ready...</p-->
      
-    <button class="action-to-next-screen summon-your-herd">Summon your herd</button>
+    
     
 
     
@@ -976,7 +1149,7 @@
       <button style='position:absolute;right:10px;top:-40px;' class="compact action-unsummon-place-finder">×</button>
     </div>
   </div>
-  <div class="screen bg-cats">
+  <!--div class="screen bg-cats">
      <br><br> <br><br>
     <div class="herd active action-to-next-screen" data-to-screen='-1'>
       <div class="madlib">
@@ -996,8 +1169,8 @@
 
     <button class="summoner">Invite/Share</button>
    
-  </div>
-  <div class="screen screen-has-footer" style="background:yellow;">
+  </div-->
+  <div class="screen screen-has-footer bg-yellow" data-nav='herds'>
    
     <div class="herd">
       <div class="madlib">
@@ -1006,24 +1179,30 @@
         <div class="madlib-line edited">on Saturday.</div>
       </div>
       <div class="herd-footer">
-        
-        <img style='width:30px;vertical-align: middle;' src='./cats/cat_33.png'>12 
-        <img style='width:20px;vertical-align: middle;margin-left: 10px;' src='./tick.png'> 6
-        <img style='width:18px;vertical-align: middle;margin-left: 10px;' src='./maybe.png'> 3
-        <p style="margin:0px;padding:0px;margin-top:10px;">Your herd is <strong>unruly</strong>.<br>Do some <a href=''>shepherding</a>.</p>
+        <div class="herd-stat herd-stat-yes">6</div>
+        <div class="herd-stat herd-stat-maybe">3</div>
       </div>
     </div>
-    <div class="herd">
+    <div class="herd" >
       <div class="madlib">
         <div class="madlib-line">Hey, let's</div><br>
         <div class="madlib-line edited">be  the mad lads we are</div><br>
         <div class="madlib-line edited">Tomorrow.</div>
       </div>
        <div class="herd-footer">
-        
-        <img style='width:30px;vertical-align: middle;' src='./cats/cat_33.png'>5 
-        <img style='width:20px;vertical-align: middle;margin-left: 10px;' src='./tick.png'> 5
-        <p style="margin:0px;padding:0px;margin-top:10px;">Your herd is <strong>perfect</strong>.</p>
+        <div class="herd-stat herd-stat-yes">2</div>
+        <div class="herd-stat herd-stat-maybe">0</div>
+      </div>
+    </div>
+    <div class="herd">
+      <div class="madlib">
+        <div class="madlib-line">Hey, let's</div><br>
+        <div class="madlib-line edited">eat some cheese</div><br>
+        <div class="madlib-line edited">on Friday.</div>
+      </div>
+     <div class="herd-footer">
+        <div class="herd-stat herd-stat-yes">1</div>
+        <div class="herd-stat herd-stat-maybe">0</div>
       </div>
     </div>
     <div class="herd">
@@ -1033,25 +1212,8 @@
         <div class="madlib-line edited">on Friday.</div>
       </div>
       <div class="herd-footer">
-        
-        <img style='width:30px;vertical-align: middle;' src='./cats/cat_33.png'>12 
-        <img style='width:20px;vertical-align: middle;margin-left: 10px;' src='./tick.png'> 6
-        <img style='width:18px;vertical-align: middle;margin-left: 10px;' src='./maybe.png'> 3
-        <p style="margin:0px;padding:0px;margin-top:10px;">Your herd is <strong>unruly</strong>.<br>Do some <a href=''>shepherding</a>.</p>
-      </div>
-    </div>
-    <div class="herd">
-      <div class="madlib">
-        <div class="madlib-line">Hey, let's</div><br>
-        <div class="madlib-line edited">eat some cheese</div><br>
-        <div class="madlib-line edited">on Friday.</div>
-      </div>
-      <div class="herd-footer">
-        
-        <img style='width:30px;vertical-align: middle;' src='./cats/cat_33.png'>12 
-        <img style='width:20px;vertical-align: middle;margin-left: 10px;' src='./tick.png'> 6
-        <img style='width:18px;vertical-align: middle;margin-left: 10px;' src='./maybe.png'> 3
-        <p style="margin:0px;padding:0px;margin-top:10px;">Your herd is <strong>unruly</strong>.<br>Do some <a href=''>shepherding</a>.</p>
+        <div class="herd-stat herd-stat-yes">0</div>
+        <div class="herd-stat herd-stat-maybe">0</div>
       </div>
     </div>
    <!--button class="compact action-to-next-screen" data-to-screen='2' style="position: absolute;top:10px;left:10px;"><</button-->
@@ -1070,7 +1232,7 @@
     <div class="tip">Be specific. People like it.</div>
     <button class="back"></button>
   </div-->
-  <div class="screen screen-has-footer" style="background:yellow;">
+  <div class="screen screen-has-footer bg-yellow" data-nav='me'>
     
     <div class="herd">
       <p style="font-size: 15px;">You are a</p>
@@ -1086,7 +1248,7 @@
       <br>
       <br>
     </div>
-    <button>Invite friends</button>
+    <button class="summoner">Invite Friends</button>
     <!--button class="compact action-to-next-screen" data-to-screen='2' style="position: absolute;top:10px;left:10px;"><</button-->
     
   </div>
@@ -1225,19 +1387,22 @@
       <p class="small">Wanna send your own invites?<br><a href="">Sign up</a> to Herding Cats.</p>
   </div>
   <div class="footer">
-      <div class="footer-button action-to-next-screen" data-to-screen="5">
-        <div class="footer-icon" style="width:50px;height:42px;background-color:transparent;background-size:100%;background-image:url(./cats/cat_43.png);background-position: center top;"></div>
+      <div class="footer-button action-nav" data-nav='me'>
+        <div class="footer-icon me-icon"></div>
         <h3>Me</h3>
      </div>
-     <div class="footer-button footer-button-new action-to-next-screen" data-to-screen='2'>
-      +
+     <div class="footer-button action-nav" data-nav='create'>
+      <div class="footer-icon new-icon"></div>
+      <h3>Create</h3>
      </div>
-      <div class="footer-button action-to-next-screen" data-to-screen='4'>
+      <div class="footer-button action-nav" data-nav='herds'>
         <div class="footer-icon herd-icon"></div>
         <h3>Herds</h3>
       </div>
     </div>
+    <div class="grid"></div>
 </div>
 <div class="nav-train"></div>
+<div class="grid-toggle"></div>
 </body>
 </html>
