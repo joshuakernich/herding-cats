@@ -138,7 +138,7 @@
     }
 
     button:after{
-      content: ">";
+      content: "";
       position: absolute;
       right: 25px;
       display: inline-block;
@@ -751,18 +751,15 @@
       
       background-image: url('./feather/send.svg');
       background-size: 20px;
-      right: 15px;
+      right: 0px;
       bottom: 0px;
+      left: 0px;
       padding: 15px;
-      padding-right: 25px;
-      background-position: right center;
+      padding-right: 45px;
+      /*background-position: right 20px center;*/
       background-repeat: no-repeat;
-      
-      
-
+      text-align: right;
     }
-
-
 
     .invite-button:before{
       content: 'invite';
@@ -902,6 +899,38 @@
       display: block;
     }
 
+    @keyframes flight{
+      0%{
+        background-position: right 60px top 60px;
+      }
+
+      30%{
+        background-position: right 20px top 20px;
+      }
+
+      70%{
+        background-position: right 20px top 20px;
+      }
+
+      100%{
+        background-position: right -20px top -20px;
+      }
+    }
+
+    
+
+    .builder.gift-wrapped .invite-button{
+      animation-name: flight;
+      animation-duration: 2s;
+      animation-fill-mode: forwards;
+      animation-iteration-count: infinite;
+    }
+
+    .builder.gift-wrapped.invited .invite-button{
+      animation:none;
+      background-position: right 20px top 20px;
+    }
+
     .builder.gift-wrapped .editable{
       pointer-events: none;
     }
@@ -933,7 +962,7 @@
       content: "";
       width: 20px;
       height: 20px;
-      background-image: url('./feather/check-circle.svg');
+      background-image: url('./icon-yes.png');
       background-size: 100%;
       display: inline-block;
       vertical-align: middle;
@@ -947,7 +976,7 @@
     }
 
     .herd-stat.herd-stat-maybe:before{
-      background-image: url('./feather/x-circle.svg');
+      background-image: url('./icon-no.png');
     }
 
     .screen-padded{
@@ -968,6 +997,23 @@
       font-weight: normal;
       background-color: var(--col-1);
     }
+
+    .tutor-button{
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      width: 50px;
+      height: 50px;
+      border: none;
+      background: none;
+      background-image: url('./feather/help-circle.svg');
+      background-size: 50%;
+      background-position: center;
+      background-repeat: no-repeat;
+
+    }
+
+
 
 
   </style>
@@ -1020,6 +1066,9 @@
       }
 
       function onInvite(){
+
+        var $b = $(this).closest('.builder').addClass('invited');
+
         var text = "Hey, let's " + $('.input-thing .input').text() + ' ' + $('.input-date .input').text();
 
         text = text + ' ' + location.href + '?herdID';
@@ -1289,93 +1338,17 @@
         <button class="compact place-finder-close-button action-unsummon-place-finder">×</button>
       </div>
     </div>
-    
+    <button class="tutor-button"></button>
       
      
   </div>
-  <!--div class="screen bg-cats">
-     <br><br> <br><br>
-    <div class="herd active action-to-next-screen" data-to-screen='-1'>
-      <div class="madlib">
-        <div class="madlib-line">Hey, let's</div><br>
-        <div class="madlib-line edited">eat some cheese</div><br>
-        <div class="madlib-line edited">on Friday.</div>
-      </div>
-      <div class="deets static">
-        <div class="deet" style="background-image: url(./feather/map-pin.svg)">a place called home</div>
-        <div class="deet" style="background-image: url(./feather/clock.svg)">at 7:00 pm</div>
-        <div class="deet" style="font-size:14px;padding-top:5px;padding-bottom:5px;background-image: url(./feather/clipboard.svg)">
-          Come to mine. We'll kick out the jams.
-        </div>
-      </div>
-      <br><br>
-    </div>
-
-    <button class="summoner">Invite/Share</button>
-   
-  </div-->
   <div class="screen screen-has-footer bg-yellow" data-nav='herds'>
-
-    <!--div class="herd">
-      <div class="madlib">
-        <div class="madlib-line">Hey, let's</div><br>
-        <div class="madlib-line edited">eat some cheese</div><br>
-        <div class="madlib-line edited">on Saturday.</div>
-      </div>
-      <div class="herd-footer">
-        <div class="herd-stat herd-stat-yes">6</div>
-        <div class="herd-stat herd-stat-maybe">3</div>
-      </div>
-    </div>
-    <div class="herd" >
-      <div class="madlib">
-        <div class="madlib-line">Hey, let's</div><br>
-        <div class="madlib-line edited">be  the mad lads we are</div><br>
-        <div class="madlib-line edited">Tomorrow.</div>
-      </div>
-       <div class="herd-footer">
-        <div class="herd-stat herd-stat-yes">2</div>
-        <div class="herd-stat herd-stat-maybe">0</div>
-      </div>
-    </div>
-    <div class="herd">
-      <div class="madlib">
-        <div class="madlib-line">Hey, let's</div><br>
-        <div class="madlib-line edited">eat some cheese</div><br>
-        <div class="madlib-line edited">on Friday.</div>
-      </div>
-     <div class="herd-footer">
-        <div class="herd-stat herd-stat-yes">1</div>
-        <div class="herd-stat herd-stat-maybe">0</div>
-      </div>
-    </div>
-    <div class="herd">
-      <div class="madlib">
-        <div class="madlib-line">Hey, let's</div><br>
-        <div class="madlib-line edited">eat some cheese</div><br>
-        <div class="madlib-line edited">on Friday.</div>
-      </div>
-      <div class="herd-footer">
-        <div class="herd-stat herd-stat-yes">0</div>
-        <div class="herd-stat herd-stat-maybe">0</div>
-      </div>
-    </div-->
-   <!--button class="compact action-to-next-screen" data-to-screen='2' style="position: absolute;top:10px;left:10px;"><</button-->
+    <br>
+      <p class="small">Want to hang out?<br>Create a plan.</p>
+      <div style="width: 50px;height: 50px;margin:auto;background-size: 100%;background-color: rgba(255,255,255,0.5);border-radius:100px;" class="new-icon action-to-next-screen" data-to-screen='-1'></div>
+      <p class="small" style="margin:0px;">create</p>
   </div>
-  <!--div class="screen">
-    <br><br><br>
-    <div class="madlib">
-      <div class="madlib-line">Hey, let's</div><br>
-      <div class="madlib-line editable" contenteditable>do something</div><br>
-      <div class="madlib-line editable" contenteditable>tomorrow.</div>
-    </div>
-    <br>
-   
-    <br>
-    <button class="bottomed">Summon the herd!</button>
-    <div class="tip">Be specific. People like it.</div>
-    <button class="back"></button>
-  </div-->
+  
   <div class="screen screen-has-footer bg-yellow" data-nav='me'>
     
     <div class="herd">
