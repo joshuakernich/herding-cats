@@ -27,6 +27,7 @@
       --col-1: #FFF12B;
       --col-2: #99ffdd;
       --col-black: #222;
+      --col-grad: linear-gradient(var(--col-1), #ff9900);
 
       color: var(--col-black);
     }
@@ -409,6 +410,7 @@
       border: 2px solid var(--col-black);
       position: relative;
       padding: 20px 0px;
+
     }
 
 
@@ -417,7 +419,16 @@
 
     .herd-footer{
        margin-top:20px;
+       border-top: 2px solid var(--col-black);
+      background: var(--col-2);
+       position: absolute;
+       bottom: 0px;
+       left: 0px;
+       right: 0px;
+       padding: 15px;
+      
     }
+
 
     strong{
       background: var(--col-1);
@@ -509,7 +520,7 @@
     }
 
     .bg-cats{
-      background: linear-gradient( var(--col-2), var(--col-1), var(--col-1) );
+      background: var(--col-grad);
       
     }
 
@@ -530,7 +541,7 @@
     }
 
     .bg-yellow{
-      background: linear-gradient( var(--col-2), var(--col-1), var(--col-1) );
+      background: var(--col-grad);
     }
 
     .deet-info{
@@ -716,9 +727,10 @@
       position: absolute;
       display: block;
       background-image: url('./feather/edit-3.svg');
+      background-image: url('./feather/more-vertical.svg');
       background-size: 100%;
-      right: 20px;
-      top: 20px;
+      right: 5px;
+      top: 10px;
     }
 
     .expand-button{
@@ -739,13 +751,18 @@
       
       background-image: url('./feather/send.svg');
       background-size: 20px;
-      right: 20px;
-      bottom: 20px;
-      padding-right: 30px;
+      right: 15px;
+      bottom: 0px;
+      padding: 15px;
+      padding-right: 25px;
       background-position: right center;
       background-repeat: no-repeat;
+      
+      
 
     }
+
+
 
     .invite-button:before{
       content: 'invite';
@@ -824,7 +841,7 @@
     }
 
     .builder{
-      padding: 50px 20px 100px;
+      padding: 100px 20px 100px;
       transition: 0.5s all;
       background: white;
       position: relative;
@@ -851,6 +868,7 @@
     .builder.gift-wrapped{
       margin: 20px;
       padding: 20px;
+      padding-bottom: 80px;
       border: 2px solid var(--col-black);
       min-height: 0px;
     }
@@ -946,6 +964,10 @@
       background: none;
     }
 
+    b{
+      font-weight: normal;
+      background-color: var(--col-1);
+    }
 
 
   </style>
@@ -960,11 +982,11 @@
 
       var $bReset = $('.builder').clone();
 
-      for(var i=0; i<12; i++){
+      /*for(var i=0; i<12; i++){
         var $bc = $bReset.clone().addClass('step-2 gift-wrapped').appendTo('.screen[data-nav=herds]');
         $bc.find('.editable').addClass('edited');
 
-      }  
+      } */ 
 
      
       
@@ -1068,7 +1090,7 @@
       }
 
      
-      toScreen(2);
+      toNavName('create');
 
       if(window.location.href.indexOf('?')>-1) $('.screen').hide().eq(-4).show();
 
@@ -1293,7 +1315,7 @@
    
   </div-->
   <div class="screen screen-has-footer bg-yellow" data-nav='herds'>
-   
+
     <!--div class="herd">
       <div class="madlib">
         <div class="madlib-line">Hey, let's</div><br>
@@ -1507,6 +1529,25 @@
       <br><br>
       <p>Thanks for your response!</p>
       <p class="small">Wanna send your own invites?<br><a href="">Sign up</a> to Herding Cats.</p>
+  </div>
+  <div class="screen">
+    <br><br>
+    <div class="logo"></div>
+    <p class="small"><b>Sign up</b> to keep track of your herd.</p>
+    <div class="madlib-line editable iconified" contenteditable style="margin-top:10px;">
+      <div class="madlib-icon" style='background-image:url(./feather/phone.svg)'></div>
+      <div class='input' style='display:inline-block;' contenteditable>+44 ANON ANON</div>
+    </div>
+    <p>or</p>
+    <div class="madlib-line editable iconified" contenteditable style="margin-top:10px;">
+      <div class="madlib-icon" style='background-image:url(./feather/mail.svg)'></div>
+      <div class='input' style='display:inline-block;' contenteditable>email</div>
+    </div>
+    <br>
+    <div class="madlib-line editable iconified" contenteditable style="margin-top:10px;">
+      <div class="madlib-icon" style='background-image:url(./feather/lock.svg)'></div>
+      <div class='input' style='display:inline-block;' contenteditable>********</div>
+    </div>
   </div>
   <div class="footer">
       <div class="footer-button action-nav" data-nav='me'>
