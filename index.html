@@ -28,6 +28,7 @@
       --col-2: #99ffdd;
       --col-black: #222;
       --col-grad: linear-gradient(var(--col-1), #ff9900);
+      --col-grad: url('./bg.jpeg');
 
       color: var(--col-black);
     }
@@ -523,7 +524,13 @@
 
     .bg-cats{
       background: var(--col-grad);
+      background-size: cover;
       
+    }
+
+     .bg-yellow{
+      background: var(--col-grad);
+      background-size: cover;
     }
 
     .bg-cats:before{
@@ -542,9 +549,7 @@
 
     }
 
-    .bg-yellow{
-      background: var(--col-grad);
-    }
+
 
     .deet-info{
       text-align: left;
@@ -751,16 +756,24 @@
       position: absolute;
       display: block;
       
-      background-image: url('./feather/send.svg');
-      background-size: 20px;
+     
       right: 0px;
       bottom: 0px;
       left: 0px;
       padding: 15px;
       padding-right: 45px;
-      /*background-position: right 20px center;*/
-      background-repeat: no-repeat;
       text-align: right;
+      overflow: hidden;
+    }
+
+    .invite-button:after{
+      content: "";
+      width: 20px;
+      height: 20px;
+      background-image: url('./feather/send.svg');
+      background-size: 20px;
+      position: absolute;
+      display: block;
     }
 
     .invite-button:before{
@@ -903,34 +916,39 @@
 
     @keyframes flight{
       0%{
-        background-position: right 60px top 60px;
+        right:60px;
+        top:60px;
       }
 
       30%{
-        background-position: right 20px top 20px;
+        right:20px;
+        top:20px;
       }
 
       70%{
-        background-position: right 20px top 20px;
+        right:20px;
+        top:20px;
       }
 
       100%{
-        background-position: right -20px top -20px;
+        right:-20px;
+        top:-20px
       }
     }
 
     
 
-    .builder.gift-wrapped .invite-button{
+    .builder.gift-wrapped .invite-button:after{
       animation-name: flight;
       animation-duration: 2s;
       animation-fill-mode: forwards;
       animation-iteration-count: infinite;
     }
 
-    .builder.gift-wrapped.invited .invite-button{
+    .builder.gift-wrapped.invited .invite-button:after{
       animation:none;
-      background-position: right 20px top 20px;
+      right:20px;
+      top:20px;
     }
 
     .builder.gift-wrapped .editable{
@@ -1003,7 +1021,7 @@
     .tutor-button{
       position: absolute;
       right: 0px;
-      top: 0px;
+      top: env(safe-area-inset-top);
       width: 50px;
       height: 50px;
       border: none;
@@ -1015,7 +1033,40 @@
 
     }
 
+    .responder-header{
+      height: 150px;
+      background-image: url('./cats/cat-invite.png');
+      background-size: 150px;
+      background-position: center;
+      background-repeat: no-repeat;
+      margin: 50px 0px;
+      transition: all 0.5s;
+    }
 
+    .responder .response-reason,.responder .response-proposal{
+      display: none;
+      margin-bottom: 50px;
+    }
+
+    .responder.responded .deets,.responder.responded .madlib{
+      display: none;
+    }
+
+    .responder.responded .response-reason, .responder.responded .response-proposal{
+      display: block;
+    }
+
+    .responder.responded .responder-header{
+      
+    }
+
+    .response-list{
+      margin: 50px 0px;
+    }
+
+    .response-list button.selected{
+      background-color: var(--col-2);
+    }
 
 
   </style>
@@ -1251,6 +1302,13 @@
       
       relisten();
 
+      function onResponse(){
+        $(this).addClass('selected');
+        $('.responder').addClass('responded');
+      }
+
+      $('.response-list button').click(onResponse);  
+
     })
   </script>
 </head>
@@ -1305,7 +1363,7 @@
       <div class="story-train"></div>
     </div>
   </div>
-  <div class="screen screen-herd-builder screen-has-footer bg-cats" data-nav='create'>
+  <div class="screen screen-herd-builder screen-has-footer" data-nav='create'>
     <div class="builder">
        <div class="madlib">
         <div class="madlib-line">Hey, let's</div><br>
@@ -1372,60 +1430,67 @@
     
   </div>
   <div class="screen">
-      <br>
-      <img src="./cats/cat_43.png">
-      <br><br>
+     <div class="responder">
+      <div class="responder-header"></div>
+     
       <div class="madlib">
         <div class="madlib-line">Hey, let's</div><br>
         <div class="madlib-line edited">make some cheese</div><br>
         <div class="madlib-line edited">on Saturday.</div>
       </div>
-      <br>
       <div class="deets static">
-      <div class="deet" style="background-image: url(./feather/map-pin.svg)">a place called home</div>
-      <div class="deet" style="background-image: url(./feather/clock.svg)">at 7:00 pm</div>
-      <div class="deet" style="font-size:14px;padding-top:5px;padding-bottom:5px;background-image: url(./feather/clipboard.svg)">
-        Come to mine. We'll kick out the jams.
+        <div class="deet" style="background-image: url(./feather/map-pin.svg)">a place called home</div>
+        <div class="deet" style="background-image: url(./feather/clock.svg)">at 7:00 pm</div>
+        <div class="deet small" style="padding-top:5px;padding-bottom:5px;background-image: url(./feather/clipboard.svg)">Come to mine. We'll kick out the jams.</div>
       </div>
-    </div>
-      <br>
-
-      <br>
-      <button class="third action-to-next-screen" data-to-screen='+3'>I'm in!</button>
-      <button class="third action-to-next-screen" data-to-screen='+1'>Maybe</button>
-      <button class="third action-to-next-screen" data-to-screen='+2'>Can't</button>
-      <br><br>
-      <p style='font-size: 14px;'>Wanna be part of more things?<br>
-      <a href='./'>Sign up</a> to Herding Cats.</p>
-
-  </div>
-  
-  <div class="screen">
-    <br>
-      <img src="./cats/cat_43.png">
-      <br><br>
-      <button class="third edited">Maybe</button>
-      <br><br>
-      <p style="font-size: 14px;">Want to <span class='edited'>kick up some fuss</span>?</p>
-      
-      <div class="proposal-select">
-        <div class="proposal"><span class='proposal-headline'>Propose a <span class="editable">change of plan</span></span><div style='background-image:url(./feather/chevron-down.svg)' class='madlib-icon compact'></div></div>
-        <div class="proposal-series">
-          <ul>
-            <li>Propose <span class='editable'>another date</span></li>
-            <li>Propose <span class='editable'>another time</span></li>
-            <li>Propose <span class='editable'>another location</span></li>
-            <li>Propose <span class='editable'>another activity</span></li>
-            <li>Air a <span class='editable'>grievance</span></li>
-          </ul>
+      <div class="response-list">
+        <button class="third" data-response='yes'>I'm in!</button>
+        <button class="third" data-response='maybe'>Maybe</button>
+        <button class="third" data-response='no'>Can't</button>
+      </div>
+      <div class="response-reason">
+        <p style="font-size: 14px;">Feel the need to <span class='edited'>explain yourself</span>?</p>
+        <div class="proposal-select">
+          <div class="proposal"><span class='proposal-headline'>Send a <span class="editable">reason</span></span><div style='background-image:url(./feather/chevron-down.svg)' class='madlib-icon compact'></div></div>
+          <div class="proposal-series">
+            <ul>
+              <li>I have <span class='editable'>other plans</span></li>
+              <li>I'm kinda <span class='editable'>not feeling so well</span></li>
+              <li>That's a <span class='editable'>bad time for me</span></li>
+              <li>This thing <span class='editable'>sounds kinda shit</span></li>
+            </ul>
+          </div>
         </div>
       </div>
-      <button class="bottomed action-to-next-screen" data-to-screen='+2'  data-handball="Maybe">Send to Josh</button>
+      <div class="response-proposal">
+        <p style="font-size: 14px;">Want to <span class='edited'>kick up some fuss</span>?</p>
+        <div class="proposal-select">
+          <div class="proposal"><span class='proposal-headline'>Propose a <span class="editable">change of plan</span></span><div style='background-image:url(./feather/chevron-down.svg)' class='madlib-icon compact'></div></div>
+          <div class="proposal-series">
+            <ul>
+              <li>Propose <span class='editable'>another date</span></li>
+              <li>Propose <span class='editable'>another time</span></li>
+              <li>Propose <span class='editable'>another location</span></li>
+              <li>Propose <span class='editable'>another activity</span></li>
+              <li>Air a <span class='editable'>grievance</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!--div class="screen">
+      
+        <div class="invite-header"></div>
+        <button class="third edited">Maybe</button>
+        <br><br>
+        
+        <button class="bottomed action-to-next-screen" data-to-screen='+2'  data-handball="Maybe">Send to Josh</button>
+
   </div>
   <div class="screen">
-    <br>
-      <img src="./cats/cat_43.png">
-      <br><br>
+      <div class="invite-header"></div>
       <button class="third edited">Can't</button>
       <br><br>
       <p style="font-size: 14px;">Feel the need to <span class='edited'>explain yourself</span>?</p>
@@ -1458,16 +1523,12 @@
         </div>
       </div>
       <button class="bottomed action-to-next-screen" data-handball="Can't">Send to Josh</button>
-  </div>
+  </div-->
   <div class="screen">
-    <br>
-      <img src="./cats/cat_43.png">
-      <br><br>
+    <div class="invite-header"></div>
       <button class="third edited handball">I'm in!</button>
       <br><br>
     <div class="madlib">
-        <!--div class="madlib-line">Hang on,</div><br>
-        <div class="madlib-line">who are you?</div-->
         <p style="font-size: 14px;padding:0px 50px;">Help <span class='edited'>Josh</span> keep track of who is coming.</p>
         
       
@@ -1480,9 +1541,7 @@
     <button class="bottomed action-to-next-screen">Next</button>
   </div>
   <div class="screen">
-    <br>
-      <img src="./cats/cat_43.png">
-      <br><br>
+   <div class="invite-header"></div>
       <button class="third edited handball">I'm in!</button>
       <br><br>
     <div class="madlib">
@@ -1497,9 +1556,7 @@
     <button class="bottomed action-to-next-screen">There ya go, Josh.</button>
   </div>
   <div class="screen">
-    <br>
-     <img src="./cats/cat_43.png">
-      <br><br>
+    <div class="invite-header"></div>
       <button class="third edited handball">I'm in!</button>
       <br><br>
       <p>Thanks for your response!</p>
