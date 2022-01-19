@@ -908,10 +908,16 @@
     .builder .herd-footer{
       display: none;
       text-align: left;
+      background: var(--col-1);
     }
 
     .builder.gift-wrapped .herd-footer{
       display: block;
+    }
+
+    .builder.invited .herd-footer{
+      
+      background: var(--col-2);
     }
 
     @keyframes flight{
@@ -936,7 +942,6 @@
       }
     }
 
-    
 
     .builder.gift-wrapped .invite-button:after{
       animation-name: flight;
