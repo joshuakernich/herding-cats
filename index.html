@@ -1187,21 +1187,31 @@
       
       function onFocusLine(e){
         e.stopPropagation();
+
         $(this).closest('.madlib-line').find('.input').blur();
         $(this).closest('.madlib-line').find('.input').html($(this).text());
+        
+        console.log('here');
       }
 
       function doEditLine(){
+
+        $(this).find('.input').data('cache',$(this).find('.input').text());
+
         $(this).css({
           'height':$(this).height(),
           'min-width':$(this).width(),
           'min-height':$(this).outerHeight()
         }).addClass('editing').find('.input').empty();
+
+        
       }
 
       function onEditFinish(){
 
-          var $b = $(this).closest('.builder');
+        var $b = $(this).closest('.builder');
+        var isBlank = ( $(this).text() == '' );
+        if( isBlank ) $(this).text($(this).data('cache'));
 
          $(this).closest('.editable').css({
           'height':'auto',
