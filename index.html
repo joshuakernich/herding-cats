@@ -357,7 +357,7 @@
     }
 
     .story{
-      background: var(--col-2);
+      background: white;
       position: absolute;
       top: 0px;
       right: 0px;
@@ -382,6 +382,7 @@
       overflow: hidden;
       scroll-snap-align: start;
       position: relative;
+
     }
 
     .story-scroll{
@@ -393,12 +394,13 @@
 
     .story-train{
      padding: 15px;
+     border-top: 2px solid var(--col-black);
     }
 
     .story-train-station{
       width: 8px;
       height: 8px;
-      background: white;
+      background: #ccc;
       display: inline-block;
       margin: 0px 3px;
       border-radius: 10px;
@@ -493,6 +495,7 @@
        font-weight: normal;
        font-size: 50px;
        line-height: 50px;
+       margin: 0px;
     }
 
     .logo{
@@ -500,13 +503,14 @@
       font-size: 75px;
       line-height: 75px;
       color: var(--col-black);
+
       /*text-shadow: 2px -2px 0px white;*/
     }
 
     .logo:before{
       content: "herding";
       display: block;
-      z-index: 2;
+     
       position: relative;
     }
 
@@ -516,7 +520,7 @@
       position: relative;
       top: -22px;
       left: 30px;
-      z-index: 1;
+      
     }
 
     @keyframes scroll-bg{
@@ -1050,7 +1054,7 @@
       background-position: center;
       background-repeat: no-repeat;
       box-shadow: none;
-
+      z-index: 1;
     }
 
     .responder-header{
@@ -1090,6 +1094,74 @@
 
     .response-list button.selected{
       background-color: var(--col-2);
+    }
+
+    .tutor{
+      position: absolute;
+      top: 100%;
+      left: 0px;
+      background: white;
+      min-height: 100%;
+      width: 100%;
+      z-index: 2;
+      box-shadow: 0px -2px var(--col-black);
+      padding: 20px;
+      box-sizing: border-box;
+      white-space: normal;
+      transition: all 0.5s;
+    }
+
+    .tutor.active{
+      top: 0px;
+    }
+
+    .tutor ol{
+      margin: 0px;
+      padding: 0px;
+      list-style-type: none;
+      counter-reset: li;
+    }
+
+
+    .tutor li{
+      margin: 0px;
+      padding: 0px;
+      margin-bottom: 20px;
+      counter-increment: li;
+    }
+
+    .tutor li:before {
+      content: counter(li);
+      background: var(--col-1);
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      margin-right: 10px;
+      display: inline-block;
+    }
+
+    .close-button{
+      position: absolute;
+      right: 0px;
+      top: env(safe-area-inset-top);
+      width: 50px;
+      height: 50px;
+      border: none;
+      background: none;
+      background-image: url('./feather/x-circle.svg');
+      background-size: 50%;
+      background-position: center;
+      background-repeat: no-repeat;
+      box-shadow: none;
+      z-index: 1;
+    }
+
+    hr{
+      height: 2px;
+      background: var(--col-black);
+      border: none;
+      margin: 0px;
     }
 
 
@@ -1331,14 +1403,20 @@
         $('.responder').addClass('responded');
       }
 
+      function onTutor(){
+        $('.tutor').toggleClass('active');
+      }
+
       $('.response-list button').click(onResponse);  
+      $('.action-tutor').click(onTutor);  
+      $('.action-untutor').click(onTutor);  
 
     })
   </script>
 </head>
 <body>
   <div class="wrapper">
-  <div class="screen screen-padded bg-cats">
+  <div class="screen screen-padded bg-yellow">
     <!--img style='position:absolute;right:-20px;top:150px;' src='./cats/cat_02.png'>
     <img style='position:absolute;left:20px;top:150px;' src='./cats/cat_05.png'>
     <img style='position:absolute;right:30px;top:380px;' src='./cats/cat_08.png'>
@@ -1422,7 +1500,7 @@
         <button class="compact place-finder-close-button action-unsummon-place-finder">×</button>
       </div>
     </div>
-    <button class="tutor-button"></button>
+    <button class="tutor-button action-tutor"></button>
       
      
   </div>
@@ -1436,18 +1514,12 @@
   <div class="screen screen-has-footer bg-yellow" data-nav='me'>
     
     <div class="herd">
-      <p style="font-size: 15px;">You are a</p>
+      <p>You are a</p>
       <h2 class="rank">Fledgeling<br>Cat Herder</h2>
 
-      <p style="font-size: 15px;">Your herd is <strong>37 strong</strong> and growing.</p>
-      <img src="./cats/cat_02.png" style="height: 40px;">
-      <img src="./cats/cat_15.png" style="height: 40px;">
-      <img src="./cats/cat_05.png" style="height: 40px;">
-      <img src="./cats/cat_08.png" style="height: 40px;">
-      <img src="./cats/cat_11.png" style="height: 40px;">
-      <img src="./cats/cat_17.png" style="height: 40px;">
-      <br>
-      <br>
+      <p>Your herd is <strong>37 strong</strong> and growing.</p>
+      <img src="./cats/cat-shepherd-flock.png" width="300">
+
     </div>
     <button class="bottomed action-invite">Invite Friends</button>
     <!--button class="compact action-to-next-screen" data-to-screen='2' style="position: absolute;top:10px;left:10px;"><</button-->
@@ -1620,6 +1692,18 @@
       </div>
     </div>
     <div class="grid"></div>
+    <div class="tutor">
+      <div class="logo" ></div>
+      <hr>
+      <br>
+      <ol>
+        <li>Propose an event</li>
+        <li>Copy your unique URL to invite friends</li>
+        <li>Friends propose any changes</li>
+        <li>Keep track of who is coming</li>
+      </ol>
+      <button class="close-button action-untutor"></button>
+    </div>
 </div>
 <div class="nav-train"></div>
 <div class="grid-toggle"></div>
