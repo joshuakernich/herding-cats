@@ -86,7 +86,7 @@
 
     button{
       border: 2px solid var(--col-black);
-      background: white;
+      background: rgba(255,255,255,0.9);
       display: block;
       
      
@@ -253,6 +253,8 @@
     .builder.step-2 .deet, .builder.step-2 .summon-your-herd{
       opacity: 1;
     }
+
+    
 
 
     .tip:before{
@@ -535,13 +537,12 @@
 
     .bg-cats{
       background: var(--col-grad);
-      background-size: cover;
       
     }
 
      .bg-yellow{
       background: var(--col-grad);
-      background-size: cover;
+      background-size: 300%;
     }
 
     .bg-cats:before{
@@ -669,7 +670,10 @@
     }
 
     .screen-herd-builder{
-      
+      background-image: url('./bg-pale.png');
+      background-size:cover;
+      background-position: bottom;
+      background: white;
     }
 
 
@@ -870,13 +874,14 @@
       background: white;
       position: relative;
       box-sizing: border-box;
-      border: 2px solid white;
+      border: 2px solid transparent;
       min-height: 100%;
       overflow: hidden;
       background-image: url('./cats/cat-shepherd-flock.png');
       background-size: 300px;
       background-position: bottom 20px right 20px;
       background-repeat: no-repeat;
+      background-color: transparent;
     }
 
 
@@ -889,6 +894,10 @@
 
     .builder .edit-button{
       opacity: 0;
+    }
+
+    .builder.doned{
+      background-color: white;
     }
 
     .builder.gift-wrapped .edit-button{
@@ -915,7 +924,7 @@
       display: none;
     }
 
-    .builder.gift-wrapped .deet.edited{
+    .builder.gift-wrapped .edited{
       background-color: transparent;
     }
 
@@ -1331,7 +1340,10 @@
 
       function toInvite(){
         $b = $(this).closest('.builder');
+
         if($b.closest('.screen').is('.screen-herd-builder')){
+
+          $b.addClass('doned');
           $b.prependTo('.screen[data-nav=herds]');
           $bReset.clone().appendTo('.screen-herd-builder');
           relisten();
@@ -1536,69 +1548,30 @@
     
   </div>
   <div class="screen">
-     <div class="responder">
-      <div class="responder-header"></div>
-     
-      <div class="madlib">
-        <div class="madlib-line">Hey, let's</div><br>
-        <div class="madlib-line edited">make some cheese</div><br>
-        <div class="madlib-line edited">on Saturday.</div>
-      </div>
-      <div class="deets static">
-        <div class="deet" style="background-image: url(./feather/map-pin.svg)">a place called home</div>
-        <div class="deet" style="background-image: url(./feather/clock.svg)">at 7:00 pm</div>
-        <div class="deet small" style="padding-top:5px;padding-bottom:5px;background-image: url(./feather/clipboard.svg)">Come to mine. We'll kick out the jams.</div>
-      </div>
-      <div class="response-list">
-        <button class="third" data-response='yes'>I'm in!</button>
-        <button class="third" data-response='maybe'>Maybe</button>
-        <button class="third" data-response='no'>Can't</button>
-      </div>
-      <div class="response-reason">
-        <p style="font-size: 14px;">Feel the need to <span class='edited'>explain yourself</span>?</p>
-        <div class="proposal-select">
-          <div class="proposal"><span class='proposal-headline'>Send a <span class="editable">reason</span></span><div style='background-image:url(./feather/chevron-down.svg)' class='madlib-icon compact'></div></div>
-          <div class="proposal-series">
-            <ul>
-              <li>I have <span class='editable'>other plans</span></li>
-              <li>I'm kinda <span class='editable'>not feeling so well</span></li>
-              <li>That's a <span class='editable'>bad time for me</span></li>
-              <li>This thing <span class='editable'>sounds kinda shit</span></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="response-proposal">
-        <p style="font-size: 14px;">Want to <span class='edited'>kick up some fuss</span>?</p>
-        <div class="proposal-select">
-          <div class="proposal"><span class='proposal-headline'>Propose a <span class="editable">change of plan</span></span><div style='background-image:url(./feather/chevron-down.svg)' class='madlib-icon compact'></div></div>
-          <div class="proposal-series">
-            <ul>
-              <li>Propose <span class='editable'>another date</span></li>
-              <li>Propose <span class='editable'>another time</span></li>
-              <li>Propose <span class='editable'>another location</span></li>
-              <li>Propose <span class='editable'>another activity</span></li>
-              <li>Air a <span class='editable'>grievance</span></li>
-            </ul>
-          </div>
-        </div>
-      </div>
+    <div class="responder-header"></div>
+    <div class="madlib">
+      <div class="madlib-line">Hey, let's</div><br>
+      <div class="madlib-line edited">make some cheese</div><br>
+      <div class="madlib-line edited">on Saturday.</div>
+    </div>
+    <div class="deets static">
+      <div class="deet" style="background-image: url(./feather/map-pin.svg)">a place called home</div>
+      <div class="deet" style="background-image: url(./feather/clock.svg)">at 7:00 pm</div>
+      <div class="deet small" style="padding-top:5px;padding-bottom:5px;background-image: url(./feather/clipboard.svg)">Come to mine. We'll kick out the jams.</div>
+    </div>
+    <div class="response-list">
+      <button class="third" data-response='yes'>I'm in!</button>
+      <button class="third" data-response='maybe'>Maybe</button>
+      <button class="third" data-response='no'>Can't</button>
     </div>
   </div>
-  
-  <!--div class="screen">
-      
-        <div class="invite-header"></div>
-        <button class="third edited">Maybe</button>
-        <br><br>
-        
-        <button class="bottomed action-to-next-screen" data-to-screen='+2'  data-handball="Maybe">Send to Josh</button>
-
-  </div>
   <div class="screen">
-      <div class="invite-header"></div>
-      <button class="third edited">Can't</button>
-      <br><br>
+    <div class="response-list">
+      <button class="third" data-response='yes'>I'm in!</button>
+      <button class="third" data-response='maybe'>Maybe</button>
+      <button class="third" data-response='no'>Can't</button>
+    </div>
+    <div class="response-reason">
       <p style="font-size: 14px;">Feel the need to <span class='edited'>explain yourself</span>?</p>
       <div class="proposal-select">
         <div class="proposal"><span class='proposal-headline'>Send a <span class="editable">reason</span></span><div style='background-image:url(./feather/chevron-down.svg)' class='madlib-icon compact'></div></div>
@@ -1611,11 +1584,9 @@
           </ul>
         </div>
       </div>
-
-     
-      <br>
+    </div>
+    <div class="response-proposal">
       <p style="font-size: 14px;">Want to <span class='edited'>kick up some fuss</span>?</p>
-      
       <div class="proposal-select">
         <div class="proposal"><span class='proposal-headline'>Propose a <span class="editable">change of plan</span></span><div style='background-image:url(./feather/chevron-down.svg)' class='madlib-icon compact'></div></div>
         <div class="proposal-series">
@@ -1628,8 +1599,9 @@
           </ul>
         </div>
       </div>
-      <button class="bottomed action-to-next-screen" data-handball="Can't">Send to Josh</button>
-  </div-->
+    </div>
+  </div>  
+ 
   <div class="screen">
     <div class="invite-header"></div>
       <button class="third edited handball">I'm in!</button>
