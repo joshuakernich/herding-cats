@@ -80,16 +80,17 @@
           for(var c in listAll[w]){
             score.yellow += wordsWithLetters[listAll[w][c]];
             score.green += ( map[c][listAll[w][c]] )?( map[c][listAll[w][c]] ):0;
-
           }
           scores[w] = score;
+
+          if(score.word == 'arise') var scoreTarget = score;
         }
       }
 
       scores.sort(sortOnGreen);
 
       function sortOnGreen(a,b){
-        if(a.word == 'saine') console.log(a,b);
+        
         if(a.green>b.green) return -1;
         else if(b.green>a.green) return 1;
         else return 0;

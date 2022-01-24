@@ -1331,8 +1331,6 @@
 
         $(this).closest('.madlib-line').find('.input').blur();
         $(this).closest('.madlib-line').find('.input').html($(this).text());
-        
-        console.log('here');
       }
 
       function doEditLine(){
@@ -1441,7 +1439,7 @@
      
       
 
-      if(window.location.href.indexOf('?')>-1) $('.screen').hide().eq(-4).show();
+      if(window.location.href.indexOf('?')>-1) toScreen(5);
 
       $(window).resize(function(){
         $('.wrapper').height(window.innerHeight-20);
