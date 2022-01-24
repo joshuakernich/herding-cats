@@ -884,6 +884,7 @@
       background-position: bottom 20px right 20px;
       background-repeat: no-repeat;
       background-color: transparent;
+      background-image: none;
     }
 
 
@@ -1229,12 +1230,86 @@
     .has-icon-sad { background-image: url('./feather/frown.svg'); }
 
 
+    .flock{
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+    }
+
+    .flock-shepherd{
+      width: 65px;
+      height: 75px;
+      background-image: url('./cats/cat-shepherd.png');
+      background-size: 100%;
+      position: absolute;
+      right: 0px;
+      bottom: 0px;
+    }
+
+    .flock-sheep{
+      position: absolute;
+      right: 0px;
+      bottom: 0px;
+      width: 43px;
+      height: 35px;
+      background-size: 100%;
+      background-image: url('./cats/cat-sheep.png');
+    }
+
   </style>
   <script type="text/javascript" src='./jq.js'></script>
   <script type="text/javascript">
     $(function(){
 
       toNavName('create');
+
+
+      $('.flock-sheep').each(function(n){
+        new Sheep($(this),n);
+      });
+
+      function Sheep($s,n){
+
+        var p = 30+Math.random()*250;
+        var t = p;
+        var dir = 1;
+
+        $s.css('right',p);
+        $s.css('bottom',5-n);
+
+        function hop(){
+
+          if(dir == 1 && p>t){
+            // too high
+            t = p - Math.random() * p;
+            dir = -1;
+          }
+
+          if(dir == -1 && p<t){
+            // too low
+            t = p + Math.random() * (280-p);
+            dir = 1;
+          }
+
+          $s.css('transform','scaleX('+dir+')');
+          
+          var p2 = p+20*dir;
+          $s.delay(500+Math.random()*500).animate({right:(p+p2)/2,bottom:15-n},50).animate({right:p2,bottom:5-n},50,hop);
+          p = p2;
+          
+
+          
+        }
+
+        
+        t = Math.random()*280;
+        dir = (p>t)?1:-1;
+        hop();
+        
+
+      }
+
+
 
       $('.story-page').each(function(){
         $('<div class=story-train-station>').appendTo('.story-train');
@@ -1557,6 +1632,15 @@
   </div>
   <div class="screen screen-herd-builder screen-has-footer" data-nav='create'>
     <div class="builder">
+      <div class="flock">
+        <div class="flock-sheep"></div>
+        <div class="flock-sheep"></div>
+        <div class="flock-sheep"></div>
+        <div class="flock-sheep"></div>
+        <div class="flock-sheep"></div>
+        <div class="flock-sheep"></div>
+        <div class="flock-shepherd"></div>
+      </div>
        <div class="madlib">
         <div class="madlib-line">Hey, let's</div><br>
         <div class="madlib-line editable input-thing"><div class='input' contenteditable>do something</div><ul><li>go to the movies</li><li>make some cheese</li><li>indulge in exploits</li></ul></div><br>
