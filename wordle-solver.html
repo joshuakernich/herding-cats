@@ -72,22 +72,27 @@
 
       var scores = [];
       for(var w in listAll){
+
         if(isIsogram(listAll[w])){
 
           var score = {word:listAll[w],green:0,yellow:0};
+
           for(var c in listAll[w]){
             score.yellow += wordsWithLetters[listAll[w][c]];
-            score.green += map[c][listAll[w][c]];
+            score.green += ( map[c][listAll[w][c]] )?( map[c][listAll[w][c]] ):0;
+
           }
           scores[w] = score;
         }
-        
       }
 
       scores.sort(sortOnGreen);
 
       function sortOnGreen(a,b){
-        return b.green-a.green;
+        if(a.word == 'saine') console.log(a,b);
+        if(a.green>b.green) return -1;
+        else if(b.green>a.green) return 1;
+        else return 0;
       }
 
       $ws = $('<div class="words">').appendTo('body');
