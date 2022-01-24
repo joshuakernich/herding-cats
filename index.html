@@ -13,7 +13,7 @@
 
     @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
 
-    @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
 
     body{
       white-space: nowrap;
@@ -86,7 +86,7 @@
 
     button{
       border: 2px solid var(--col-black);
-      background: rgba(255,255,255,0.9);
+      background: white;
       display: block;
       
      
@@ -149,7 +149,7 @@
       
     }
 
-    button.action-invite:after{
+    button.action-invite:after, button.send-icon:after{
       content: "";
       width: 20px;
       height: 20px;
@@ -167,7 +167,8 @@
 
     .madlib{
       text-align: center;
-      font-size: 30px;
+      font-size: 35px;
+
     }
 
     .madlib-line{
@@ -225,8 +226,8 @@
       
       display: inline-block;
       padding: 3px;
-      padding-left: 30px;
-      background-position: 4px 5px;
+      padding-left: 25px;
+      background-position: 0px 5px;
       background-size: 20px;
       background-repeat: no-repeat;
 
@@ -1080,6 +1081,15 @@
       margin-bottom: 50px;
     }
 
+    .response-proposal{
+
+    }
+
+    .proposal-select{
+
+      font-size: 25px;
+    }
+
     .responder .response-reason,.responder .response-proposal{
       display: none;
       margin-bottom: 50px;
@@ -1171,6 +1181,10 @@
       background: var(--col-black);
       border: none;
       margin: 0px;
+    }
+
+    .back-button{
+      border: none;
     }
 
 
@@ -1551,13 +1565,14 @@
     <div class="responder-header"></div>
     <div class="madlib">
       <div class="madlib-line">Hey, let's</div><br>
-      <div class="madlib-line edited">make some cheese</div><br>
-      <div class="madlib-line edited">on Saturday.</div>
+      <div class="madlib-line">make some cheese</div><br>
+      <div class="madlib-line">on Saturday.</div>
     </div>
+    <br><br>
     <div class="deets static">
       <div class="deet" style="background-image: url(./feather/map-pin.svg)">a place called home</div>
       <div class="deet" style="background-image: url(./feather/clock.svg)">at 7:00 pm</div>
-      <div class="deet small" style="padding-top:5px;padding-bottom:5px;background-image: url(./feather/clipboard.svg)">Come to mine. We'll kick out the jams.</div>
+      <div class="deet small" style="background-image: url(./feather/clipboard.svg)">Come to mine. We'll kick out the jams.</div>
     </div>
     <div class="response-list">
       <button class="third" data-response='yes'>I'm in!</button>
@@ -1566,13 +1581,14 @@
     </div>
   </div>
   <div class="screen">
+    <button class='back-button action-to-next-screen' data-to-screen='-1'><</button>
     <div class="response-list">
       <button class="third" data-response='yes'>I'm in!</button>
-      <button class="third" data-response='maybe'>Maybe</button>
+      <button class="third edited" data-response='maybe'>Maybe</button>
       <button class="third" data-response='no'>Can't</button>
     </div>
     <div class="response-reason">
-      <p style="font-size: 14px;">Feel the need to <span class='edited'>explain yourself</span>?</p>
+      <p>Feel the need to explain yourself?</p>
       <div class="proposal-select">
         <div class="proposal"><span class='proposal-headline'>Send a <span class="editable">reason</span></span><div style='background-image:url(./feather/chevron-down.svg)' class='madlib-icon compact'></div></div>
         <div class="proposal-series">
@@ -1585,8 +1601,17 @@
         </div>
       </div>
     </div>
+    <button class="bottomed action-to-next-screen">Next</button>
+  </div>
+  <div class="screen">
+    <button class='back-button action-to-next-screen' data-to-screen='-1'><</button>
+    <div class="response-list">
+      <button class="third" data-response='yes'>I'm in!</button>
+      <button class="third edited" data-response='maybe'>Maybe</button>
+      <button class="third" data-response='no'>Can't</button>
+    </div>
     <div class="response-proposal">
-      <p style="font-size: 14px;">Want to <span class='edited'>kick up some fuss</span>?</p>
+      <p>Want to kick up some fuss?</p>
       <div class="proposal-select">
         <div class="proposal"><span class='proposal-headline'>Propose a <span class="editable">change of plan</span></span><div style='background-image:url(./feather/chevron-down.svg)' class='madlib-icon compact'></div></div>
         <div class="proposal-series">
@@ -1600,14 +1625,19 @@
         </div>
       </div>
     </div>
+    <button class="bottomed action-to-next-screen">Next</button>
   </div>  
  
   <div class="screen">
-    <div class="invite-header"></div>
-      <button class="third edited handball">I'm in!</button>
-      <br><br>
+    <button class='back-button action-to-next-screen' data-to-screen='-1'><</button>
+    <div class="response-list">
+      <button class="third" data-response='yes'>I'm in!</button>
+      <button class="third edited" data-response='maybe'>Maybe</button>
+      <button class="third" data-response='no'>Can't</button>
+    </div>
+      <p>Help Josh keep track of who is coming.</p>
     <div class="madlib">
-        <p style="font-size: 14px;padding:0px 50px;">Help <span class='edited'>Josh</span> keep track of who is coming.</p>
+        
         
       
         <div class="madlib-line editable iconified" contenteditable>
@@ -1619,19 +1649,20 @@
     <button class="bottomed action-to-next-screen">Next</button>
   </div>
   <div class="screen">
-   <div class="invite-header"></div>
-      <button class="third edited handball">I'm in!</button>
-      <br><br>
+    <button class='back-button action-to-next-screen' data-to-screen='-1'><</button>
+    <div class="response-list">
+      <button class="third" data-response='yes'>I'm in!</button>
+      <button class="third edited" data-response='maybe'>Maybe</button>
+      <button class="third" data-response='no'>Can't</button>
+    </div>
     <div class="madlib">
-        <p style="font-size: 14px;padding:0px 50px;">Help <span class='edited'>Josh</span> keep track of who is coming.</p>
-        
         <div class="madlib-line editable iconified" contenteditable style="margin-top:10px;">
           <div class="madlib-icon" style='background-image:url(./feather/phone.svg)'></div>
           <div class='input' style='display:inline-block;' contenteditable>+44 ANON ANON</div>
         </div>
     </div>
     <p class="small">* This is totally optional, by the way.</p>
-    <button class="bottomed action-to-next-screen">There ya go, Josh.</button>
+    <button class="bottomed action-to-next-screen send-icon">Send Response</button>
   </div>
   <div class="screen">
     <div class="invite-header"></div>
