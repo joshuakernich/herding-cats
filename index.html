@@ -165,8 +165,35 @@
       background-size: 100%;
     }
 
+    button.action-add-to-calendar{
+      padding: 10px;
+      padding-right: 35px;
+      border: none;
+      background: none;
+    }
+
+    button.action-add-to-calendar:after{
+      content: "";
+      width: 20px;
+      height: 20px;
+      background-image: url('./feather/calendar.svg');
+      background-size: 100%;
+      right: 10px;
+    }
+
+    .builder .action-add-to-calendar{
+      opacity: 0;
+      margin-top: 20px;
+    }
+
+    .builder.step-2 .action-add-to-calendar{
+      opacity: 1;
+    }
+
+
+
     .madlib{
-      text-align: center;
+      text-align: left;
       font-size: 35px;
 
     }
@@ -238,7 +265,6 @@
 
       opacity: 0;
       transition: 0.5s opacity;
-      transition-delay: 0.5s;
     }
 
     .edited, .deet.edited{
@@ -659,6 +685,7 @@
       font-weight: normal;
       color: inherit;
       text-align: left;
+      padding-right: 0px;
     }
 
 
@@ -773,11 +800,10 @@
       
       position: absolute;
       display: block;
-      
      
       right: 0px;
       bottom: 0px;
-      left: 0px;
+      
       padding: 15px;
       padding-right: 45px;
       text-align: right;
@@ -919,6 +945,10 @@
       display: block;
     }
 
+    .builder.gift-wrapped .action-add-to-calendar{
+      display: none;
+    }
+
     .builder.gift-wrapped .editable{
       border-bottom-width: 0px;
     }
@@ -939,6 +969,7 @@
       display: none;
       text-align: left;
       background: var(--col-1);
+      font-weight: bold;
     }
 
     .builder.gift-wrapped .herd-footer{
@@ -1032,6 +1063,25 @@
 
     .herd-stat.herd-stat-maybe:before{
       background-image: url('./icon-no.png');
+    }
+
+
+
+    .herd-stat.herd-stat-message:before{
+      background-image: url('./feather/mail.svg');
+      animation: jiggle;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+
+    }
+
+    @keyframes jiggle{
+      0%{ transform: rotate(0deg); }
+      20%{ transform: rotate(-15deg); }
+      30%{ transform: rotate(15deg); }
+      40%{ transform: rotate(-15deg); }
+      50%{ transform: rotate(15deg); }
+      60%{ transform: rotate(0deg); }
     }
 
     .screen-padded{
@@ -1256,6 +1306,65 @@
       background-image: url('./cats/cat-sheep.png');
     }
 
+    .message{
+      padding-left: 35px;
+      position: relative;
+      text-align: left;
+      padding-bottom: 15px;
+      margin-bottom: 10px;
+    }
+
+    .message-person{
+      display: block;
+      font-size: 10px;
+      position: absolute;
+      top: 25px;
+      left: 0px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .message:before{
+      content: "";
+      display: block;
+      width: 22px;
+      height: 22px;
+      background-image: url('./icon-herd.png');
+      background-size: 45px;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+    }
+
+    .message-content{
+      display: inline-block;
+      border-bottom: 2px solid black;
+      position: relative;
+    }
+
+    .message-content:after{
+      content: "";
+      width: 20px;
+      height: 15px;
+      background-size: 100%;
+      background-image: url('./message-tail.png');
+      display: block;
+      position: absolute;
+      left: 10px;
+      bottom: -15px;
+    }
+
+
+    .message button{
+      display: inline-block;
+      background: var(--col-black);
+      color: white;
+      font-size: 15px;
+      border: none;
+      padding: 5px 10px;
+      margin-left: 10px;
+    }
+
   </style>
   <script type="text/javascript" src='./jq.js'></script>
   <script type="text/javascript">
@@ -1367,9 +1476,23 @@
 
         var $b = $(this).closest('.builder').addClass('invited');
 
-        var text = "Hey, let's " + $('.input-thing .input').text() + ' ' + $('.input-date .input').text();
+        var text = "Hey, let's "
+        + $b.find('.input-thing .input').text()
+        + ' '
+        + $b.find('.input-date .input').text()
+        + '\r\n\r\n'
+        + '📍' + $b.find('.input-place').text()
+        + '\r\n'
+        + '🕒' + $b.find('.input-time input').eq(0).val()
+        + '\r\n'
+        + '📋' + $b.find('.input-details .input').text()
+        + '\r\n'
+        + '\r\n'
+        + 'RESPOND AT'
+        + '\r\n'
+        + 'herds.io/h/12hg';
 
-        text = text + ' ' + location.href + '?herdID';
+        console.log(text);
 
 
         if(navigator.share){
@@ -1482,15 +1605,19 @@
         toNavName('herds');
         $b.addClass('gift-wrapped');
 
+        $(this).closest('.screen').addClass('screen-has-footer');
+
       }
 
       function toEdit(){
-        $(this).closest('.builder').removeClass('gift-wrapped');
+        $(this).closest('.builder').removeClass('gift-wrapped').css('z-index',1);
 
         var t = $(this).closest('.builder').position().top;
         var st = $(this).closest('.screen').scrollTop();
        
         $(this).closest('.screen').animate({scrollTop:st+t+22});
+
+        $(this).closest('.screen').removeClass('screen-has-footer');
       }
 
       function toExpand(){
@@ -1630,7 +1757,7 @@
   </div>
   <div class="screen screen-herd-builder screen-has-footer" data-nav='create'>
     <div class="builder">
-      <div class="flock">
+      <!--div class="flock">
         <div class="flock-sheep"></div>
         <div class="flock-sheep"></div>
         <div class="flock-sheep"></div>
@@ -1638,7 +1765,7 @@
         <div class="flock-sheep"></div>
         <div class="flock-sheep"></div>
         <div class="flock-shepherd"></div>
-      </div>
+      </div-->
        <div class="madlib">
         <div class="madlib-line">Hey, let's</div><br>
         <div class="madlib-line editable input-thing"><div class='input' contenteditable>do something</div><ul><li>go to the movies</li><li>make some cheese</li><li>indulge in exploits</li></ul></div><br>
@@ -1646,14 +1773,24 @@
       </div>
       <br>
       <div class="deet editable action-summon-place-finder input-place" style="background-image: url(./feather/map-pin.svg)">somewhere</div>
-      <div class="deet editable input-time" style="background-image: url(./feather/clock.svg)">at <input class='time-input' type="time" value="00:00"></div>
+      <div class="deet editable input-time" style="background-image: url(./feather/clock.svg)"><input class='time-input' type="time" value="00:00"> to <input class='time-input' type="time" value="00:00"></div>
       <div class="deet editable input-details" style="background-image: url(./feather/clipboard.svg)">
-        <div class='input' contenteditable>Add some deets.<br>People LOVE deets 📄 ❤️.</div>
+        <div class='input' contenteditable>Add some deets.<br>People LOVE deets.</div>
       </div>
+      <button class='action-add-to-calendar'>Add to Calendar</button>
+      <!--div class="messages">
+        <div class="message"><div class="message-person">Abe</div><div class='message-content'>I'm in</div></div>
+        <div class="message"><div class="message-person">Suf</div><div class='message-content'>I'm not interested</div></div>
+        <div class="message"><div class="message-person">Josh</div><div class='message-content'>I'm busy at that time.<br>Can we change it to <b>9pm</b>?</div><button>ACCEPT</button></div>
+         <div class="message"><div class="message-person">Josh</div><div class='message-content'>Can we go to <b>Mainline Cinema</b><br>instead?</div><button>ACCEPT</button></div>
+      </div-->
       <div class="herd-footer">
         <div class="herd-stat herd-stat-yes">0</div>
         <div class="herd-stat herd-stat-maybe">0</div>
+        <div class="herd-stat herd-stat-message">1</div>
       </div>
+
+      
       <button class="action-to-invite summon-your-herd bottomed">Done</button>
       <!--button class="action-invite bottomed">Invite/Share</button-->
       <div class="action-to-edit edit-button"></div>
@@ -1817,6 +1954,7 @@
     </div>
       <h1>Thanks!</h1>
       <p>Your response has been sent.</p>
+      <button class='action-add-to-calendar' style='margin:auto;'>Add to Calendar</button>
       <p>Wanna send your own invites?<br><a style='color:blue;' class="action-to-next-screen" data-to-screen='2'>Jump in</a> to Herding Cats.</p>
   </div>
   <div class="screen">
@@ -1853,6 +1991,7 @@
       </div>
     </div>
     <div class="grid"></div>
+
     <div class="tutor">
       <div class="logo" ></div>
       <hr>
