@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript" src="./jq.js"></script>
+  <title>Event Builder</title>
+  <style type="text/css">
+    @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+
+    @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
+    body{
+      text-align: center;
+      background: #ddd;
+
+      font-weight: 300;
+      font-family: 'Rubik', sans-serif;
+    }
+
+    .logo{
+      font-family: 'Abril Fatface', cursive;
+      font-size: 40px;
+      line-height: 55px;
+      color: var(--col-black);
+      text-align: center;
+
+      /*text-shadow: 2px -2px 0px white;*/
+    }
+
+    .logo:before{
+      content: "herding";
+      display: block;
+      position: relative;
+    }
+
+    .logo:after{
+      content: "cats";
+      display: block;
+      position: relative;
+      top: -22px;
+      left: 20px;
+    }
+
+    .screen{
+      width: 400px;
+      height: 650px;
+      border: 1px solid black;
+      display: inline-block;
+      text-align: left;
+      background: white;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .scroller{
+      overflow: auto;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      padding: 40px;
+      bottom: 60px;
+    }
+
+    h1{
+      margin: 0px;
+      padding: 0px;
+      font-weight: normal;
+    }
+
+    .edit{
+      background: yellow;
+      border-bottom: 2px solid black;
+    }
+
+    h1.edit{
+      display: inline-block;
+    }
+
+    .adder:before{
+      content: "";
+    }
+
+    .adder{
+      list-style-type: none;
+      padding: 0px;
+      margin: 0px;
+    }
+
+    .adder li{
+      display: inline-block;
+      background-color: yellow;
+      border-bottom: 2px solid black;
+      
+      width: 30px;
+      height: 50px;
+      padding-top: 30px;
+      font-size: 12px;
+      box-sizing: border-box;
+      text-align: center;
+
+
+      background-size: 20px;
+      background-position: center 6px;
+      background-repeat: no-repeat;
+      position: relative;
+
+      background-color:transparent;
+      border:none;
+      margin-right: 10px;
+    }
+
+    .adder li:before{
+      content: "";
+      position: absolute;
+      top: 0px;
+      right: -2px;
+      width: 15px;
+      line-height: 15px;
+    }
+
+    .builder{
+      list-style-type: none;
+      padding: 0px;
+      margin: 0px;
+      margin-top: 20px;
+    }
+
+    .builder li{
+      margin: 0px;
+    
+      background-size: 20px;
+      background-position: 4px 4px;
+      background-repeat: no-repeat;
+    }
+
+    .builder li:empty{
+      display: none;
+    }
+
+    .builder li p{
+      padding: 5px 30px;
+      margin: 0px;
+      position: relative;
+    }
+
+    .builder li{
+      margin-bottom: 5px;
+      position: relative;
+    }
+
+    .time{ background-image: url('./icon-clock.png'); }
+    .place{ background-image: url('./icon-place.png'); }
+    .info{ background-image: url('./icon-info.png'); }
+    .poll{ background-image: url('./icon-poll.png'); }
+
+    .builder li:after, .option:after{
+      content: "×";
+
+      position: absolute;
+      top: 3px;
+      right: 0px;
+      width: 25px;
+      text-align: center;
+      line-height: 24px;
+      font-size: 1.5em;
+      opacity: 0.2;
+    }
+
+    .option{
+      position: relative;
+    }
+
+    .option:before{
+      content: "";
+      width: 6px;
+      height: 6px;
+      border: 1.5px solid black;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+
+    button{
+      display: block;
+      background: yellow;
+      border: 1px solid black;
+      width: calc( 100% - 80px );
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      padding: 10px;
+    }
+
+    .builder li p:empty:before{
+      content: "yo!";
+      opacity: 0.3;
+    }
+
+    .builder li.time p:empty:before{ content: "7pm"; }
+    .builder li.place p:empty:before{ content: "My place"; }
+    .builder li.info p:empty:before{ content: "Bring snacks!"; }
+    .builder li.poll p:empty:before{ content: "Where should we meet?"; }
+    .builder li.poll .option p:empty:before{ content: "A good option"; }
+
+    .sometime:empty:before{ content: "sometime"; opacity: 0.3; }
+    .something:empty:before{ content: "do something"; opacity: 0.3; }
+
+  </style>
+  <script type="text/javascript">
+    $(function(){
+
+
+
+      $('.adder li').click(function(){
+        
+        if($(this).is('.info')){
+          $('<p contenteditable>').text("").appendTo('.builder .info').focus();
+          $(this).hide();
+        }
+
+        if($(this).is('.place')){
+          $('<p contenteditable>').text("").appendTo('.builder .place').focus();
+          $(this).hide();
+        }
+
+        if($(this).is('.time')){
+          $('<p contenteditable>').text("").appendTo('.builder .time').focus();
+          $(this).hide();
+        }
+
+        if($(this).is('.poll')){
+
+          var $li = $('<li class="poll edit">').appendTo('.builder')
+          $('<p contenteditable>').text("").appendTo($li).focus();
+          //$('<p contenteditable>').text("Catnip City").appendTo($li);
+          //$('<p contenteditable>').text("Dognip Town").appendTo($li);
+          $('<p style="font-size:0.7em;">').text("+ add option").appendTo($li).click(function(){
+
+            var $o = $('<div class="option">').insertBefore(this);
+            $('<p contenteditable>').text("").appendTo($o).focus();
+          });
+        }
+
+        
+      });
+    })
+  </script>
+</head>
+<body>
+  <div class="screen">
+    <div class="scroller">
+      <div class="logo"></div>
+      <h1>Hey, let's</h1>
+      <h1 class="edit something" contenteditable></h1><br>
+      <h1 class="edit sometime" contenteditable></h1>
+      <ul class="builder">
+        <li class="time edit"></li>
+        <li class="place edit"></li>
+        <li class="info edit"></li>
+        
+      </ul>
+      <ul class="adder">
+        <li class="time">time</li>
+        <li class="place">place</li>
+        <li class="info">info</li>
+        <li class="poll">poll</li>
+      </ul>
+    </div>
+    <button>DONE</button>
+  </div>
+</body>
+</html>
