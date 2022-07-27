@@ -137,7 +137,7 @@
     }
 
     .builder li p{
-      padding: 5px 30px;
+      padding: 5px 0px 5px 30px;
       margin: 0px;
       position: relative;
     }
@@ -147,12 +147,12 @@
       position: relative;
     }
 
-    .thing{ background-image: url('./feather/activity.svg'); }
+    .thing{ background-image: url('./feather/sun.svg'); }
     .date{ background-image: url('./feather/calendar.svg'); }
     .time{ background-image: url('./feather/clock.svg'); }
     .place{ background-image: url('./feather/navigation.svg'); }
     .info{ background-image: url('./feather/info.svg'); }
-    .poll{ background-image: url('./feather/users.svg'); }
+    .poll{ background-image: url('./feather/message-circle.svg'); }
 
     .builder li:after, .option:after{
       content: "×";
@@ -197,12 +197,18 @@
       opacity: 0.3;
     }
 
+    .builder li.thing p:empty:before{ content: "hunt mice"; }
     .builder li.date p:empty:before{ content: "tomorrow"; }
     .builder li.time p:empty:before{ content: "7pm"; }
     .builder li.place p:empty:before{ content: "My place"; }
     .builder li.info p:empty:before{ content: "Bring snacks!"; }
     .builder li.poll p:empty:before{ content: "Where should we meet?"; }
     .builder li.poll .option p:empty:before{ content: "A good option"; }
+
+    .response:empty:before{ content: "add your own response" !important; };
+    .response:before{
+      display: none !important;
+    }
 
     .sometime:empty:before{ content: "sometime"; opacity: 0.3; }
     .something:empty:before{ content: "do something"; opacity: 0.3; }
@@ -244,7 +250,7 @@
       $a.click(doPoll);
 
       var qPoll = 'What should we do?';
-      var tPoll = 'poll';
+      var tPoll = 'thing';
 
       function doPoll(){
 
@@ -256,10 +262,17 @@
           $('<p contenteditable>').text(qPoll).appendTo($li).focus();
           //$('<p contenteditable>').text("Catnip City").appendTo($li);
           //$('<p contenteditable>').text("Dognip Town").appendTo($li);
-          $('<p style="font-size:0.7em;">').text("+ add option").appendTo($li).click(function(){
+          var $p = $('<p style="font-size:0.7em;display:inline-block;">').text("+ add option").appendTo($li).click(function(){
 
             var $o = $('<div class="option">').insertBefore(this);
             $('<p contenteditable>').text("").appendTo($o).focus();
+          });
+
+          $('<p style="font-size:0.7em;display:inline-block;padding-left:10px;">').text("+ allow open response").appendTo($li).click(function(){
+
+            var $o = $('<div class="option">').insertBefore($p);
+            $(this).remove();
+            $('<p class="response">').text("").appendTo($o);
           });
         }
 
@@ -337,7 +350,7 @@
         <li class="time">time</li>
         <li class="place">place</li>
         <li class="info">info</li>
-        <li class="poll">poll</li>
+        <li class="poll">ask</li>
       </ul>
     </div>
     <button>DONE</button>
