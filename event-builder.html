@@ -147,10 +147,12 @@
       position: relative;
     }
 
-    .time{ background-image: url('./icon-clock.png'); }
-    .place{ background-image: url('./icon-place.png'); }
-    .info{ background-image: url('./icon-info.png'); }
-    .poll{ background-image: url('./icon-poll.png'); }
+    .thing{ background-image: url('./feather/activity.svg'); }
+    .date{ background-image: url('./feather/calendar.svg'); }
+    .time{ background-image: url('./feather/clock.svg'); }
+    .place{ background-image: url('./feather/navigation.svg'); }
+    .info{ background-image: url('./feather/info.svg'); }
+    .poll{ background-image: url('./feather/users.svg'); }
 
     .builder li:after, .option:after{
       content: "×";
@@ -195,6 +197,7 @@
       opacity: 0.3;
     }
 
+    .builder li.date p:empty:before{ content: "tomorrow"; }
     .builder li.time p:empty:before{ content: "7pm"; }
     .builder li.place p:empty:before{ content: "My place"; }
     .builder li.info p:empty:before{ content: "Bring snacks!"; }
@@ -204,33 +207,53 @@
     .sometime:empty:before{ content: "sometime"; opacity: 0.3; }
     .something:empty:before{ content: "do something"; opacity: 0.3; }
 
+    .hint{
+      font-size: 0.8em;
+      opacity: 0.5;
+      padding: 10px;
+      padding-left: 30px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .hint:before{
+      content: "?";
+      border-radius: 100px;
+      background: black;
+      color: white;
+      position: absolute;
+      top: 10px;
+      left: 5px;
+      height: 15px;
+      width: 15px;
+      line-height: 15px;
+      text-align: center;
+    }
+
+    a{
+      cursor: pointer;
+    }
+
   </style>
   <script type="text/javascript">
     $(function(){
 
+      var $hint = $('<div class="hint">').insertBefore('.builder');
+      var $msg = $('<span>').appendTo($hint).text('Not sure what to do?');
+      var $a = $('<span style="margin-left:7px;text-decoration:underline;">').appendTo($hint).text('Try a poll.');
+      $a.click(doPoll);
 
+      var qPoll = 'What should we do?';
+      var tPoll = 'poll';
 
-      $('.adder li').click(function(){
-        
-        if($(this).is('.info')){
-          $('<p contenteditable>').text("").appendTo('.builder .info').focus();
-          $(this).hide();
-        }
+      function doPoll(){
 
-        if($(this).is('.place')){
-          $('<p contenteditable>').text("").appendTo('.builder .place').focus();
-          $(this).hide();
-        }
+          $hint.hide();
+          $('.builder li.'+tPoll).empty();
+         
 
-        if($(this).is('.time')){
-          $('<p contenteditable>').text("").appendTo('.builder .time').focus();
-          $(this).hide();
-        }
-
-        if($(this).is('.poll')){
-
-          var $li = $('<li class="poll edit">').appendTo('.builder')
-          $('<p contenteditable>').text("").appendTo($li).focus();
+          var $li = $('<li class="'+tPoll+' edit">').appendTo('.builder')
+          $('<p contenteditable>').text(qPoll).appendTo($li).focus();
           //$('<p contenteditable>').text("Catnip City").appendTo($li);
           //$('<p contenteditable>').text("Dognip Town").appendTo($li);
           $('<p style="font-size:0.7em;">').text("+ add option").appendTo($li).click(function(){
@@ -239,6 +262,57 @@
             $('<p contenteditable>').text("").appendTo($o).focus();
           });
         }
+
+      $('.adder li').click(function(){
+        
+        if($(this).is('.info')){
+          $hint.hide();
+          $('.builder .info').appendTo('.builder');
+          $('<p contenteditable>').text("").appendTo('.builder .info').focus();
+          $(this).hide();
+        }
+
+        if($(this).is('.date')){
+          $('.builder .date').appendTo('.builder');
+          $('<p contenteditable>').text("").appendTo('.builder .date').focus();
+          $hint.insertAfter('.builder .date').show();
+          $msg.text('Not sure on dates?');
+          $(this).hide();
+
+          tPoll = 'date';
+          qPoll = "What day works?";
+        }
+
+        if($(this).is('.place')){
+          $('.builder .place').appendTo('.builder');
+          $('<p contenteditable>').text("").appendTo('.builder .place').focus();
+          $hint.insertAfter('.builder .place').show();
+          $msg.text('Not sure where to go?');
+          $(this).hide();
+
+          tPoll = 'place';
+          qPoll = "Where should we go?";
+        }
+
+        if($(this).is('.time')){
+          $('.builder .time').appendTo('.builder');
+          $('<p contenteditable>').text("").appendTo('.builder .time').focus();
+          $hint.insertAfter('.builder .time').show();
+          $msg.text('Not sure what time?');
+
+          $(this).hide();
+
+          tPoll = 'time';
+          qPoll = "What time works?";
+        }
+
+        if($(this).is('.poll')){
+          tPoll = 'poll';
+          qPoll = "What's your catnip preference?";
+          doPoll();
+        }
+
+        
 
         
       });
@@ -251,14 +325,15 @@
       <div class="logo"></div>
       <h1>Hey, let's</h1>
       <h1 class="edit something" contenteditable></h1><br>
-      <h1 class="edit sometime" contenteditable></h1>
+      <!--h1 class="edit sometime" contenteditable></h1-->
       <ul class="builder">
+        <li class="date edit"></li>
         <li class="time edit"></li>
         <li class="place edit"></li>
         <li class="info edit"></li>
-        
       </ul>
       <ul class="adder">
+        <li class="date">date</li>
         <li class="time">time</li>
         <li class="place">place</li>
         <li class="info">info</li>
