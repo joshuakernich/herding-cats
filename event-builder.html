@@ -48,6 +48,9 @@
       background: white;
       box-sizing: border-box;
       position: relative;
+      vertical-align: top;
+
+      background: #FAFAFF;
     }
 
     .scroller{
@@ -57,7 +60,7 @@
       left: 0px;
       right: 0px;
       padding: 40px;
-      bottom: 60px;
+      bottom: 0px;
     }
 
     h1{
@@ -69,6 +72,12 @@
     .edit{
       background: yellow;
       border-bottom: 2px solid black;
+
+      background: none;
+      border-bottom: none;
+
+      background: white;
+      border: 1px solid #ddd;
     }
 
     h1.edit{
@@ -117,35 +126,39 @@
       line-height: 15px;
     }
 
-    .builder{
+    .builder, .deets{
       list-style-type: none;
       padding: 0px;
       margin: 0px;
       margin-top: 20px;
     }
 
-    .builder li{
+    .builder li, .deets li{
       margin: 0px;
     
       background-size: 20px;
       background-position: 4px 4px;
       background-repeat: no-repeat;
+      margin-bottom: 5px;
+      position: relative;
     }
 
     .builder li:empty{
       display: none;
     }
 
-    .builder li p{
+    .deets li p, .builder li p{
       padding: 5px 0px 5px 30px;
       margin: 0px;
       position: relative;
     }
 
-    .builder li{
-      margin-bottom: 5px;
-      position: relative;
+    .something.edit{
+      background: yellow;
+      border: none;
+      border-bottom: 2px solid black;
     }
+
 
     .thing{ background-image: url('./feather/sun.svg'); }
     .date{ background-image: url('./feather/calendar.svg'); }
@@ -154,7 +167,7 @@
     .info{ background-image: url('./feather/info.svg'); }
     .poll{ background-image: url('./feather/message-circle.svg'); }
 
-    .builder li:after, .option:after{
+    .builder li:after, .builder .option:after{
       content: "×";
 
       position: absolute;
@@ -185,14 +198,13 @@
       display: block;
       background: yellow;
       border: 1px solid black;
-      width: calc( 100% - 80px );
-      position: absolute;
-      bottom: 40px;
-      left: 40px;
-      padding: 10px;
+      width: 100%;
+      padding: 10px 0px;
+      margin-top: 20px;
+      
     }
 
-    .builder li p:empty:before{
+    .deets li.edit p:empty:before, .builder li p:empty:before{
       content: "yo!";
       opacity: 0.3;
     }
@@ -204,6 +216,9 @@
     .builder li.info p:empty:before{ content: "Bring snacks!"; }
     .builder li.poll p:empty:before{ content: "Where should we meet?"; }
     .builder li.poll .option p:empty:before{ content: "A good option"; }
+
+    .deets li.edit.thing p:empty:before{ content: "Add your idea"; }
+    .deets li.edit.date p:empty:before{ content: "Add your own date"; }
 
     .response:empty:before{ content: "add your own response" !important; };
     .response:before{
@@ -239,6 +254,59 @@
     a{
       cursor: pointer;
     }
+
+    .message{
+      width: 200px;
+      border: 1.5px solid black;
+      margin: 40px;
+      position: relative;
+    }
+
+    .message p{
+      padding: 10px;
+      margin: 0px;
+    }
+
+    .message:after{
+      content: "";
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 20px 20px 0 0;
+      border-color: black transparent transparent transparent;
+      position: absolute;
+      bottom: -20px;
+      left: 10px;
+      position: absolute;
+    }
+
+    .option{
+      position: relative;
+    }
+
+    .option .votes{
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 10px;
+      display: block;
+      padding-left: 20px;
+      background-image: url('./feather/users.svg');
+      background-size: 15px;
+      background-repeat: no-repeat;
+      vertical-align: middle;
+    }
+
+    .users{
+
+      padding-left: 20px;
+      background-image: url('./feather/users.svg');
+      background-size: 15px;
+      background-repeat: no-repeat;
+      vertical-align: middle;
+      font-size: 10px;
+    }
+
 
   </style>
   <script type="text/javascript">
@@ -352,8 +420,59 @@
         <li class="info">info</li>
         <li class="poll">ask</li>
       </ul>
+
+      <button>DONE</button>
     </div>
-    <button>DONE</button>
+  </div>
+  <div class="screen">
+    <div class="header" style="border-bottom: 1.5px solid black; padding: 20px;">
+      James, Joyce, and Janice
+    </div>
+    <div class="message">
+      <p>Hey, let's do something<br><br>Details and RSVP at <a href='herdcats.io'>herdcats.io/e/ohcw9d</a></p>
+      <img src="./og-image.png" width="200px;">
+      <p style="background:#ddd;">herdcats.io</p>
+    </div>
+  </div>
+  <div class="screen">
+    <div class="scroller">
+      <!--div class="logo"></div-->
+
+      <img width=80 src="./cats/cat-invite.png">
+      <br><br>
+      <div class="hint">Joshua Kernich has invited you!</div>
+      <h1>Hey, let's</h1>
+      <h1>do something</h1>
+      <p class="users">James, Joyce, and Brian have responded</p>
+      <ul class="deets">
+        <li class="time"><p>7pm</p></li>
+        <li class="place"><p>My place</p></li>
+        <li class="info"><p>Bring a cup!</p></li>
+        <hr>
+        <div class="hint">Help figure out some details.</div>
+        <li class="thing edit">
+          <p>What should we do?</p>
+          <p contenteditable></p>
+        </li>
+        <li class="date edit">
+          <p>When are you free?</p>
+          <p class="option">This Saturday<span class="votes"><span class='vote'>James, Joyce</span></span></p>
+          <p class="option">This Sunday<span class="votes"><span class='vote'>James</span></span></p>
+          <p contenteditable></p>
+        </li>
+        <li class="info edit">
+          <p>Your name?</p>
+          <p contenteditable></p>
+        </li>
+        <li class="poll edit">
+          <p>Comments? questions?</p>
+          <p contenteditable></p>
+        </li>
+      </ul>
+
+      <button>SUBMIT RESPONSE</button>
+
+    </div>
   </div>
 </body>
 </html>
