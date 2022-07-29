@@ -260,6 +260,7 @@
       border: 1.5px solid black;
       margin: 40px;
       position: relative;
+      
     }
 
     .message p{
@@ -320,7 +321,11 @@
       var qPoll = 'What should we do?';
       var tPoll = 'thing';
 
+      $hint.hide();
+
       function doPoll(){
+
+          tPoll = 'poll';
 
           $hint.hide();
           $('.builder li.'+tPoll).empty();
@@ -356,7 +361,7 @@
         if($(this).is('.date')){
           $('.builder .date').appendTo('.builder');
           $('<p contenteditable>').text("").appendTo('.builder .date').focus();
-          $hint.insertAfter('.builder .date').show();
+          //$hint.insertAfter('.builder .date').show();
           $msg.text('Not sure on dates?');
           $(this).hide();
 
@@ -367,7 +372,7 @@
         if($(this).is('.place')){
           $('.builder .place').appendTo('.builder');
           $('<p contenteditable>').text("").appendTo('.builder .place').focus();
-          $hint.insertAfter('.builder .place').show();
+          //$hint.insertAfter('.builder .place').show();
           $msg.text('Not sure where to go?');
           $(this).hide();
 
@@ -378,7 +383,7 @@
         if($(this).is('.time')){
           $('.builder .time').appendTo('.builder');
           $('<p contenteditable>').text("").appendTo('.builder .time').focus();
-          $hint.insertAfter('.builder .time').show();
+          //$hint.insertAfter('.builder .time').show();
           $msg.text('Not sure what time?');
 
           $(this).hide();
@@ -389,7 +394,7 @@
 
         if($(this).is('.poll')){
           tPoll = 'poll';
-          qPoll = "What's your catnip preference?";
+          qPoll = "What day works?";
           doPoll();
         }
 
@@ -458,7 +463,7 @@ So come watch me die. Let's all love each other one last time, before the end.</
           <p>Any ideas for death rituals?</p>
           <p contenteditable></p>
         </li>
-        <li class="date edit">
+        <li class="poll edit">
           <p>When are you free?</p>
           <p class="option">This Friday<span class="votes"><span class='vote'>James, Joyce</span></span></p>
           <p class="option">This Saturday<span class="votes"><span class='vote'>James</span></span></p>
