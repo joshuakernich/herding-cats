@@ -260,7 +260,7 @@
       border: 1.5px solid black;
       margin: 40px;
       position: relative;
-      
+
     }
 
     .message p{
@@ -328,7 +328,7 @@
           tPoll = 'poll';
 
           $hint.hide();
-          $('.builder li.'+tPoll).empty();
+          //$('.builder li.'+tPoll).empty();
          
 
           var $li = $('<li class="'+tPoll+' edit">').appendTo('.builder')
@@ -353,13 +353,13 @@
         
         if($(this).is('.info')){
           $hint.hide();
-          $('.builder .info').appendTo('.builder');
+          //$('.builder .info').appendTo('.builder');
           $('<p contenteditable>').text("").appendTo('.builder .info').focus();
           $(this).hide();
         }
 
         if($(this).is('.date')){
-          $('.builder .date').appendTo('.builder');
+          //$('.builder .date').appendTo('.builder');
           $('<p contenteditable>').text("").appendTo('.builder .date').focus();
           //$hint.insertAfter('.builder .date').show();
           $msg.text('Not sure on dates?');
@@ -370,7 +370,7 @@
         }
 
         if($(this).is('.place')){
-          $('.builder .place').appendTo('.builder');
+          //$('.builder .place').appendTo('.builder');
           $('<p contenteditable>').text("").appendTo('.builder .place').focus();
           //$hint.insertAfter('.builder .place').show();
           $msg.text('Not sure where to go?');
@@ -381,7 +381,7 @@
         }
 
         if($(this).is('.time')){
-          $('.builder .time').appendTo('.builder');
+          //$('.builder .time').appendTo('.builder');
           $('<p contenteditable>').text("").appendTo('.builder .time').focus();
           //$hint.insertAfter('.builder .time').show();
           $msg.text('Not sure what time?');
