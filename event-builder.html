@@ -201,7 +201,7 @@
       width: 100%;
       padding: 10px 0px;
       margin-top: 20px;
-      
+      font: inherit;
     }
 
     .deets li.edit p:empty:before, .builder li p:empty:before{
@@ -217,8 +217,14 @@
     .builder li.poll p:empty:before{ content: "Where should we meet?"; }
     .builder li.poll .option p:empty:before{ content: "A good option"; }
 
-    .deets li.edit.thing p:empty:before{ content: "Add your idea"; }
-    .deets li.edit.date p:empty:before{ content: "Add your own date"; }
+    .deets li p.edit{
+      padding-left: 10px;
+    }
+    .deets li p.edit:empty:before{ 
+      opacity: 0.3;
+      content: attr(data-ph); 
+
+    }
 
     .response:empty:before{ content: "add your own response" !important; };
     .response:before{
@@ -298,6 +304,15 @@
       vertical-align: middle;
     }
 
+    .option .gauge{
+      height: 5px;
+      background: white;
+      border: 1px solid #ddd;
+      display: block;
+      margin-top: 5px;
+      display: none;
+    }
+
     .users{
 
       padding-left: 20px;
@@ -306,6 +321,63 @@
       background-repeat: no-repeat;
       vertical-align: middle;
       font-size: 10px;
+    }
+
+    .deets li{
+      background-position-x: 0px;
+    }
+
+    .deets li p{
+      padding-left: 30px;
+    }
+
+    
+
+    .deets .option{
+      margin-left: 0px;
+      margin-bottom: 5px;
+      position: relative;
+      background: white;
+      border-bottom: 1px solid #ddd;
+      padding: 10px;
+    }
+
+    .deets .option:before{
+      display: none;
+    }
+
+    .tally{
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      list-style-type: none;
+      
+      text-align: right;
+      width: 80px;
+    }
+
+    .tally li{
+      width: 12px;
+      height: 20px;
+      display: inline-block;
+    }
+
+    .tally li:before{
+      content: "";
+      width: 10px;
+      height: 10px;
+      background: url('./icon-me.png');
+      background-size: 100%;
+      background-position: 0% 0%;
+      display: inline-block;
+
+    }
+
+    button.third{
+      display: inline-block;
+      width: 32%;
+      background: white;
+      margin-top: 0px;
     }
 
 
@@ -439,6 +511,20 @@
       <p style="background:#ddd;">herdcats.io</p>
     </div>
   </div>
+  <!--div class="screen">
+    <div class="scroller">
+      <h1>Hey let's</h1>
+      <h1 style="background:yellow;display:inline-block;">go to the movies</h1>
+      <ul class="deets">
+        <li class="poll">
+          <p>What movie should we see?</p>
+          <div class="option" style="background: yellow;border-bottom: 2px solid black;">The Red Dot: A Mystery<ul class="tally"><li></li><li></li><li></li></ul></div>
+          <div class="option">Catmageddon<ul class="tally"><li></li></ul></div>
+          <div class="option">Spidercat: Far from Catnip<ul class="tally"><li></li><li></li></ul></div>
+        </li>
+      </ul>
+    </div>
+  </div-->
   <div class="screen">
     <div class="scroller">
       <!--div class="logo"></div-->
@@ -457,25 +543,31 @@ And so, on my 35th birthday, I'm going to die. It's going to be quite sad, I ima
 Bring a poem, song, ritual, or tribute, to mark my untimely death. Perform a seance to my listless spirit, or piss on my grave. Mark my inevitable rebirth with a garland of flowers, or some tearful indulgence in fleshly pleasures. Or just bring yourself, and I’ll spend most of the time saying nice things about everyone I love.<br><br>
 This will also mark the farewell to my little Loft in the sky. One last hurrah before I abandon the Josh pad in search of European Sunshine and solace.<br><br>
 So come watch me die. Let's all love each other one last time, before the end.</p></li>
-        <hr>
-        <div class="hint">Help figure out some details.</div>
-        <li class="poll edit">
+
+       <li class="info">
+          <p>Are you in?</p>
+        </li>
+        <button class="third">Keen</button>
+        <button class="third">Maybe</button>
+        <button class="third">Can't</button>
+        <br><br>
+        <li class="poll">
           <p>Any ideas for death rituals?</p>
-          <p contenteditable></p>
+          <p class='edit' contenteditable data-ph='Your answer here'></p>
         </li>
-        <li class="poll edit">
+        <li class="poll">
           <p>When are you free?</p>
-          <p class="option">This Friday<span class="votes"><span class='vote'>James, Joyce</span></span></p>
-          <p class="option">This Saturday<span class="votes"><span class='vote'>James</span></span></p>
-          <p contenteditable></p>
+          <div class="option">This Friday<ul class="tally"><li></li><li></li></ul></div>
+          <div class="option">This Saturday<ul class="tally"><li></li></ul></div>
+          <p class='edit' contenteditable data-ph='Your answer here'></p>
         </li>
-        <li class="info edit">
+        <li class="info">
           <p>Your name?</p>
-          <p contenteditable></p>
+          <p class='edit' contenteditable data-ph='Mittens Magee'></p>
         </li>
-        <li class="poll edit">
+        <li class="poll">
           <p>Comments? questions?</p>
-          <p contenteditable></p>
+          <p class='edit' contenteditable data-ph='Will there be licking?'></p>
         </li>
       </ul>
 
