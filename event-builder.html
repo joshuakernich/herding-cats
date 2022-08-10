@@ -7,19 +7,26 @@
     @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
 
     @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
+
+    :root{
+      --yellow: #FFF12B;
+      --white: #FAFAFF;
+      --black: #1C1C1C;
+    }
+
     body{
       text-align: center;
       background: #ddd;
-
       font-weight: 300;
       font-family: 'Rubik', sans-serif;
+      color: var(--black);
     }
 
     .logo{
       font-family: 'Abril Fatface', cursive;
       font-size: 40px;
       line-height: 55px;
-      color: var(--col-black);
+      color: var(--black);
       text-align: center;
 
       /*text-shadow: 2px -2px 0px white;*/
@@ -50,7 +57,7 @@
       position: relative;
       vertical-align: top;
 
-      background: #FAFAFF;
+      background: var(--white);
     }
 
     .scroller{
@@ -63,7 +70,7 @@
       bottom: 0px;
     }
 
-    h1{
+    h1, h2{
       margin: 0px;
       padding: 0px;
       font-weight: normal;
@@ -71,7 +78,7 @@
 
     .edit{
       background: yellow;
-      border-bottom: 2px solid black;
+      border-bottom: 2px solid var(--black);
 
       background: none;
       border-bottom: none;
@@ -96,8 +103,8 @@
 
     .adder li{
       display: inline-block;
-      background-color: yellow;
-      border-bottom: 2px solid black;
+      background-color: var(--yellow);
+      border-bottom: 2px solid var(--black);
       
       width: 30px;
       height: 50px;
@@ -154,9 +161,9 @@
     }
 
     .something.edit{
-      background: yellow;
+      background: var(--yellow);
       border: none;
-      border-bottom: 2px solid black;
+      border-bottom: 2px solid var(--black);
     }
 
 
@@ -188,7 +195,7 @@
       content: "";
       width: 6px;
       height: 6px;
-      border: 1.5px solid black;
+      border: 1.5px solid var(--black);
       position: absolute;
       top: 15px;
       left: 15px;
@@ -196,8 +203,8 @@
 
     button{
       display: block;
-      background: yellow;
-      border: 1px solid black;
+      background: var(--yellow);
+      border: 1px solid var(--black);
       width: 100%;
       padding: 10px 0px;
       margin-top: 20px;
@@ -223,7 +230,6 @@
     .deets li p.edit:empty:before{ 
       opacity: 0.3;
       content: attr(data-ph); 
-
     }
 
     .response:empty:before{ content: "add your own response" !important; };
@@ -264,7 +270,7 @@
     .message{
       width: 200px;
       border: 1.5px solid black;
-      margin: 40px;
+      margin-bottom: 30px;
       position: relative;
 
     }
@@ -339,7 +345,7 @@
       position: relative;
       background: white;
       border-bottom: 1px solid #ddd;
-      padding: 10px;
+      padding: 12px;
     }
 
     .deets .option:before{
@@ -347,32 +353,51 @@
     }
 
     .tally{
+      margin-right: 20px;
+    }
+
+    .option .tally{
       position: absolute;
-      right: 12px;
-      top: 10px;
+      right: 23px;
+      top: 4px;
       list-style-type: none;
       
       text-align: right;
       width: 80px;
+      margin-right: 0px;
     }
 
-    .tally li{
-      width: 12px;
-      height: 20px;
-      display: inline-block;
+    .tally .catvatar{
+      margin-right: -15px;
     }
 
-    .tally li:before{
-      content: "";
-      width: 10px;
-      height: 10px;
-      background: url('./icon-me.png');
-      background-size: 100%;
-      background-position: 0% 0%;
-      display: inline-block;
-
+    .option .tally-names{
+      text-align: right;
+      font-size: 8px;
+      margin: 5px 0px;
+      position: absolute;
+      right: 8px;
+      bottom: 0px;
     }
 
+    .option.result .tally-names{
+      
+      right: 0px;
+    }
+
+    .option.result{
+      padding: 0px;
+      border: none;
+      border-top: 1px solid #ddd;
+      padding: 12px 0px;
+      margin: 0px;
+    }
+
+    .option.result .tally{
+      top: 5px;
+      right: 15px;
+    }
+    
     button.third{
       display: inline-block;
       width: 32%;
@@ -380,6 +405,80 @@
       margin-top: 0px;
     }
 
+
+
+    .catvatar{
+      width: 20px;
+      height: 20px;
+      background-image: url('./catvatar-thicc.png');
+      background-position: 0%;
+      
+      background-size: 900%;
+      vertical-align: middle;
+      display: inline-block;
+      margin-right: 10px;
+      position: relative;
+    }
+
+    .catvatar[n='0']{ background-position: -0%; }
+    .catvatar[n='1']{ background-position: -100%; }
+    .catvatar[n='2']{ background-position: -200%; }
+    .catvatar[n='3']{ background-position: -300%; }
+    .catvatar[n='4']{ background-position: -400%; }
+    .catvatar[n='5']{ background-position: -500%; }
+    .catvatar[n='6']{ background-position: -600%; }
+    .catvatar[n='7']{ background-position: -700%; }
+    .catvatar[n='8']{ background-position: -800%; }
+
+
+    .catvatar.selected:after{
+      border: 2px solid orange;
+      content: "";
+      padding: 10px;
+      position: absolute;
+      top: -10px;
+      bottom: -10px;
+      right: -10px;
+      left: -10px;
+    }
+
+    .mini{
+      font-size: 10px;
+    }
+
+    .herd{
+      border: 1px solid var(--black);
+      background: white;
+    }
+
+    .herd button{
+      border-bottom: none;
+      border-left: none;
+      border-right: none;
+      text-transform: uppercase;
+    }
+
+    .herd-info{
+      padding: 10px;
+      padding-bottom: 0px;
+    }
+
+    .invite-button:before{
+      content: "";
+      width: 15px;
+      height: 15px;
+      background-image: url('./feather/share-2.svg');
+      display: inline-block;
+      background-size: 100%;
+      vertical-align: top;
+      margin-right: 5px;
+      position: relative;
+      top: 2px;
+    }
+
+    .invite-button:after{
+      content: "SHARE INVITATION";
+    }
 
   </style>
   <script type="text/javascript">
@@ -502,13 +601,69 @@
     </div>
   </div>
   <div class="screen">
-    <div class="header" style="border-bottom: 1.5px solid black; padding: 20px;">
+    <div class="scroller">
+      <div class="logo"></div>
+      <div class="herd">
+        <div class="herd-info">
+          <h2>Hey let's<br>Watch Josh Die (Ep 35)</h2>
+          <p class="mini"><span class="tally"><span class='catvatar' n=1></span><span class='catvatar' n=4></span><span class='catvatar' n=2></span></span><b>James, Joyce,</b> and <b>Brian</b> have responded</p>
+          <ul class="deets">
+            <li class="poll">
+                <p>When are you free?</p>
+                <div class="option result">This Friday<span class="tally"><span class='catvatar' n=1></span><span class='catvatar' n=2></span></span>
+                <div class="tally-names">James and Joyce</div>
+              </div>
+                <div class="option result">This Saturday<span class="tally"><span class='catvatar' n=3></span></span>
+
+                <div class="tally-names">Brian</div>
+                </div>
+                <div class="option result">Sunday<span class="tally"><span class='catvatar' n=6></span></span>
+                <div class="tally-names">Lucy</div></div>
+              </li>
+            </ul>
+        </div>
+
+        <button class="invite-button"></button>
+      </div><br>
+      <div class="herd">
+        <div class="herd-info">
+          <h2>Hey let's<br>Have a Casual Orgy</h2>
+          <p class="mini"><span class="tally"><span class='catvatar' n=1></span>
+            <span class='catvatar' n=2></span></span><b>James, Joyce,</b> and <b>Brian</b> have responded</p>
+        </div>
+        <button class="invite-button"></button>
+      </div><br><div class="herd">
+        <div class="herd-info">
+          <h2>Hey let's<br>Hit the Beach!</h2>
+          <p class="mini"><span class="tally"><span class='catvatar' n=1></span>
+            <span class='catvatar' n=2></span></span><b>James, Joyce,</b> and <b>Brian</b> have responded</p>
+
+
+        </div>
+        <button class="invite-button"></button>
+      </div><br>
+    </div>
+  </div>
+  <div class="screen">
+    <div class="header" style="background:#ddd;border-bottom: 1.5px solid black; padding: 20px;">
       James, Joyce, and Janice
     </div>
-    <div class="message">
-      <p>Hey, let's do something<br><br>Details and RSVP at <a href='herdcats.io'>herdcats.io/e/ohcw9d</a></p>
-      <img src="./og-image.png" width="200px;">
-      <p style="background:#ddd;">herdcats.io</p>
+    <div class="scroller" style="top:60px;">
+      <div class="message">
+        <p>Joshua Kernich has invited you!</p>
+        <p>Hey, let's Watch Josh Die (Ep 35)<br><br>Details and RSVP at <a href='herdcats.io'>herdcats.io/e/ohcw9d</a></p>
+        <img src="./og-image.png" width="200px;">
+        <p style="background:#ddd;">herdcats.io</p>
+      </div>
+      <div class="message">
+        <p>An update for you!</p>
+        <p>Hey, let's Watch Josh Die (Ep 35)
+        <br>7pm
+        <br>on Saturday
+        <br><br>Details and RSVP at <a href='herdcats.io'>herdcats.io/e/ohcw9d</a></p>
+        <img src="./og-image.png" width="200px;">
+        <p style="background:#ddd;">herdcats.io</p>
+      </div>
     </div>
   </div>
   <!--div class="screen">
@@ -529,12 +684,12 @@
     <div class="scroller">
       <!--div class="logo"></div-->
 
-      <img width=80 src="./cats/cat-invite.png">
-      <br><br>
-      <div class="hint">Joshua Kernich has invited you!</div>
+      <!--img width=80 src="./cats/cat-invite.png">
+      <br><br-->
+      <p class="mini"><span class='catvatar' n=2></span><b>Joshua Kernich</b> has invited you!</p>
       <h1>Hey, let's</h1>
       <h1>Watch Josh Die (Ep 35)</h1>
-      <p class="users">James, Joyce, and Brian have responded</p>
+      <p class="mini"><span class="tally"><span class='catvatar' n=1></span><span class='catvatar' n=4></span><span class='catvatar' n=2></span></span><b>James, Joyce,</b> and <b>Brian</b> have responded</p>
       <ul class="deets">
         <li class="time"><p>7pm</p></li>
         <li class="place"><p>My place</p></li>
@@ -557,14 +712,33 @@ So come watch me die. Let's all love each other one last time, before the end.</
         </li>
         <li class="poll">
           <p>When are you free?</p>
-          <div class="option">This Friday<ul class="tally"><li></li><li></li></ul></div>
-          <div class="option">This Saturday<ul class="tally"><li></li></ul></div>
+          <div class="option">This Friday<span class="tally"><span class='catvatar' n=1></span>
+          <span class='catvatar' n=2></span></span>
+
+                <div class="tally-names">James and Joyce</div></div>
+          <div class="option">This Saturday<span class="tally"><span class='catvatar' n=3></span></span>
+            <div class="tally-names">Brian</div>
+          </div>
           <p class='edit' contenteditable data-ph='Your answer here'></p>
         </li>
         <li class="info">
           <p>Your name?</p>
           <p class='edit' contenteditable data-ph='Mittens Magee'></p>
         </li>
+        <li class="info">
+          <p>Your Catvatar</p>
+          <p class="edit">
+          <span class='catvatar selected' n=0></span>
+          <span class='catvatar' n=1></span>
+          <span class='catvatar' n=2></span>
+          <span class='catvatar' n=3></span>
+          <span class='catvatar' n=4></span>
+          <span class='catvatar' n=5></span>
+          <span class='catvatar' n=6></span>
+          <span class='catvatar' n=7></span>
+          <span class='catvatar' n=8></span>
+        </p>
+        </li> 
         <li class="poll">
           <p>Comments? questions?</p>
           <p class='edit' contenteditable data-ph='Will there be licking?'></p>
