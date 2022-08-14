@@ -385,6 +385,8 @@
       right: 0px;
     }
 
+
+
     .option.result{
       padding: 0px;
       border: none;
@@ -449,6 +451,21 @@
     .herd{
       border: 1px solid var(--black);
       background: white;
+      position: relative;
+    }
+
+    .herd:after{
+      content: "";
+      width: 30px;
+      height: 40px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-image: url('./feather/more-vertical.svg');
+      background-size: 15px;
+      display: block;
+      position: absolute;
+      top: 0px;
+      right: 0px;
     }
 
     .herd button{
@@ -478,6 +495,46 @@
 
     .invite-button:after{
       content: "SHARE INVITATION";
+    }
+
+    .rsvp{
+      width: 32%;
+      padding: 10px 8px;
+      border: 1px solid #ddd;
+      display: inline-block;
+      box-sizing: border-box;
+      position: relative;
+      background: white;
+      height: 60px;
+      vertical-align: top;
+    }
+
+    .rsvp .tally{
+      position: absolute;
+      top: 7px;
+      right: 3px;
+    }
+
+    .rsvp .tally-names{
+      font-size: 8px;
+      
+      text-align: right;
+      display: block;
+      margin: 0px;
+      padding: 0px;
+      margin-top: 3px;
+    }
+
+    .link{
+      padding: 5px;
+      padding-left: 20px;
+      opacity: 0.5;
+      background-image: url('./feather/globe.svg');
+      background-size: 15px;
+      background-repeat: no-repeat;
+      background-position: 0px center;
+      font-size: 12px;
+      margin: 10px 0px;
     }
 
   </style>
@@ -606,8 +663,9 @@
       <div class="herd">
         <div class="herd-info">
           <h2>Hey let's<br>Watch Josh Die (Ep 35)</h2>
-          <p class="mini"><span class="tally"><span class='catvatar' n=1></span><span class='catvatar' n=4></span><span class='catvatar' n=2></span></span><b>James, Joyce,</b> and <b>Brian</b> have responded</p>
-          <ul class="deets">
+          <div class="link">herdcats.io/e/ohcw9d</div>
+          <p class="mini"><span class="tally"><span class='catvatar' n=1></span><span class='catvatar' n=4></span><span class='catvatar' n=2></span></span><b>James, Joyce,</b> and <b>Brian</b> are keen</p>
+          <!--ul class="deets">
             <li class="poll">
                 <p>When are you free?</p>
                 <div class="option result">This Friday<span class="tally"><span class='catvatar' n=1></span><span class='catvatar' n=2></span></span>
@@ -620,7 +678,9 @@
                 <div class="option result">Sunday<span class="tally"><span class='catvatar' n=6></span></span>
                 <div class="tally-names">Lucy</div></div>
               </li>
-            </ul>
+
+            
+            </ul-->
         </div>
 
         <button class="invite-button"></button>
@@ -642,6 +702,35 @@
         </div>
         <button class="invite-button"></button>
       </div><br>
+    </div>
+  </div>
+  <div class="screen"> <!-- EXPANDED HERD -->
+    <div class="scroller">
+      <div class="logo"></div>
+
+        <h1>Hey, let's<br>Watch Josh Die (Ep 35)</h1>
+          <div class="link">herdcats.io/e/ohcw9d</div>
+        <div class="rsvp">Keen<span class="tally"><span class='catvatar' n=1></span><span class='catvatar' n=4></span><span class='catvatar' n=2></span></span>
+            <span class='tally-names'>James, Joyce, and Brian</span>
+        </div>
+        <div class="rsvp">Maybe
+          <span class="tally"><span class='catvatar' n=1></span></span>
+          <span class="tally-names">Larry</span>
+        </div>
+        <div class="rsvp">Can't<span class="tally"><span class='catvatar' n=4></span><span class='catvatar' n=2></span></span>
+          <span class="tally-names">Leslie and Jo</span>
+        </div>
+        
+       <button class="invite-button" style="margin-top: 5px;"></button>
+        <ul class="deets">
+          <li class="time"><p>7pm</p></li>
+          <li class="place"><p>My place</p></li>
+          <li class="info"><p>Death is generally a good idea. It makes way for new life, love, and terrible smells.<br><br>
+And so, on my 35th birthday, I'm going to die. It's going to be quite sad, I imagine. But I'll probably deliver a beautiful eulogy, and I encourage you all to do the same.<br><br>
+Bring a poem, song, ritual, or tribute, to mark my untimely death. Perform a seance to my listless spirit, or piss on my grave. Mark my inevitable rebirth with a garland of flowers, or some tearful indulgence in fleshly pleasures. Or just bring yourself, and I’ll spend most of the time saying nice things about everyone I love.<br><br>
+This will also mark the farewell to my little Loft in the sky. One last hurrah before I abandon the Josh pad in search of European Sunshine and solace.<br><br>
+So come watch me die. Let's all love each other one last time, before the end.</p></li>
+        </ul>
     </div>
   </div>
   <div class="screen">
@@ -689,7 +778,7 @@
       <p class="mini"><span class='catvatar' n=2></span><b>Joshua Kernich</b> has invited you!</p>
       <h1>Hey, let's</h1>
       <h1>Watch Josh Die (Ep 35)</h1>
-      <p class="mini"><span class="tally"><span class='catvatar' n=1></span><span class='catvatar' n=4></span><span class='catvatar' n=2></span></span><b>James, Joyce,</b> and <b>Brian</b> have responded</p>
+      <p class="mini"><span class="tally"><span class='catvatar' n=1></span><span class='catvatar' n=4></span><span class='catvatar' n=2></span></span><b>James, Joyce,</b> and <b>Brian</b> are keen</p>
       <ul class="deets">
         <li class="time"><p>7pm</p></li>
         <li class="place"><p>My place</p></li>
