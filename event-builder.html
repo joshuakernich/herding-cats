@@ -6,7 +6,7 @@
   <style type="text/css">
     @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
 
-    @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;500&display=swap');
 
     :root{
       --yellow: #FFF12B;
@@ -20,6 +20,10 @@
       font-weight: 300;
       font-family: 'Rubik', sans-serif;
       color: var(--black);
+    }
+
+    b{
+      font-weight: 500;
     }
 
     .logo{
@@ -73,7 +77,7 @@
     h1, h2{
       margin: 0px;
       padding: 0px;
-      font-weight: normal;
+      font-weight: 300;
     }
 
     .edit{
@@ -209,6 +213,11 @@
       padding: 10px 0px;
       margin-top: 20px;
       font: inherit;
+    }
+
+    button.secondary{
+      background: none;
+      border-color: #555;
     }
 
     .deets li.edit p:empty:before, .builder li p:empty:before{
@@ -392,7 +401,10 @@
       border: none;
       border-top: 1px solid #ddd;
       padding: 12px 0px;
+      padding-bottom: 15px;
       margin: 0px;
+      background: none;
+      font-size: 12px;
     }
 
     .option.result .tally{
@@ -478,6 +490,23 @@
     .herd-info{
       padding: 10px;
       padding-bottom: 0px;
+      
+    }
+
+
+
+    .herd-info .deets{
+      margin: 0px;
+    }
+
+    .herd-info .deets li{
+      font-size: 12px;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .herd-info .deets li p{
+      margin: 0px;
     }
 
     .invite-button:before{
@@ -527,21 +556,84 @@
 
     .link{
       padding: 5px;
-      padding-left: 20px;
+      padding-left: 30px;
       opacity: 0.5;
-      background-image: url('./feather/globe.svg');
-      background-size: 15px;
+      background-image: url('./feather/copy.svg');
+      background-size: 20px;
       background-repeat: no-repeat;
       background-position: 0px center;
       font-size: 12px;
       margin: 10px 0px;
     }
 
+    .herd .link{
+      margin: 5px 0px;
+    }
+
+    .named-comment{
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .scroller.with-footer{
+      bottom: 70px;
+    }
+
+    .footer{
+      position: absolute;
+      bottom: 0px;
+      height: 70px;
+      border-top: 1px solid var(--black);
+      width: 90%;
+      margin: 0px 5%;
+      text-align: center;
+    }
+
+    .footer button{
+      width: 25%;
+      margin: 0px;
+      height: 70px;
+      display: inline-block;
+      font-size: 12px;
+      padding: 30px 0px 0px;
+      background: none;
+      border: none;
+
+      background-image: url('./feather/plus.svg');
+      background-position: center 15px;
+      background-size: 20px;
+      background-repeat: no-repeat;
+      position: relative;
+    }
+
+    .footer button:nth-of-type(1){ background-image:none; }
+    .footer button:nth-of-type(1):before,.footer button:nth-of-type(3):before,.footer button:nth-of-type(3):after{ 
+      content: "";
+      width: 20px;
+      height: 20px;
+      background-image: url('./catvatar-thicc.png');
+      background-position: 0%;
+      
+      background-size: 900%;
+      position: absolute;
+      top: 15px;
+      left: 35px;
+    }
+
+    .footer button:nth-of-type(3){ background-image:none; }
+    .footer button:nth-of-type(3):before{ left:30px; }
+    .footer button:nth-of-type(3):after{ left:40px; }
+
+    .footer button.active{
+      border-top: 1.5px solid var(--black);
+    }
+
   </style>
   <script type="text/javascript">
     $(function(){
 
-      var $hint = $('<div class="hint">').insertBefore('.builder');
+      var $b = $('.builder').first();
+      var $hint = $('<div class="hint">').insertBefore($b);
       var $msg = $('<span>').appendTo($hint).text('Not sure what to do?');
       var $a = $('<span style="margin-left:7px;text-decoration:underline;">').appendTo($hint).text('Try a poll.');
       $a.click(doPoll);
@@ -559,7 +651,7 @@
           //$('.builder li.'+tPoll).empty();
          
 
-          var $li = $('<li class="'+tPoll+' edit">').appendTo('.builder')
+          var $li = $('<li class="'+tPoll+' edit">').appendTo($b)
           $('<p contenteditable>').text(qPoll).appendTo($li).focus();
           //$('<p contenteditable>').text("Catnip City").appendTo($li);
           //$('<p contenteditable>').text("Dognip Town").appendTo($li);
@@ -582,13 +674,13 @@
         if($(this).is('.info')){
           $hint.hide();
           //$('.builder .info').appendTo('.builder');
-          $('<p contenteditable>').text("").appendTo('.builder .info').focus();
+          $('<p contenteditable>').text("").appendTo($b.find('.info')).focus();
           $(this).hide();
         }
 
         if($(this).is('.date')){
           //$('.builder .date').appendTo('.builder');
-          $('<p contenteditable>').text("").appendTo('.builder .date').focus();
+          $('<p contenteditable>').text("").appendTo($b.find('.date')).focus();
           //$hint.insertAfter('.builder .date').show();
           $msg.text('Not sure on dates?');
           $(this).hide();
@@ -599,7 +691,7 @@
 
         if($(this).is('.place')){
           //$('.builder .place').appendTo('.builder');
-          $('<p contenteditable>').text("").appendTo('.builder .place').focus();
+          $('<p contenteditable>').text("").appendTo($b.find('.place')).focus();
           //$hint.insertAfter('.builder .place').show();
           $msg.text('Not sure where to go?');
           $(this).hide();
@@ -610,7 +702,7 @@
 
         if($(this).is('.time')){
           //$('.builder .time').appendTo('.builder');
-          $('<p contenteditable>').text("").appendTo('.builder .time').focus();
+          $('<p contenteditable>').text("").appendTo($b.find('.time')).focus();
           //$hint.insertAfter('.builder .time').show();
           $msg.text('Not sure what time?');
 
@@ -625,17 +717,31 @@
           qPoll = "What day works?";
           doPoll();
         }
-
-        
-
-        
       });
     })
   </script>
 </head>
 <body>
   <div class="screen">
-    <div class="scroller">
+    <div class="scroller with-footer">
+      <div class="logo"></div>
+      <p><span class='catvatar' n=2></span>Hey, Joshua Kernich.</p>
+      
+      <p>You've made <b>3</b> herds so far and have had <b>12</b> responses to your events.</p>
+      <p>MUST HERD MOAR!!</p>
+     
+      <button class="secondary"><img width=15 src='./feather/share-2.svg' style="margin-right: 10px;">INVITE FRIENDS HERE</button>
+      <button class="secondary"><img width=15 src='./feather/log-out.svg' style="margin-right: 10px;">LOG OUT</button>
+      <button><img width=15 src='./feather/plus.svg' style="margin-right: 10px;">CREATE AN EVENT</button>
+    </div>
+    <div class="footer">
+      <button class="active">Me</button>
+      <button>Create</button>
+      <button>Herds</button>
+    </div>
+  </div>
+  <div class="screen">
+    <div class="scroller with-footer">
       <div class="logo"></div>
       <h1>Hey, let's</h1>
       <h1 class="edit something" contenteditable></h1><br>
@@ -656,15 +762,22 @@
 
       <button>DONE</button>
     </div>
+    <div class="footer">
+      <button>Me</button>
+      <button class="active">Create</button>
+      <button>Herds</button>
+    </div>
   </div>
   <div class="screen">
-    <div class="scroller">
+    <div class="scroller with-footer">
       <div class="logo"></div>
       <div class="herd">
         <div class="herd-info">
-          <h2>Hey let's<br>Watch Josh Die (Ep 35)</h2>
+          <h2>Hey let's<br>Watch Josh Die</h2>
+
           <div class="link">herdcats.io/e/ohcw9d</div>
-          <p class="mini"><span class="tally"><span class='catvatar' n=1></span><span class='catvatar' n=4></span><span class='catvatar' n=2></span></span><b>James, Joyce,</b> and <b>Brian</b> are keen</p>
+          <hr>
+          
           <!--ul class="deets">
             <li class="poll">
                 <p>When are you free?</p>
@@ -681,6 +794,11 @@
 
             
             </ul-->
+            <ul class="deets">
+            <li class="time"><p>7pm</p></li>
+            <li class="place"><p>My place</p></li>
+          </ul>
+          <p class="mini"><span class="tally"><span class='catvatar' n=1></span><span class='catvatar' n=4></span><span class='catvatar' n=2></span></span><b>James, Joyce,</b> and <b>Brian</b> are keen</p>
         </div>
 
         <button class="invite-button"></button>
@@ -703,12 +821,17 @@
         <button class="invite-button"></button>
       </div><br>
     </div>
+    <div class="footer">
+      <button>Me</button>
+      <button>Create</button>
+      <button class="active">Herds</button>
+    </div>
   </div>
   <div class="screen"> <!-- EXPANDED HERD -->
     <div class="scroller">
       <div class="logo"></div>
 
-        <h1>Hey, let's<br>Watch Josh Die (Ep 35)</h1>
+        <h1>Hey, let's<br>Watch Josh Die</h1>
           <div class="link">herdcats.io/e/ohcw9d</div>
         <div class="rsvp">Keen<span class="tally"><span class='catvatar' n=1></span><span class='catvatar' n=4></span><span class='catvatar' n=2></span></span>
             <span class='tally-names'>James, Joyce, and Brian</span>
@@ -730,7 +853,72 @@ And so, on my 35th birthday, I'm going to die. It's going to be quite sad, I ima
 Bring a poem, song, ritual, or tribute, to mark my untimely death. Perform a seance to my listless spirit, or piss on my grave. Mark my inevitable rebirth with a garland of flowers, or some tearful indulgence in fleshly pleasures. Or just bring yourself, and I’ll spend most of the time saying nice things about everyone I love.<br><br>
 This will also mark the farewell to my little Loft in the sky. One last hurrah before I abandon the Josh pad in search of European Sunshine and solace.<br><br>
 So come watch me die. Let's all love each other one last time, before the end.</p></li>
+        <li class="poll">
+          <p>Any ideas for death rituals?</p>
+          <div class="option result"><span class='catvatar' n=4></span>
+            <span class='named-comment'><b>George</b><br>I can do an Egyptian thingo.</div>
+          <div class="option result"><span class='catvatar' n=1></span>
+            <span class='named-comment'><b>Mary</b><br>Let's Crucify you!</span></div>
+        </li>
+        <li class="poll">
+          <p>When are you free?</p>
+          <div class="option result">This Friday<span class="tally"><span class='catvatar' n=1></span>
+          <span class='catvatar' n=2></span></span>
+
+                <div class="tally-names">James and Joyce</div></div>
+          <div class="option result">This Saturday<span class="tally"><span class='catvatar' n=3></span></span>
+            <div class="tally-names">Brian</div>
+          </div>
+          
+          <div class="option result">I can only do Sunday<span class="tally"><span class='catvatar' n=3></span></span>
+            <div class="tally-names">Mariah</div>
+          </div>
+        </li>
+        <li class="poll">
+          <p>Comments? Questions?</p>
+           <div class="option result"><span class='catvatar' n=4></span>
+            <span class='named-comment'><b>George</b><br>
+            I'm so in!</span></div>
+          <div class="option result"><span class='catvatar' n=1></span>
+            <span class='named-comment'><b>Mary</b><br>
+            Bring on the death party!</div>
+        </li>
         </ul>
+        <button class="secondary"><img width=15 src='./feather/edit.svg' style="margin-right: 10px;">MAKE SOME CHANGES</button>
+        <button>DONE</button>
+    </div>
+  </div>
+  <div class="screen"> <!-- EDITABLE HERD -->
+    <div class="scroller">
+      <div class="logo"></div>
+
+        <h1>Hey, let's</h1>
+        <h1 class='edit something'>Watch Josh Die</h1>
+        
+        <ul class="builder">
+          <li class="time edit"><p>7pm</p></li>
+          <li class="place edit"><p>My place</p></li>
+          <li class="info edit"><p>Death is generally a good idea. It makes way for new life, love, and terrible smells.<br><br>
+And so, on my 35th birthday, I'm going to die. It's going to be quite sad, I imagine. But I'll probably deliver a beautiful eulogy, and I encourage you all to do the same.<br><br>
+Bring a poem, song, ritual, or tribute, to mark my untimely death. Perform a seance to my listless spirit, or piss on my grave. Mark my inevitable rebirth with a garland of flowers, or some tearful indulgence in fleshly pleasures. Or just bring yourself, and I’ll spend most of the time saying nice things about everyone I love.<br><br>
+This will also mark the farewell to my little Loft in the sky. One last hurrah before I abandon the Josh pad in search of European Sunshine and solace.<br><br>
+So come watch me die. Let's all love each other one last time, before the end.</p></li>
+        <li class="poll edit">
+          <p>Any ideas for death rituals?</p>
+          
+        </li>
+        <li class="poll edit">
+          <p>When are you free?</p>
+          <div class="option"><p>This Friday</p></div>
+          <div class="option"><p>This Saturday</p></div>
+          
+          
+        </li>
+        
+        </ul>
+        <button class="secondary"><img width=15 src='./feather/share-2.svg' style="margin-right: 10px;">SHARE UPDATE</button>
+        <button class="secondary"><img width=15 src='./feather/trash.svg' style="margin-right: 10px;">DELETE</button>
+        <button>DONE</button>
     </div>
   </div>
   <div class="screen">
@@ -740,13 +928,13 @@ So come watch me die. Let's all love each other one last time, before the end.</
     <div class="scroller" style="top:60px;">
       <div class="message">
         <p>Joshua Kernich has invited you!</p>
-        <p>Hey, let's Watch Josh Die (Ep 35)<br><br>Details and RSVP at <a href='herdcats.io'>herdcats.io/e/ohcw9d</a></p>
+        <p>Hey, let's Watch Josh Die<br><br>Details and RSVP at <a href='herdcats.io'>herdcats.io/e/ohcw9d</a></p>
         <img src="./og-image.png" width="200px;">
         <p style="background:#ddd;">herdcats.io</p>
       </div>
       <div class="message">
         <p>An update for you!</p>
-        <p>Hey, let's Watch Josh Die (Ep 35)
+        <p>Hey, let's Watch Josh Die
         <br>7pm
         <br>on Saturday
         <br><br>Details and RSVP at <a href='herdcats.io'>herdcats.io/e/ohcw9d</a></p>
@@ -777,7 +965,7 @@ So come watch me die. Let's all love each other one last time, before the end.</
       <br><br-->
       <p class="mini"><span class='catvatar' n=2></span><b>Joshua Kernich</b> has invited you!</p>
       <h1>Hey, let's</h1>
-      <h1>Watch Josh Die (Ep 35)</h1>
+      <h1>Watch Josh Die</h1>
       <p class="mini"><span class="tally"><span class='catvatar' n=1></span><span class='catvatar' n=4></span><span class='catvatar' n=2></span></span><b>James, Joyce,</b> and <b>Brian</b> are keen</p>
       <ul class="deets">
         <li class="time"><p>7pm</p></li>
